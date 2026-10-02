@@ -59,7 +59,7 @@ A finding's severity and its confidence are independent. A High-severity **unres
 
 ### 5. Report
 
-Use [references/report-template.md](references/report-template.md). Apply the handling rules in [references/redaction.md](references/redaction.md) before the report leaves your hands — it will name account emails, connected third-party services, and workspace names, which makes the audit itself sensitive.
+Use [references/report-template.md](references/report-template.md). [examples/sample-audit.md](examples/sample-audit.md) is a worked fictional audit showing the severity arithmetic, the confidence labels, and an unresolved finding reported as unresolved rather than quietly dropped. Apply the handling rules in [references/redaction.md](references/redaction.md) before the report leaves your hands — it will name account emails, connected third-party services, and workspace names, which makes the audit itself sensitive.
 
 ## Discipline
 
