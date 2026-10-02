@@ -1,18 +1,16 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "llm-privacy-audit",
-  "description": "LLM Privacy Audit — review the privacy and permission settings on your AI assistant accounts and flag over-permissive defaults.",
+  "description": "LLM Privacy Audit: which of your AI settings are set the way the vendor wanted, not the way you would have chosen.",
   "owner": {
     "name": "Rachael Quisel"
   },
   "plugins": [
     {
       "name": "llm-privacy-audit",
-      "description": "Audit privacy and permission settings across AI assistant accounts (ChatGPT, Claude, Gemini, Grok, Copilot, Meta AI) and flag defaults that expose more than the owner intends. Read-only, evidence-labeled, severity-ranked.",
-      "displayName": "LLM Privacy Audit",
+      "description": "Reviews the privacy settings on your AI accounts and tells you which defaults are costing you something. Every finding carries the date it was checked and whether your account was actually read.",
       "source": "./",
       "category": "security",
-      "tags": ["privacy", "audit", "permissions", "governance"],
       "homepage": "https://github.com/RachaelQuisel/llm-privacy-audit"
     }
   ]

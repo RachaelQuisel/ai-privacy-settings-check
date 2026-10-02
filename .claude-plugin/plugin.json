@@ -1,7 +1,8 @@
 {
   "name": "llm-privacy-audit",
-  "description": "Audit the privacy and permission settings across a person's or organization's AI assistant accounts, and flag the defaults that expose more than the owner intends. Read-only: it reports and recommends, it never changes a setting.",
-  "version": "0.1.0",
+  "displayName": "LLM Privacy Audit",
+  "description": "Reviews the privacy settings on your AI accounts and tells you which defaults are costing you something. Every finding carries the date it was checked and whether your account was actually read.",
+  "version": "1.0.0",
   "author": {
     "name": "Rachael Quisel"
   },
@@ -15,5 +16,8 @@
     "data-protection",
     "ai-governance",
     "settings-review"
-  ]
+  ],
+  "icon": "./icon.png",
+  "documentationUrl": "https://github.com/RachaelQuisel/llm-privacy-audit#readme",
+  "supportUrl": "https://github.com/RachaelQuisel/llm-privacy-audit/issues"
 }
