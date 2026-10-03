@@ -130,6 +130,12 @@ next, and what could not be verified at all. That last list is the honest part: 
 defaults the vendors don't publish, so you check them yourself instead of trusting a number
 someone made up.
 
+All of it is consolidated in
+[open-questions.md](skills/llm-privacy-audit/references/open-questions.md) — at the last check,
+**203 of 564 documented settings** had a default, path, or effect that could not be sourced.
+That ratio is high because most vendors document that a setting exists without ever saying what
+it ships as. A vendor near the top of that list isn't more dangerous, it's worse documented.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

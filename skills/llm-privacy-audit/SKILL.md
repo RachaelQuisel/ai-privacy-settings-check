@@ -36,7 +36,9 @@ Ask which products are in scope and whether the subject is on a free, paid, team
 
 For each product in scope, read its file in [references/vendors/](references/vendors/). These carry the documented default, what it exposes, the recommended state, the citation, and the date the entry was last verified.
 
-Check that date. If an entry is more than 90 days old, say so in the report's **Limits** section — these settings move, and a stale baseline presented as current is the main way this audit could mislead someone.
+[references/open-questions.md](references/open-questions.md) lists every setting whose default, path, or effect could not be sourced. If a product in scope has entries there, those are the settings you must read live rather than cite — and the ones to name in **Limits** if you cannot.
+
+Check the verified date. If an entry is more than 90 days old, say so in the report's **Limits** section — these settings move, and a stale baseline presented as current is the main way this audit could mislead someone.
 
 ### 3. Read the live state, when available
 
