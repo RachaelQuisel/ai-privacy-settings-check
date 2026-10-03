@@ -1,6 +1,6 @@
 # Grok (xAI / SpaceXAI)
 
-> **Last verified:** 2026-10-02
+> **Last verified:** 2026-10-02 · **second gap-fill pass same day** — ten of twelve open defaults resolved; see *Second pass* at the end of this file, including a correction to the connector inventory
 > **Surfaces covered:** grok.com + standalone Grok apps · Grok-on-X (a **separate control plane**) · Grok Build CLI · Grok Bot · xAI API
 
 ## Method notes — read before trusting a default here
@@ -16,12 +16,12 @@
 
 - **Setting:** `Improve the Model` *(helper text, verbatim: "By allowing your data to be used for training our models, you help enhance your own experience and improve the quality of the model for all users. We take measures to ensure your privacy is protected throughout the process.")*
 - **Where:** grok.com → Settings → **Data Controls** → Improve the Model. The settings overlay is driven by a `_s` query param; observed deep-link form is `https://grok.com/?_s=data`. Mobile: Settings → Data Controls → "Improve the model".
-- **Default:** **ON.** Officially unstated. xAI's Consumer FAQ says only "You control whether your data is used for training Grok" and never names the default; @grok's own public instructions and all contemporaneous reporting describe it as on-by-default (opt-out).
+- **Default:** **ON outside the EEA/UK · OFF in the EEA/UK · row hidden entirely for enterprise and government tenants.** Resolved in the second pass from shipped client code plus xAI's own EU privacy addendum — a **regional** default, which the first pass missed by treating it as one global value. xAI's Consumer FAQ still never names a default. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 - **Exposes:** Every prompt, uploaded file, image, document and voice input you send, plus Grok's responses, is retained against your account and used by SpaceXAI to train and fine-tune its models, with a limited number of authorized personnel able to read conversations.
 - **Recommend:** **OFF.** The only account-level switch that stops your chat content entering the training corpus. Turning it off is forward-only and does not retract anything already ingested.
 - **Risk:** High
 - **Evidence:** label/path verified live at `cdn.grok.com/_next/static/chunks/376vlecp-jky0.js` (key `settings-data.improve-model.title`); FAQ at `web.archive.org/web/20260928235916/https://x.ai/legal/faq` — checked 2026-10-02
-- **Confidence:** label/path `verified`; default `reported`
+- **Confidence:** `verified` — label and path from the live string table, regional defaults from shipped code and xAI's EU addendum, corroborated by independent reporting.
 
 - **Setting:** `Private Chat` *(in-chat mode, not a settings toggle. Blurb: "This chat won't appear in your history and will not be used to train models.")*
 - **Where:** Ghost-shaped icon at the top right of the grok.com chat screen / Grok app. No settings-page location, no deep link.
@@ -53,7 +53,8 @@
 
   ⚠️ **The label has drifted.** The 2024 wording was "Allow your **posts** as well as your interactions, inputs, and results **with Grok**…". The live 2026 wording is "**public data** … with Grok **and xAI**" — a broader scope (public posts, post metadata/engagement/reposts, public Spaces, public profile) wearing a similar label. **Do not search for the old string; you will not find it.**
 - **Where:** X → Settings and privacy → Privacy & Safety → Data sharing and personalization → Grok & Third-party Collaborators → Data Sharing. Deep link: **`https://x.com/settings/grok_settings`** (route confirmed live and archived continuously since 2024-07-25).
-- **Default:** **ON for existing accounts** — enabled retroactively in July 2024 without prior consent. X has never published the default in its own help text. Treat as on-by-default and verify in your own account.
+- **Default:** **ON — now `verified`**, on the strength of a **Swiss FDPIC regulator document** plus X's own opt-out framing, corroborated by independent reporting. Enabled retroactively in July 2024 without prior consent.
+- **And it does *not* ship OFF for EEA/EU accounts.** This was explicitly open and is now answered: **the 2024 Irish undertaking was a dataset-specific deletion commitment, not a change to the toggle's default.** Same default-on toggle, same regions. The DPC's April 2025 inquiry into *ongoing* EU/EEA training remains open with no decision. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 - **Exposes:** X hands xAI your public posts, their engagement metadata, public Spaces and public profile, **plus every Grok-on-X prompt, result, voice input and voice transcription**, for training and fine-tuning.
 - **Recommend:** **OFF, and do it first** — it is a distinct switch from the grok.com toggle and turning off one does nothing to the other. Note the residual: X states the opt-out *"does not prevent a deployed model from learning as a result of its normal use"* when you use Grok-powered X features such as recommendations.
 - **Risk:** High
@@ -141,7 +142,7 @@
 
 ## 3. Connectors & OAuth scopes
 
-**Live connector inventory** (verified from grok.com's own string table): Gmail, Google Calendar, Google Drive, Google Drive (sync), OneDrive, Outlook, Outlook Calendar, SharePoint, SharePoint Direct, Slack, Notion, Power BI, X Ads. Live flags show Google Drive/Gmail/Calendar/OneDrive **enabled**, GitHub and Notion **disabled** for consumer web at time of check.
+⚠️ **Corrected in the second pass.** An earlier reading of this file listed Slack, Notion, Power BI and X Ads as built-in connectors, inferred from i18n strings shipped in the client. **That over-reads the strings.** `docs.x.ai/grok/connectors` lists exactly **seven built-ins**: Gmail & Google Calendar · Google Drive · OneDrive · Outlook Mail & Calendar · Microsoft Teams · SharePoint · Salesforce. Slack and Notion strings do ship in the client, but those services sit in the **connector catalog** — third-party-hosted MCP servers xAI surfaces but does not build or maintain. One catalog maintainer reports Slack is absent from both the picker and the docs table altogether. **Treat Slack and Notion as catalog-or-absent, not as built-ins.** `verified` for the seven-item built-in list.
 
 - **Setting:** Connector consent screen — `Access your files` / `Access your messages` / `Search your emails` / `Search your calendar` / `Access your pages` / `Manage your X ads`, with `We never train on your data`
 - **Where:** grok.com → attach/connectors menu → pick a service → OAuth consent. Team: Settings → Team settings → Connectors.
@@ -173,9 +174,11 @@
 - **Confidence:** label `verified`; exact deep-link path `reported`
 
 - **Setting:** Granular OAuth scope strings
-- **Default:** **Not found.** No OAuth scope identifiers appear in any grok.com client bundle — all 84 chunks were grepped for `googleapis.com/auth/*` and Microsoft Graph scope names with **zero hits**; scopes are requested server-side. No xAI doc enumerates them.
-- **Recommend:** Read the provider's own consent screen; it is the authoritative scope list.
-- **Confidence:** `unresolved` — the requested scopes for every connector could not be confirmed
+- **Default:** **Resolved in the second pass.** The earlier conclusion — that scopes are server-side and undocumented — was wrong about the *documentation*, though right about the client bundle: the scopes are not in the JS, but **`docs.x.ai/grok/connectors/*` publishes a per-connector scope table** for all seven built-ins. Full tables are in the second-pass section.
+- **Exposes:** The headline findings: **connecting Outlook, OneDrive or Teams hands Grok write/send authority in a single click with no read-only option** · enabling Drive writes grants the **full `drive` scope**, not a scoped one · SharePoint's *recommended* mode is tenant-wide read **plus a background index that keeps its own separate grant** under a second Entra app registration.
+- **Recommend:** Read the provider's own consent screen — and know that **xAI's own opt-in scope picker exists in the shipped code but is flagged off in production**, so the provider's screen is currently the only place a user sees what they are granting.
+- **Risk:** High
+- **Confidence:** `verified` for all seven built-in scope tables, for the Microsoft-only scope-consent gate, and for the picker being disabled in production. `unresolved` for **catalog** connectors (GitHub, Notion, Linear, Box, …) — by construction, since their scopes are defined by each provider's own MCP endpoint, not by xAI. That is N provider-side lists, not one missing xAI list. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 
 ## 4. Sharing & publication defaults
 
@@ -199,11 +202,11 @@ xAI's Consumer FAQ carries this warning verbatim: *"Any share link you generate 
 
 - **Setting:** `Allow chat link sharing` *("Allow sharing chats using only your chat link.")*
 - **Where:** grok.com → Settings → Data Controls
-- **Default:** **Unresolved.** The feature is live (`show_auto_share_settings: true`, `enable_temp_always_request_share_link: true`) but the shipped state could not be determined, and **no xAI doc mentions this setting at all.** ⚠️ **This is the one to check first in your own account** — a default-on "share using only your chat link" materially lowers the bar to exposure.
+- **Default:** **ON — resolved in the second pass, and it is the dangerous answer.** Confirmed from shipped client code in two independent places, with a third-party screenshot corroborating. **On in all regions, including the EEA/UK and enterprise** — unlike the training and personalization toggles, this one has no regional carve-out. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 - **Exposes:** If on, a chat becomes viewable from its link without the explicit per-conversation share step.
 - **Recommend:** OFF. Keep sharing an explicit, per-conversation act.
 - **Risk:** High
-- **Confidence:** label `verified`; default `unresolved`
+- **Confidence:** `verified` — label from the shipped string table, default from shipped code (two places) plus a corroborating screenshot.
 
 - **Setting:** `See Shared Links` → `Manage` *(page title `Shared Conversations`; per-row `Remove`)*
 - **Where:** grok.com → Settings → Data Controls → See Shared Links, or directly **`https://grok.com/share-links`** (fetched live, HTTP 200 — the URL in xAI's FAQ is correct)
@@ -524,3 +527,1474 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 
 - **Defaults for most consumer toggles.** Neither xAI nor X publishes them. Every *label* and *path* was verified from live production code, but the only `verified` defaults are in the API and agentic planes. For the consumer toggles — **including both training toggles** — defaults are `reported` or `unresolved`. The honest instruction to a user is: **open both settings pages and look.**
 - **Mobile runtime permission manifests.** Store data-safety declarations are verified above, but the actual list of requested Android/iOS permissions is not published in either listing, and no device or APK was available.
+
+
+---
+
+# Second pass — gap-fill, 2026-10-02
+
+The first pass verified every setting's **label** and **path** from live production JavaScript, because
+`x.ai` and `help.x.com` return HTTP 403 to automated fetching. What it could not verify was most
+**default states**. This pass resolved ten of twelve by reading shipped code, regulator filings and
+xAI's own developer documentation rather than the blocked help pages.
+
+## The four results that change the audit
+
+1. **`Allow chat link sharing` is ON by default**, in **all** regions including the EEA/UK and
+   enterprise. The first pass flagged this as the single highest-priority unknown on the grounds that a
+   default-on state would materially lower the bar to accidental exposure. It is default-on. Unlike the
+   training and personalization toggles, it has **no regional carve-out**.
+2. **The consumer defaults are regional, not global.** `Improve the Model`, `Personalize with
+   conversation history` and `Personalize using 𝕏` are **ON outside the EEA/UK and OFF inside it**, with
+   the rows hidden entirely for enterprise and government tenants. The first pass treated each as one
+   global value and would have given an EEA client the wrong answer.
+3. **The X-side training toggle is default-ON, and it does *not* ship off for the EEA.** The ON default
+   is now `verified` from a **Swiss FDPIC regulator document**. And the open EEA question is answered:
+   **the 2024 Irish undertaking was a dataset-specific deletion commitment, not a change to the
+   toggle's default.** Anyone who read the undertaking as "EU accounts are opted out" read it wrong.
+4. **Connector OAuth scopes are published after all** — at `docs.x.ai/grok/connectors/*`, not in the
+   client bundle the first pass grepped. Full tables below. The operative findings: **Outlook, OneDrive
+   and Teams grant write/send authority in one click with no read-only option**, Drive writes grant the
+   **full `drive` scope**, and SharePoint's recommended mode is tenant-wide read plus a background index
+   holding its own separate grant under a second Entra app registration. xAI's own opt-in scope picker
+   exists in the shipped code and **is switched off in production**, so the provider's consent screen is
+   currently the only place a user sees what they are granting.
+
+## One contradiction, deliberately not resolved
+
+`Watermark Imagine generations` reads **`false`** in the client preference and its row is hidden — but
+`docs.x.ai/grok/faq` says Imagine output **is** watermarked with no way to remove it. Both facts are
+`verified` and they do not reconcile. **Do not publish "watermarking is off by default"** on the
+strength of the preference value; what that preference actually changes is unknown.
+
+## Still open
+
+The server-side stored defaults for the two X-side toggles (`allow_grok_memory`,
+`allow_xai_personalization`) rest on a single outlet's hands-on and stay `unresolved`; closing them
+needs a brand-new X account read before anything is touched. The shipped team **conversation-retention**
+value is undocumented across all 185 pages of `docs.x.ai`. And catalog-connector scopes are
+`unresolved` **by construction** — they are defined by each third party's own MCP endpoint, so that is
+N provider-side lists rather than one missing xAI list.
+
+## A regulator finding that fits but cannot be attributed
+
+The DPC's AI Insights Report (Sept 2026, p. 36) describes an unnamed controller whose *"opt out for
+processing personal data for AI training for a particular chatbot was not available to non-subscribers
+using mobile devices"* — ~7.7 million EEA mobile users, identified Jan 2025, fixed Feb 2025, with a
+commitment not to train on data collected during the gap. **It fits X/Grok**: Grok was open to all users
+and the opt-out was long web-only. **The report does not name it, so it stays unattributed here.** Noted
+because it is the kind of thing that gets confidently misattributed once it enters circulation.
+
+---
+
+**Method note.** `x.ai/*` and `help.x.com/*` still 403 to automated fetching. The breakthrough came from
+Route 1, done deeper than the previous pass: the previous pass had only the **84 chunks referenced by
+grok.com's landing-page HTML**. Those 84 chunks internally reference ~1,885 more lazily-loaded chunks.
+Crawling that graph (1,969 files total) surfaced the real client-side default objects, the GDPR branch,
+and the settings UI bindings. Separately, `x.com/settings/grok_settings` returns HTTP 200 and serves the
+legacy `responsive-web/client-web` stack, whose chunk id→name→hash maps are inlined in that HTML; that
+let me pull all 1,093 X chunks from `abs.twimg.com` and find the X-side Grok code.
+
+**Reproduction / provenance (hashed filenames rotate on deploy):**
+
+grok.com (Next.js / Turbopack, `https://cdn.grok.com/_next/static/chunks/<name>.js`):
+- `26x_v88vhivnt.js` — user-settings store: default object `B`, GDPR/enterprise object `M`, preference
+  defaults `P`, `this.userSettings=B`, `initializeGdprUserSettings`, `initializeEnterpriseUserSettings`
+- `1-rislvj__i6c.js` — GDPR country set `dv` and the init dispatcher that chooses `B` vs `M`
+- `1-jsl8v3kdkhp.js` — Settings → Data Controls UI (`settings-data.*` toggle bindings)
+- `3gfgjmgykxhkq.js` — team "Organization Sharing & Retention" panel
+- `00wwe6evlg5_z.js` — `MIN_RETENTION_DAYS`, `retentionModeFromSettings`, `RetentionPeriodControl`
+- `0kcqgmleanlog.js` — connector scope-consent helpers (`seedScopeGroupSelection`, `mayRequireScopeConsent`)
+- `1tx97cquvu2z2.js` — generated REST client for `/rest/user-settings`
+- `376vlecp-jky0.js` — en i18n string table
+
+x.com (legacy stack, app-version `131ee3c4f16a0ba87fd52ca174db2b8554e9cd70`,
+`https://abs.twimg.com/responsive-web/client-web/<name>.<hash>a.js`):
+- `ondemand.SettingsRevamp.3f7a1da9c7e92895a.js` — `/settings/grok_settings` screen + the three toggles
+- `shared~bundle.ComposeMedia~bundle.TwitterArticles.76a18f777fc2197ca.js` — "Block modifications by Grok"
+- `i18n/en.236349331ade24e4a.js` — en i18n string table
+
+Two further routes opened up that the brief did not anticipate, and both are **live production config,
+not code**:
+
+- **`docs.x.ai` is reachable** (unlike `x.ai/*`). It 308-redirects `/docs/*` → `/*`, serves 200, and
+  every page is available as markdown by appending `.md`. `docs.x.ai/sitemap.xml` enumerates all 185
+  pages. This is xAI's official documentation and it resolved items 11a and 12.
+- **Both apps inline their live feature-flag payload in the HTML they serve to an unauthenticated
+  request.** `https://x.com/settings/grok_settings` carries **1,390** X feature switches as
+  `"<name>":{"value":…}`; `https://grok.com/` carries **727** xAI flag keys in its SSR payload. These
+  are the real production values, so they settle the "is this row even visible?" questions that the
+  bundle alone could not. Caveat, stated once and applying everywhere below: switch values can be
+  bucketed per account, per subscription tier and per geography, and these were read from one
+  unauthenticated request from a US egress — so they are *a* production value, authoritative for the
+  anonymous/default bucket, not provably the value every user gets.
+
+Production flag values used below (all read today):
+
+| Flag | Surface | Value | Governs |
+|---|---|---|---|
+| `enable_temp_always_request_share_link` | grok.com SSR payload | `true` | the brief's flag — exists, server-side only (no client consumer) |
+| `show_auto_share_settings` | grok.com SSR payload | `true` | server-side only; "Allow chat link sharing" row |
+| `enable_memory_toggle` | grok.com SSR payload | `true` | item 4 row is rendered |
+| `enable_browser_geo_location` | grok.com SSR payload | `false` | item 6 row is **not** rendered |
+| `enable_watermark_setting` | grok.com SSR payload | **absent** | item 9 falls back to `false` → row hidden |
+| `grok_web_connector_scope_consent_enabled` | grok.com SSR payload | `false` | the connector scope-consent dialog is **off** |
+| `nsfw_enabled` / `disable_sharing` / `hide_files_page` | grok.com SSR payload | `false` / `false` / `false` | sharing is enabled; files page shown |
+| `grok_settings_memory_visibility` | x.com switches | `"hide"` | item 7 row is **not** rendered |
+| `grok_settings_age_restriction_enabled` / `grok_settings_restriction_age` | x.com switches | `true` / `18` | all three X Grok toggles `disabled` for under-18s |
+| `responsive_web_grok_media_block_edit_enabled` | x.com switches | `true` | item 10 row **is** rendered |
+| `responsive_web_grok_tweet_actions_edit_image_enabled` | x.com switches | `false` | in-timeline "edit image with Grok" entry point off |
+| `responsive_web_grok_tweet_media_edit_image_button_enabled` | x.com switches | `false` | ditto, media viewer |
+| `responsive_web_grok_tweet_media_detail_edit_image_button_enabled` | x.com switches | `false` | ditto, media detail |
+| `responsive_web_grok_link_edit_image_to_grok_com_enabled` | x.com switches | `true` | image-edit instead routes out to grok.com |
+| `responsive_web_grok_edit_image_attribution_mode` | x.com switches | `"free"` | attribution mode for Grok-edited images |
+
+**Gating variables used throughout the Data Controls panel** (`grokjs2/1-jsl8v3kdkhp.js`), resolved so
+the row-visibility claims below are checkable:
+```js
+s = useFeatureFlags()                                        // server flag map
+c = useSession()
+d = c.user?.organizationRole === OrganizationRole.ADMIN      // shows the org Sharing & Retention block
+g = useIsActiveGrokBusinessSession()                         // true inside a team/business workspace
+K = useSubscriptions().isEnterpriseUser
+H = useIsGovernment()
+C = useSettingsStore(e => e.userSettings)                    // the live settings object
+T = fetchSetUserSettings ; P = fetchSetPreference
+```
+Consequence worth carrying into the audit: the rows gated on `!g` — **memory, chat-link sharing,
+watermark and NSFW — disappear entirely inside an active Grok Business session**, where team policy
+governs instead. "Improve the Model" is gated on `!K && !H`, i.e. hidden for enterprise and government
+tenants regardless of workspace.
+
+**The single most load-bearing new fact:** grok.com ships **two different default sets**, chosen by
+account country. Everything below that says "non-EEA default" vs "EEA/UK default" rests on this:
+
+```js
+// 26x_v88vhivnt.js — non-GDPR default (also the pre-fetch placeholder: this.userSettings = B)
+B = { excludeFromTraining:!1, allowXPersonalization:!0, preferences:P, enableMemory:!0,
+      allowShareIndexing:!0, allowCompanionNotifications:!1, allowAutoShare:!0,
+      allowGrokFinishedNotification:!1, agentCustomizations:[], agentLibrary:[],
+      imagineEnabledConnectors:{connectorIds:[]} }
+
+// 26x_v88vhivnt.js — GDPR / enterprise default, written to the server on first init
+M = { excludeFromTraining:!0, allowXPersonalization:!1, preferences:P, enableMemory:!1,
+      allowShareIndexing:!1, allowCompanionNotifications:!1, allowAutoShare:!0,
+      allowGrokFinishedNotification:!1 }
+
+initializeGdprUserSettings = () => settingsGetUserSettings().then(e => {
+  (e.excludeFromTraining === undefined || e.enableMemory === undefined)
+    ? fetchSetUserSettings(M)      // no stored value yet -> write the privacy-protective set
+    : U(e, t) })                   // otherwise honour what the server already has
+
+initializeEnterpriseUserSettings = () => settingsGetUserSettings().then(e =>
+  e.excludeFromTraining ? U(e,t) : fetchSetUserSettings(M))
+```
+
+```js
+// 1-rislvj__i6c.js — which accounts get M
+dv = new Set(["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT",
+              "LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","IS","LI","NO","GB"]);   // EU27 + IS/LI/NO + GB
+// ...
+if (user.email?.endsWith("@x.ai")) { /* skipped */ }
+else if (countryCode && dv.has(countryCode)) {
+   logEvent("initialize_gdpr_user_settings", countryCode, {...});
+   if (!hasPreviouslyInitUserSettings)            // localStorage guard, once per browser
+       useSettingsStore.getState().initializeGdprUserSettings()...
+} else if (isEnterpriseUser) { initializeEnterpriseUserSettings() }
+```
+
+Note on the country list: it is **EU 27 + Iceland + Liechtenstein + Norway + GB**, and
+**Switzerland (`CH`) is absent** — even though xAI's privacy policy groups Switzerland with Europe and
+the Swiss FDPIC closed its own investigation into X/Grok in March 2025. A Swiss grok.com account
+therefore receives the permissive set `B`, not `M`. Worth a line in the audit.
+
+End-to-end confirmation of the mechanism: `countryCode` is **server-detected and inlined in the same
+SSR payload** — my request came back with `"countryCode":"US","region":"California","regionCode":"CA"`,
+which is why the US flag/default bucket is what I read. The GDPR branch would have fired on the same
+code path had that value been one of the 31 in `dv`. (No prefetched `user-settings` object appears in
+an anonymous payload — searched for `excludeFromTraining`, `exclude_from_training`, `allowAutoShare`,
+`allowShareIndexing`: all absent — so the server-side stored default for a *fresh authenticated*
+account is still inferred from the client's write-on-absent behaviour, not observed directly.)
+
+Caveat to carry into the audit file: these are the **client's** defaults. For every field the client
+writes `M` only when the server reports the field as absent, so the client default and the server
+default coincide for a fresh account — but a value the server has already stored always wins. Where a
+value is read straight off the server with no client fallback (all three X-side toggles) the bundle
+proves nothing about the default, and I have said so — item 3 is resolved from the regulatory and
+official record instead, items 7 and 8 remain unresolved.
+
+**Full Data Controls panel, in shipped render order** (`grokjs2/1-jsl8v3kdkhp.js`), so the audit can
+state the click path exactly. Toggles are marked T, action rows A, with the gate that controls each:
+
+| # | Row | Type | Gate |
+|---|---|---|---|
+| — | "Organization Sharing & Retention" block | section | `d` (org admin) |
+| 1 | Improve the Model | T | `!K && !H` |
+| 2 | Personalize Grok using 𝕏 | T | `c.user?.xUserId` |
+| 3 | Personalize Grok with your device location | T | `s.ENABLE_BROWSER_GEO_LOCATION` (prod: `false`) |
+| 4 | Personalize Grok with your conversation history | T | `s.ENABLE_MEMORY_TOGGLE && c.user && !g` (prod flag: `true`) |
+| 5 | Memory from your chats (summary) / Import memory | A | `ENABLE_MEMORY_SUMMARY` (prod: `false`) / `ENABLE_MEMORY_IMPORT` |
+| 6 | Allow chat link sharing | T | `c.user && !g` |
+| 7 | Watermark Imagine generations | T | `IMAGINE_CONFIGS.get("enable_watermark_setting", !1)` (prod: key absent) |
+| 8 | Allow NSFW Content (I'm 18+) | T | `c.user && !g && s.NSFW_ENABLED` (prod: `false`) |
+| 9 | See Files and Assets | A | `c.user && !s.HIDE_FILES_PAGE` (prod: `false` → shown) |
+| 10 | See Shared Links | A | `c.user` |
+| 11 | See Deleted Conversations | A | `c.user` — *"Deleted conversations are permanently removed after 30 days."* |
+| 12 | Cookie Settings | A | `window.OneTrust` |
+| 13 | Clear Cache / Export Account Data / Delete All Conversations / Delete All Imagine Data / Delete Account | A | — |
+
+In the US/anonymous bucket that means the panel actually shows four privacy toggles — Improve the
+Model, Personalize using 𝕏 (if X-linked), conversation history, and Allow chat link sharing — and the
+location, watermark and NSFW rows are flagged off.
+
+---
+
+### 1. `Allow chat link sharing` (grok.com → Settings → Data Controls)
+
+**Resolved default: ON — in every region, including EEA/UK and enterprise tenants.**
+
+**How established — `verified`, read from shipped code, two independent places in the bundle:**
+- `grokjs2/1-jsl8v3kdkhp.js`, the toggle's own render:
+  ```js
+  title: n("settings-data.allow-auto-share.title","Allow chat link sharing"),
+  description: n("settings-data.allow-auto-share.description","Allow sharing chats using only your chat link."),
+  checked: C.allowAutoShare ?? !0,      // absent server value renders as ON
+  onCheckedChange: e => { ...; T({allowAutoShare:e}) }
+  ```
+  The `?? !0` is decisive: when the account has **no stored value**, the switch is drawn ON.
+- `26x_v88vhivnt.js`: `allowAutoShare:!0` in `B` (non-GDPR) **and** `allowAutoShare:!0` in `M`
+  (the GDPR/enterprise set). It is the only privacy-relevant field in `M` that is **not** flipped to
+  the restrictive position — `M` turns off training, X-personalization, memory and share-indexing, and
+  leaves chat-link sharing on. I checked every reference to `M` in that chunk: it is used only by
+  `initializeGdprUserSettings` and `initializeEnterpriseUserSettings`, nowhere else.
+
+Backing-flag note — resolved, and the brief's flag is real. `enable_temp_always_request_share_link`
+is **not present in any of the 1,969 grok.com JS chunks** (grepped the literal plus
+`always_request_share_link`, `alwaysRequest`, `tempAlways` across `grokjs/` + `grokjs2/` — zero hits),
+which is why the previous pass could not place it. It **is** present in grok.com's server-delivered
+flag payload, inlined in the HTML of `https://grok.com/`, with value **`true`**:
+```json
+"enable_notifications":true,"notifications_fetch_interval_ms":0,
+"enable_temp_always_request_share_link":true,"enable_imagine_delete_button":true, …
+"enable_enterprise_teams_connectors_and_collections":true,"show_auto_share_settings":true, …
+```
+Both it and the adjacent `show_auto_share_settings` (also `true`) have **no client consumer** — greps
+over all 1,969 chunks return nothing for either name — so they are server-side flags governing
+share-link issuance and the exposure of the Data Controls row respectively. The user-facing stored
+field is `allowAutoShare`; the API surface is `POST /rest/user-settings` with body field
+`allowAutoShare` (`1tx97cquvu2z2.js`), and shared-link objects are managed at
+`/rest/app-chat/share_links` (+ `/share_links/summaries`). `disable_sharing` is `false` in production,
+so sharing is on platform-wide.
+
+Related, and worth adding to the audit as its own line: **`allowShareIndexing` defaults to `true`**
+(`B`) and **has no UI anywhere in the shipped bundle** — grepped all 1,969 chunks for
+`shareIndexing`, which appears only in the API client and the defaults object, never in a
+`SettingsToggleRow`. It is flipped to `false` only by the GDPR/enterprise set `M`. So outside
+EEA/UK/enterprise, a user cannot turn off indexing of shared chats from the product UI.
+
+**Independent corroboration — `reported`, with a screenshot:** DeleteMe's "Grok Privacy Settings
+Guide" (29 Jun 2026) shows this exact row **toggled on**
+(https://joindeleteme.com/ai-privacy-settings/grok-privacy-settings-guide/#turn-off-grok-chat-link-sharing ,
+screenshot https://joindeleteme.com/wp-content/uploads/2026/06/grokallowchatlinksharingtoggleon-1024x106.png )
+and describes the semantics: *"a toggle that governs the Share feature, which generates a public URL for
+one of your conversations. When it's turned on, you can click 'Share' on a chat, and Grok will create a
+link that anyone with the URL can use to view the full conversation without needing an account."*
+
+**Essential context — this toggle is a post-incident addition, and it shipped ON.** In August 2025,
+Grok's share button published conversations to a public, search-indexed URL with no per-user control at
+all. `corroborated reported`, and the contemporaneous coverage is unanimous that no setting existed:
+- Forbes, Iain Martin, 20 Aug 2025 — *"Anytime a Grok user clicks the 'share' button… a unique URL is
+  created… that unique URL is also made available to search engines, like Google, Bing and
+  DuckDuckGo… hitting the share button means that a conversation will be published on Grok's website,
+  **without warning or a disclaimer to the user**."*
+  https://www.forbes.com/sites/iainmartin/2025/08/20/elon-musks-xai-published-hundreds-of-thousands-of-grok-chatbot-conversations/
+  (mirror, Forbes blocks fetchers: https://www.forbes.com.au/news/innovation/xai-published-hundreds-of-thousands-of-grok-chatbot-conversations/ )
+- PCMag, Aug 2025 — the only remedies offered were behavioural, not a setting: *"to stop Grok from
+  publishing your chats online, **avoid using its share button**"*, plus revoking at
+  `grok.com/share-links`.
+  https://uk.pcmag.com/ai/159688/groks-share-button-is-a-privacy-disaster-heres-why-you-should-avoid-it
+- TechCrunch, 20 Aug 2025: https://techcrunch.com/2025/08/20/thousands-of-grok-chats-are-now-searchable-on-google/
+- BBC, 21 Aug 2025 — contrasts with OpenAI, whose chats were *"private by default and users had to
+  explicitly opt-in to sharing them."* https://www.bbc.com/news/articles/cdrkmk00jy0o
+- Also Fortune (22 Aug 2025), eWeek, Vice.
+
+xAI's FAQ has since added an explicit disclosure, which did not exist at the time of the incident —
+archived 13 Sept 2026, https://web.archive.org/web/20260913161312/https://x.ai/legal/faq :
+> "**Note:** Any share link you generate will be accessible to anyone you choose to share the link
+> with. For example, if you share the link publicly on a social media platform, **it may be subject to
+> indexing by a search engine (e.g., Google)** just like any other publicly shared content."
+
+`unresolved`: the exact ship date of the "Allow chat link sharing" toggle. No archived grok.com
+settings page and no dated xAI announcement found.
+
+**Confidence: high (verified) on the default; `corroborated reported` on the incident history;
+`unresolved` on the ship date.**
+
+**What changes for a user:** two toggles' worth of exposure sits ON by default and the brief's
+prioritisation was right. Anyone who possesses a Grok chat link can open the chat without further
+permission, and the GDPR carve-out does not help here. Outside EEA/UK there is additionally no
+in-product way to opt shared chats out of indexing.
+
+---
+
+### 2. `Improve the Model` (grok.com)
+
+**Resolved default: ON for consumer accounts outside EEA/UK (`excludeFromTraining:false`).
+OFF for EEA/UK accounts and for enterprise accounts. Row hidden entirely for enterprise and
+government tenants.**
+
+**How established — `verified`, shipped code:**
+- `grokjs2/1-jsl8v3kdkhp.js`:
+  ```js
+  !K && !H && SettingsToggleRow({                       // K = isEnterpriseUser, H = useIsGovernment()
+    title: n("settings-data.improve-model.title","Improve the Model"),
+    checked: !C.excludeFromTraining,
+    onCheckedChange: e => T({excludeFromTraining: !e}) })
+  ```
+  The toggle is the **inverse** of the stored field, and the row is suppressed for enterprise/government.
+- `26x_v88vhivnt.js`: `B.excludeFromTraining = !1` (training on) vs `M.excludeFromTraining = !0`
+  (training off), with `M` written for `dv` countries and for enterprise users.
+
+Two mechanical details worth recording, both `verified`:
+- The EEA/UK write is **guarded once per browser** by a `hasPreviouslyInitUserSettings` localStorage
+  flag, and additionally only fires when the server reports `excludeFromTraining`/`enableMemory` as
+  absent. So it establishes the default; it does not re-assert it against a user's later choice.
+- The **enterprise** write has **no such guard**: `initializeEnterpriseUserSettings` runs on every
+  load and re-writes `M` whenever `excludeFromTraining` is falsy. An enterprise user who deliberately
+  turns training *on* should expect it to be forced back off on the next session. (It is reached via
+  the `else if (isEnterpriseUser)` arm, i.e. only for enterprise accounts **outside** the 31-country
+  set; inside it, the GDPR arm handles them first.)
+
+**Independent corroboration — `corroborated reported`:**
+- DeleteMe, 29 Jun 2026, screenshot of the row **toggled ON** with the exact description string:
+  https://joindeleteme.com/ai-privacy-settings/grok-privacy-settings-guide/ (image
+  https://joindeleteme.com/wp-content/uploads/2026/06/grokimprovethemodel-1024x184.png )
+- **xAI's own FAQ page embeds a mobile Data Controls screenshot showing "Improve the Model" and
+  "Personalize Grok using X" both switched ON** —
+  https://media.x.ai/cdn-cgi/image/fit=scale-down,onerror=redirect,f=auto/v1/website/app-data-6d629376.webp
+  (embedded on https://x.ai/legal/faq ). Caveat worth noting: the *web* screenshot on the same page
+  shows both OFF, because it illustrates the opted-out state, and it is stale — it predates the memory,
+  location, link-sharing and watermark rows
+  (https://media.x.ai/cdn-cgi/image/fit=scale-down,onerror=redirect,f=auto/v1/website/web-data-15f61728.webp ).
+- Ars Technica, Jul 2024 (X side) — *"X is training Grok… and that's opt-out, not opt-in."*
+  https://arstechnica.com/ai/2024/07/x-is-training-grok-ai-on-your-data-heres-how-to-stop-it/ ;
+  ZDNET: https://www.zdnet.com/article/elon-musks-x-now-trains-its-grok-ai-on-your-data-by-default-heres-how-to-opt-out/
+- Tom's Guide (privacy-settings comparison across chatbots); plus several smaller guides stating the
+  opt-out posture directly.
+
+**Official confirmation of the legal posture — `verified`:** xAI's **Europe Privacy Policy Addendum**
+(https://x.ai/legal/europe-privacy-policy-addendum ) names **legitimate interests**, not consent, as the
+basis for training — *"This is necessary for our legitimate interests in improving the accuracy and
+performance of our models"* — and then: *"You can **object** to processing of your personal information
+when our processing is based on our legitimate interests… Please note you can object to our use of your
+information to train our models in your settings."* Legitimate interests plus a right to object is the
+legal signature of an opt-out, i.e. on by default. (The EEA/UK client behaviour above means EEA/UK users
+start already objected-out; the addendum still governs the non-default case.)
+
+**Timeline, `verified` from Wayback:** in November 2024 **there was no toggle at all** —
+https://web.archive.org/web/20241105123923/https://x.ai/legal/faq read *"You can opt-out of training by
+**emailing us at privacy@x.ai**. Once you opt out, new conversations will not be used to train our
+models."* By June 2025 the toggle existed —
+https://web.archive.org/web/20250614022714/https://x.ai/legal/faq : *"**Grok.com Data Controls for
+Training Grok:** For the Grok.com website, you can go to Settings, Data, and then 'Improve the Model' to
+select whether your content is used for model training."* So the opt-out posture is original and
+continuous; only the mechanism changed.
+
+**Confidence: high (verified).** Upgraded from `reported`.
+
+**What changes for a user:** a consumer account in, say, the US is opted into model training on
+sign-up and must find Data Controls to leave; an account whose country code is in EU27/IS/LI/NO/GB is
+opted out on first load without doing anything. Enterprise users cannot see or change the toggle —
+their tenant is forced to `excludeFromTraining`.
+
+---
+
+### 3. The X-side training toggle (`x.com/settings/grok_settings`)
+
+Label (verified from X's en table, id `i586f3e0`): *"Allow your public data as well as your
+interactions, inputs, and results with Grok and xAI to be used for training and fine-tuning."*
+Help text (id `a8d516a4`): *"X may share with xAI your X public data as well as your user
+interactions, inputs and results with Grok on X to train and fine-tune Grok and other AI models
+developed by xAI…"*
+
+**Click path — `verified` two ways.** From shipped code: Settings → **Privacy and safety** → (second
+group, "Data sharing and personalization") → **"Grok & Third-party Collaborators"** →
+`/settings/grok_settings`. The row is unconditional (`includeGrokSettings:!0` in
+`ondemand.SettingsRevamp...js`); the screen's testID is `xaiDataSharingSettings` and it renders exactly
+three switches in this order — training, personalization, memory — plus a destructive "Delete
+conversation history" action. X's own help page gives the identical path in prose
+(`help.x.com/en/using-x/about-grok`, archived
+https://web.archive.org/web/20260902121507/https://help.x.com/en/using-x/about-grok ):
+*"Select 'Privacy & Safety' → Scroll to 'Data sharing and personalization' → Select 'Grok &
+Third-party Collaborators' → You will see 'Data Sharing' → Select or de-select the option 'Allow your
+public data as well as your interactions, inputs, and results with Grok and xAI to be used for training
+and fine-tuning.'"* (The literal URL `/settings/grok_settings` is login-walled and has no Wayback
+capture, but it is the route string in X's own bundle, so it is verified from code.)
+
+#### 3a. Is it ON by default? — **Resolved: YES. `verified`.**
+
+Upgraded from `reported`. The decisive source is a **regulator document**, the Swiss FDPIC's
+conclusion of its investigation into X/Grok, 20 March 2025
+(https://www.edoeb.admin.ch/en/conclusion-investigation-x-grok ):
+
+> "TIUC informed the FDPIC about the opt-out option introduced since 16 July 2024. This allows users
+> to **reject the default use** of their X contributions for training and fine-tuning Grok in the data
+> protection settings. The FDPIC concluded that the company is complying with the requirements of the
+> FADP by offering this opt-out option, **which is also offered in the EU**."
+
+A regulator stating that the processing is "the default use" and that the control is an opt-out settles
+the polarity. X's own help page corroborates the framing without ever using the words "on by default":
+the section is titled **"How do I opt-out of model training?"** and documents only a de-selection
+action — in the current wording and in the original 7 Aug 2024 wording
+(https://web.archive.org/web/20240807122234/https://help.x.com/en/using-x/about-grok , then reading
+*"Allow your posts as well as your interactions, inputs, and results with Grok to be used for training
+and fine-tuning"*).
+
+Additionally `corroborated reported` across many independent outlets with hands-on screenshots, and
+still true in 2026:
+- TechCrunch, 26 Jul 2024 — *"The setting is turned on by default."*
+  https://techcrunch.com/2024/07/26/heres-how-to-disable-x-twitter-from-using-your-data-to-train-its-grok-ai/
+- The Verge, 26 Jul 2024 — *"X uses your data to train its Grok AI assistant by default."*
+  https://www.theverge.com/2024/7/26/24206904/x-grok-ai-train-turn-off
+- Social Media Today, 28 Jul 2024 — *"users opted in by default."*
+  https://www.socialmediatoday.com/news/x-opt-out-of-sharing-your-data-to-train-grok/722601/
+- Tom's Guide, 30 Jul 2024; Variety, 26 Jul 2024; BleepingComputer, 27 Jul 2024; WIRED, Sept 2024.
+- **Engadget, 28 Sept 2026** — *"X enrols every account in Grok training by default, covering both your
+  public posts and conversations with SpaceXAI's chatbot."*
+  https://www.engadget.com/2268598/how-to-stop-ai-companies-training-your-data/
+- PCMag, updated 21 Jul 2026 (headline: "X Has a Hidden Setting Turned On by Default"):
+  https://www.pcmag.com/explainers/x-twitter-has-hidden-setting-training-elon-musks-ai-how-to-turn-it-off
+- PPC Land, 11 Jul 2026, reporting Surfshark research — *"X sets AI training consent to on by default"*,
+  3–5 actions to disable: https://ppc.land/meta-drops-instagram-ai-tagging-tool-as-8-of-10-apps-default-users-in/
+
+**String/UI timeline, `verified` from Wayback diffs of `help.x.com/en/using-x/about-grok`:**
+- ≤ 13 Nov 2024 — old string *"your **posts** as well as your interactions…"*, settings path "Grok":
+  https://web.archive.org/web/20241113070229/https://help.x.com/en/using-x/about-grok
+- by 10 Dec 2024 — current string *"your **public data** … with Grok **and xAI**"*, path renamed to
+  **"Grok & Third-party Collaborators"**:
+  https://web.archive.org/web/20241210020141/https://help.x.com/en/using-x/about-grok
+- between 23 and 30 Jan 2025 — the "Grok Personalization" section (item 8) is added:
+  absent https://web.archive.org/web/20250123122941/https://help.x.com/en/using-x/about-grok ,
+  present https://web.archive.org/web/20250130172040/https://help.x.com/en/using-x/about-grok
+
+**Confidence: high (verified).** Note what the client contributes here: nothing. The value is a Relay
+field read straight off the server with no fallback —
+```js
+let {__id:o, allow_xai_data_sharing:c} = useFragment(v, userPreferences);
+let p = !!c;                     // no ?? fallback, no seed value
+return <Toggle checked={p} disabled={l} name="allowXaiDataSharingCustomization" .../>
+```
+(mutation `XaiDataSharingSettingsMutation`, variable `allowXaiDataSharing`). So the default is
+established entirely by the external record, not by the bundle.
+
+**What changes for a user:** every X account is enrolled in Grok/xAI training on creation, including
+the content of their Grok conversations, and the only exit is a three-levels-deep checkbox.
+
+#### 3b. Does it ship OFF for EU/EEA accounts? — **Resolved: NO, on the best available record.**
+
+**Label: `verified` that what the EU gets is an opt-out rather than an opt-in or a regional default-off;
+`corroborated reported` that EU/EEA accounts were and are defaulted in; `unresolved` only on a
+first-hand observation of the checkbox on a newly created EU/EEA account today.**
+
+This is the one item where the brief's hypothesis does not survive. The 2024 Irish remedy was a
+**backward-looking, dataset-specific** commitment, not a change of default.
+
+**The undertaking itself.** Full text obtained and published by TechCrunch, 4 Sept 2024
+(https://techcrunch.com/2024/09/04/irelands-privacy-watchdog-ends-legal-fight-with-x-over-data-use-for-ai-after-it-agrees-to-permanent-limits/ ):
+
+> "Twitter International Unlimited Company undertakes that personal data comprised in EU/EEA publicly
+> accessible posts … which is contained in datasets which were used for the purposes of developing,
+> training and/or refining … 'Grok' **between May 7, 2024 and August 1, 2024, shall be deleted and not
+> processed** … for the aforementioned purposes."
+
+Nothing about future processing, consent, or any setting. Max Schrems in the same piece: *"Basically
+Twitter got away without any fine… Twitter continues to offer the product based on unlawfully obtained
+data."*
+
+**The DPC's own press releases say nothing about defaults.** 8 Aug 2024
+(https://www.dataprotection.ie/en/news-media/press-releases/dpc-welcomes-xs-agreement-suspend-its-processing-personal-data-purpose-training-ai-tool-grok )
+— the first-ever use of s.134 Data Protection Act 2018 by any Lead Supervisory Authority — and
+4 Sept 2024, striking out the proceedings on the undertaking becoming permanent
+(https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-welcomes-conclusion-proceedings-relating-xs-ai-tool-grok ).
+Neither mentions toggles, settings, defaults, opt-in or opt-out. `verified` negative.
+
+**Nor does any later DPC/EDPB material.** The DPC's **AI Insights Report, Sept 2026**
+(https://www.dataprotection.ie/sites/default/files/uploads/2026-09/DPC-AI-Insights-Report-AC.pdf )
+frames the X case purely as a mitigations failure, and — crucially — its normative framework for AI
+training treats **Article 21 objection / opt-out** as the compliance mechanism, not mandatory opt-in:
+*"there may be no effective way for users to exercise their Article 21 rights if not provided the
+opportunity to opt out or object prior to the processing beginning"*; *"Objection forms or opt outs
+should be easily accessible, easy to use…"* (pp. 52–53). I found **no EDPB opinion, statement or
+Art. 66 urgent binding decision specific to X/Grok** — the DPC's 4 Sept 2024 EDPB referral produced
+only generic AI-model guidance. `unresolved` on EDPB.
+
+**Positive evidence that EU/EEA accounts were and are defaulted in:**
+- **noyb, 12 Aug 2024** (nine GDPR complaints, AT/BE/FR/GR/IE/IT/NL/ES/PL) —
+  https://noyb.eu/en/twitters-ai-plans-hit-9-more-gdpr-complaints — *"began unlawfully using the
+  personal data of more than 60 million users in the EU/EEA … without their consent"*, and explicitly:
+  *"most people found out about **the new default setting** through a viral post … on 26 July 2024 –
+  over two months after the AI training had begun."* X relied on legitimate interests, not consent.
+- **X's own statement, 8 Aug 2024**, quoted by TechCrunch
+  (https://techcrunch.com/2024/08/08/elon-musks-x-agrees-to-pause-eu-data-processing-for-training-grok/ ):
+  *"We are pleased that people using X in the EU can continue to use Grok and control how their data is
+  used with **a simple privacy setting**."* The EU remedy was framed as the same user-controlled
+  setting, not a regional default flip.
+- **FDPIC, 20 Mar 2025** — the opt-out against "the default use" *"is also offered in the EU."*
+- **X Privacy Policy effective 15 Jan 2026**, archived
+  https://web.archive.org/web/20261001000125/https://x.com/en/privacy (official PDF
+  https://legal.x.com/content/dam/legal-twitter/site-assets/x-privacy-policy-2026-09-21/en/x-privacy-policy-2026-09-21.pdf ):
+  *"**If you do not opt out**, in some instances the recipients of the information may use it for their
+  own independent purposes… including, for example, to train their artificial intelligence models."*
+  Its only EEA-specific content is controller/DPO/LSA identification (X Internet Unlimited Company,
+  Dublin; Irish DPC as LSA) — **no EEA carve-out for AI-training defaults**. `verified`
+- **xAI's own FAQ** states the opposite of a default-off rule for the EU: *"in some regions (excluding
+  the EU/UK), when you use Grok without logging in, you won't have the option to opt out of model
+  training"* — i.e. EU/UK get an opt-out where others do not. `verified` (https://x.ai/legal/faq ;
+  direct fetch 403s, reachable via text proxy).
+- **help.x.com has never published an EU/EEA variant** of the Grok settings instructions — no "EU",
+  "EEA" or "Europe" string appears in the settings sections across Wayback snapshots from Aug 2024
+  through Sept 2026. `verified` negative.
+- 2026 how-to journalism records no EU exception for X even while carving one out for Meta
+  (Engadget, Sept 2026; Surfshark/PPC Land, Jul 2026). `reported`
+
+**Claims to the contrary, flagged and not relied on:** AI-generated SEO pages (e.g. cortexos.app:
+*"the Irish DPC … leading to a pause and eventual exclusion for the EU"*) assert an EU exclusion. It is
+unsourced and contradicted by the FDPIC (Mar 2025) and by the DPC's April 2025 inquiry into *ongoing*
+EU/EEA training. Do not cite it.
+
+**The April 2025 statutory inquiry and whether training resumed.**
+- **Opened 11 April 2025** under s.110, into *"the processing of personal data comprised in
+  publicly-accessible posts posted on the 'X' social media platform by EU/EEA users, for the purposes
+  of training generative artificial intelligence models, in particular the Grok Large Language Models
+  (LLMs) … lawfulness and transparency"*
+  (https://www.dataprotection.ie/en/news-media/latest-news/data-protection-commission-announces-commencement-inquiry-x-internet-unlimited-company-xiuc ;
+  TIUC renamed **X Internet Unlimited Company (XIUC)** from 1 April 2025). Corroborated by Reuters,
+  RTÉ, Politico, TechCrunch. `verified`
+- **Still open as of Sept 2026, no decision, no fine** — the DPC AI Insights Report (p. 29) lists both
+  the Grok-LLM-training inquiry and a second XIUC inquiry into Grok generative functionality affecting
+  EU/EEA data subjects "including children" as ongoing. `verified`
+- **Did X resume EU training, and under what default?** No company statement exists. The inference —
+  that EU/EEA public posts continued or resumed being processed on a legitimate-interests,
+  default-on/opt-out basis — follows from the undertaking's narrow scope, the April 2025 inquiry into
+  ongoing processing, and the FDPIC's March 2025 finding. Label that inference
+  `corroborated reported`; an explicit resumption date or X statement about the EU default is
+  **`unresolved`**.
+
+**Other 2025–26 regulatory actions, none of which pin down a default** (`verified`):
+- **DPC inquiry, 17 Feb 2026** into XIUC over *"the creation and publication of potentially harmful,
+  non-consensual intimate and/or sexualized images … including children, using generative artificial
+  intelligence functionality associated with the Grok large language model"*, examining **GDPR Arts. 5,
+  6, 25 (data protection by design and by default) and 35 (DPIA)**
+  (https://www.dataprotection.ie/en/news-media/press-releases/data-protection-commission-opens-investigation-x-xiuc ).
+  This is the only DPC proceeding putting Art. 25 "by default" in scope — but about Grok's image
+  generation, **not** the training toggle.
+- **European Commission, 26 Jan 2026 — DSA, not GDPR/AI Act**: formal proceedings on whether X assessed
+  and mitigated systemic risks from Grok's functionalities, including manipulated sexually explicit
+  images, and whether it produced a pre-deployment risk assessment for Grok
+  (https://digital-strategy.ec.europa.eu/en/news/commission-investigates-grok-and-xs-recommender-systems-under-digital-services-act ).
+  Does not mention training data, GDPR, or default settings.
+- **EU AI Act: `unresolved`** — no AI Act action, decision or AI Office measure found concerning X/Grok
+  training defaults.
+- **Switzerland**: FDPIC closed its preliminary investigation 20 Mar 2025 finding the opt-out model
+  FADP-compliant.
+- **UK ICO** reportedly opened a Grok investigation 3 Feb 2026 — `reported` only; the ICO URL could not
+  be retrieved, so treat as unverified.
+
+**What changes for a user:** an EEA or UK account on **x.com** gets the same default-on training toggle
+as a US account — the Irish action deleted a 2024 dataset, it did not flip the switch. That is the
+opposite of **grok.com**, where xAI *does* ship the privacy-protective set to the same 31 countries
+(see the `dv` set above). Anyone writing guidance should not tell EEA users they are protected by
+default on X.
+
+**Verified negative on a client-side EU gate:** I searched X's live 1,390-key switch payload for any
+region/jurisdiction gate that could sit in front of this toggle (`\beu\b`, `_eu_`, `europe`, `dsa`,
+`gdpr`, `region`, `geo`, `country`, `jurisdic`, `p13n`, `personaliz`). The only hits are DSA reporting
+flows, German/Turkish media transparency, Birdwatch country allow-listing,
+`responsive_web_personalization_id_sync_enabled:false` and `xchat_enable_eu_report:false` — **nothing
+touching xAI training**. And `ondemand.SettingsRevamp...js` does contain an `isEUUser` selector
+(`settings_metadata.is_eu || is_eu_country`) but it is wired only to the **Off-X Activity / cookie-use**
+screen; the same is true of the other five chunks that reference `is_eu_country` (`bundle.Routes`,
+`bundle.Ocf`, `ondemand.SettingsInternals`, `bundle.LoggedOutHome`,
+`shared~loader.LoggedOutExtras…`), all of which use it for ads/cookie personalization propagation in
+signup flows. The only gating on the three Grok toggles is age
+(`grok_settings_age_restriction_enabled: true`, `grok_settings_restriction_age: 18` — under-age
+accounts get the switches `disabled`).
+
+---
+
+### 4. `Personalize Grok with your conversation history` (grok.com)
+
+**Resolved default: ON outside EEA/UK (`enableMemory:true`); OFF for EEA/UK and enterprise.
+Row is additionally gated on a server feature flag.**
+
+**How established — `verified`, shipped code:**
+- `grokjs2/1-jsl8v3kdkhp.js`:
+  ```js
+  s.ENABLE_MEMORY_TOGGLE && c.user && !g && SettingsToggleRow({
+     title: n("settings-data.memory-toggle.title","Personalize Grok with your conversation history"),
+     description: n("settings-data.previous-conversations.description",
+       "Allow Grok to remember details from your previous conversations. Private chats are never stored."),
+     checked: C.enableMemory, onCheckedChange: e => T({enableMemory:e}) })
+  ```
+- `26x_v88vhivnt.js`: `B.enableMemory = !0`; `M.enableMemory = !1`.
+
+Row visibility also resolved: `ENABLE_MEMORY_TOGGLE` maps to the server flag `enable_memory_toggle`
+(constant table in `26x_v88vhivnt.js`), and grok.com's inlined production payload carries
+`"enable_memory_toggle":true` — so **the row is rendered**. Companion flags in the same payload:
+`enable_memory_summary:false` (the "Memory from your chats" summary viewer is hidden),
+`enable_memory_import:true`, `enable_memory_editing:true`, `force_allow_memory_settings:false`.
+
+**Independent corroboration — `corroborated reported`, and it independently confirms the EEA/UK
+carve-out:**
+- **TechCrunch, 16 Apr 2025** — *"Grok's new memory feature is available in beta on Grok.com and the
+  Grok iOS and Android apps, **but not for users in the EU or U.K.** It can be turned off from the Data
+  Controls page in the settings menu."* https://techcrunch.com/2025/04/16/xai-adds-a-memory-feature-to-grok/
+  (same EU/UK exclusion in The Economic Times:
+  https://economictimes.indiatimes.com/tech/artificial-intelligence/grok-gets-a-memory-xai-rolls-out-recall-feature-mirroring-chatgpt/articleshow/120374371.cms )
+- **CNET, Joe Hindy, 17 Apr 2025** — *"Despite being in beta, the feature is **enabled by default**, or
+  at least it was when we tried it."*
+  https://www.cnet.com/tech/services-and-software/grok-now-remembers-what-you-talked-about-and-heres-how-to-make-it-stop/
+- DeleteMe, 29 Jun 2026 — screenshot of the row **switched on**, carrying a `beta` pill:
+  https://joindeleteme.com/wp-content/uploads/2026/06/personalizegrokwithyourconversationhistory-1024x126.png
+
+That is a clean three-way convergence: the shipped `B`/`M` objects, a tech-press report of the EU/UK
+exclusion at launch, and a hands-on report plus screenshot of the default-on state.
+
+**Confidence: high (verified) — stored default from shipped code, row visibility from the live
+production flag payload, corroborated by independent reporting including the EEA/UK carve-out.**
+
+**What changes for a user:** outside EEA/UK, Grok accumulates a persistent memory of your chats from
+the first conversation. The description's promise — "Private chats are never stored" — is the only
+built-in escape hatch, and the incognito path is itself removable by a `disable_incognito` server flag.
+
+---
+
+### 5. `Personalize Grok using 𝕏` (grok.com)
+
+**Resolved default: ON outside EEA/UK (`allowXPersonalization:true`); OFF for EEA/UK and enterprise.
+Row only appears if the Grok account is linked to an X account.**
+
+**How established — `verified`, shipped code:** `grokjs2/1-jsl8v3kdkhp.js`
+```js
+c.user?.xUserId && SettingsToggleRow({
+  title: n("settings-data.x-personalization.title","Personalize Grok using 𝕏"),
+  checked: C.allowXPersonalization, onCheckedChange: e => T({allowXPersonalization:e}) })
+```
+plus `B.allowXPersonalization = !0` / `M.allowXPersonalization = !1` in `26x_v88vhivnt.js`.
+The declared data scope (i18n `settings-data.x-personalization.permissions`) is: *"𝕏 user profile,
+𝕏 account information and location, 𝕏 settings, 𝕏 preferences, posts viewable on your 𝕏 account."*
+
+**Independent corroboration — `reported`:** DeleteMe's screenshot of the row **switched on**
+(https://joindeleteme.com/wp-content/uploads/2026/06/grokpersonalizationtoggle-1024x192.png ), and
+xAI's **own** mobile Data Controls screenshot on https://x.ai/legal/faq shows "Personalize Grok using
+X" ON alongside "Improve the Model"
+(https://media.x.ai/cdn-cgi/image/fit=scale-down,onerror=redirect,f=auto/v1/website/app-data-6d629376.webp ) —
+a first-party illustration, so `verified` for the state it depicts.
+
+**Confidence: high (verified).**
+
+**What changes for a user:** linking X to Grok outside EEA/UK silently turns on a cross-product data
+flow that includes posts from protected accounts the user can see — the row is on from the moment the
+link exists, and its visibility is conditional on the link, so an unlinked user never sees it and never
+learns it exists.
+
+---
+
+### 6. `Personalize Grok with your device location` (grok.com)
+
+**Resolved default: OFF (`enableBrowserGeoLocation:false`), in all regions — and in production the
+row is not rendered at all, because the gating flag `enable_browser_geo_location` is `false`.**
+
+**How established — `verified`, shipped code:**
+- `26x_v88vhivnt.js`, the preferences default object `P` (which both `B` and `M` embed):
+  `P = { ..., enableBrowserGeoLocation:!1, ... }`
+- `grokjs2/1-jsl8v3kdkhp.js`: `s.ENABLE_BROWSER_GEO_LOCATION && c.user && SettingsToggleRow({ ...,
+  checked: C.preferences.enableBrowserGeoLocation, onCheckedChange: e => P("enableBrowserGeoLocation",e) })`
+- The Zod schema in the same file re-asserts the default via `.catch(e.enableBrowserGeoLocation)`,
+  so a malformed stored value also falls back to `false`.
+
+- Row visibility: grok.com's inlined production flag payload carries
+  `"enable_browser_geo_location":false`, so the toggle is **absent from Data Controls** right now.
+  The sibling `enable_chat_location_request` is also `false`.
+
+**Confidence: high (verified) — stored default from shipped code, row visibility from the live
+production flag payload.**
+
+Corroboration status: **`unresolved`, and worth saying so.** I could find **no third-party
+walkthrough, screenshot, or article that covers this row at all** — searches on the exact label and
+description string return nothing, and everything written about "Grok location" concerns IP geolocation
+or OS-level permissions rather than this toggle. That is consistent with the row being flagged off for
+essentially everyone. The one adjacent official statement is xAI's privacy policy: *"We obtain your
+consent prior to collecting precise location information."* (https://x.ai/legal/privacy-policy )
+
+**What changes for a user:** nothing to fix — this one ships off and is not even exposed. Note that
+`enable_chat_location_request` is a separate per-chat prompt rather than a stored preference, and it is
+also off, so neither location path is live in the anonymous bucket.
+
+---
+
+### 7. `Allow Grok to remember your conversation history` (X side)
+
+**Resolved default: `unresolved`** (but see the row-visibility finding below, which matters more in
+practice). What blocked it: the same structure as item 3a — no client default; the value is a
+server-supplied Relay field.
+```js
+// ondemand.SettingsRevamp.3f7a1da9c7e92895a.js
+let i = featureFlagString("grok_settings_memory_visibility","hide");
+let {__id:c, allow_grok_memory:d} = useFragment(H, userPreferences);
+let g = !!d;
+return i === "hide" ? null : <Toggle checked={g} disabled={o || i==="disable"} name="allowXaiMemory" .../>
+```
+Mutation `XaiMemoryMutation`, variable `allow_grok_memory`. Help text (id `f49b39b8`): *"Allow Grok to
+remember details from your previous conversations. You can delete individual conversations to forget the
+associated details."*
+
+**But the more important finding, and it is `verified`: the row is not rendered in production.**
+The client's own fallback for `grok_settings_memory_visibility` is `"hide"` (the third argument to the
+flag read), and X's **live switch payload — inlined in the HTML of `x.com/settings/grok_settings` —
+carries `"grok_settings_memory_visibility":{"value":"hide"}`**. The three states are `hide` (row not
+rendered at all), `disable` (rendered but read-only), anything else (interactive). So today the X-side
+memory toggle **does not appear on the page**, in the anonymous/default bucket.
+
+Also verified from the same payload: `grok_settings_age_restriction_enabled: true` and
+`grok_settings_restriction_age: 18`, which is what drives the `disabled` prop on all three Grok
+toggles for under-18 accounts.
+
+**Third-party evidence on the stored default — `reported`, single source, and it conflicts with the
+production flag above.** PCMag, Jason Cohen, updated 21 Jul 2026, hands-on:
+> "I opened Settings and privacy > Privacy and safety > Grok & Third-party Collaborators and found
+> **three things enabled by default**: Allow your public data, as well as your interactions, inputs, and
+> results with Grok and xAI, to be used for training and fine-tuning. Allow X to personalize your
+> experience with Grok. **Allow Grok to remember your conversation history.** I unchecked all three."
+
+https://www.pcmag.com/explainers/x-twitter-has-hidden-setting-training-elon-musks-ai-how-to-turn-it-off
+(Yahoo Tech / regional PCMag editions carry the same article and are **not** independent corroboration.)
+
+**Reconciling the two, honestly:** PCMag saw the row in July 2026; the anonymous/default bucket today
+returns `grok_settings_memory_visibility: "hide"`. Both can be true — the switch is a per-cohort string
+value, so it was presumably not `"hide"` for that account at that time, or has since been set to `hide`
+platform-wide. I am not going to collapse this into one claim. The defensible statement is: *the row is
+flagged hidden in the bucket I can observe; where it has been visible, one outlet reports it shipped ON.*
+
+X's help centre is silent on it: `help.x.com/en/using-x/grok-memory` exists in Wayback only as a single
+403 capture (`20260804095212`) and currently returns 404, and no "remember"/"memory" string appears
+anywhere in the Sept 2026 "About Grok" page. `verified` negative.
+
+Weak contrary signal, flagged not relied on: a July 2026 tutorial video is framed as *enabling* the
+setting — "How To Allow Grok To Remember Your Conversation History On X.Com / Twitter", with a
+"1:07 Turn On Conversation History Memory" chapter and a description saying it shows you where to
+*"turn it on"* (https://www.youtube.com/watch?v=nwg47Ns-GGE , 10 Jul 2026). Low-quality channel; the
+account may simply have had it off. It is the only thing pointing the other way.
+
+Do not conflate this with grok.com's memory toggle (item 4). CNET's *"enabled by default"* finding and
+TechCrunch's EU/UK exclusion both concern the **xAI-side** control, not this X-side one.
+
+**Confidence: high (verified) that the row is hidden in the observable production bucket and on the
+field name; the stored value's default is `reported` on one outlet's hands-on, and therefore
+`unresolved` as a firm default.**
+
+**What changes for a user:** there is currently **no X-side control over Grok conversation memory** —
+the toggle is flagged off, so a user cannot see or change it, and whatever the server has stored stands.
+Practically this means "I checked my X Grok settings and memory wasn't listed" is the expected
+experience, not evidence that memory is off. The only reachable memory control is the grok.com one
+(item 4).
+
+---
+
+### 8. `Allow X to personalize your experience with Grok` (X side)
+
+**Resolved default: `unresolved`.** Same blocker: server-supplied Relay field, no client default.
+```js
+let {__id:p, allow_xai_personalization:g} = useFragment(Z, userPreferences);
+let h = !!g;
+return <Toggle checked={h} disabled={d} name="allowXaiPersonalizationCustomization"
+        learnMoreLink="https://help.x.com/using-x/about-grok" .../>
+```
+Mutation `XaiPersonalizationSettingsMutation`, variable `allow_xai_personalization`. Help text
+(id `ed141096`) names the flow explicitly: *"X may share with xAI your X data as well as your user
+interactions, inputs and results with Grok to personalize your experience with Grok and other AI
+models developed by xAI."*
+
+Row is unconditional apart from the age gate (no `*_visibility` flag, unlike item 7).
+
+**Official framing — `verified`:** X documents this control *only* as an opt-out, which is the same
+signature as item 3. `help.x.com/en/using-x/about-grok`, archived
+https://web.archive.org/web/20260902121507/https://help.x.com/en/using-x/about-grok :
+> "**How do I opt-out of Grok personalization?** You have the flexibility to control how your data …
+> are used to personalize your Grok experience. Below you can see how you can opt-out by managing your
+> privacy setting at X. … You will see 'Grok Personalization' → Select or de-select the option **'Allow
+> X to personalize your experience with Grok.'**"
+
+**Ship date — `verified`:** between 23 and 30 January 2025 (absent
+https://web.archive.org/web/20250123122941/https://help.x.com/en/using-x/about-grok , present
+https://web.archive.org/web/20250130172040/https://help.x.com/en/using-x/about-grok ).
+
+**Third-party evidence on the default — `reported`, single source:** PCMag's 21 Jul 2026 hands-on (quoted
+in full under item 7) lists this as one of *"three things enabled by default."*
+https://www.pcmag.com/explainers/x-twitter-has-hidden-setting-training-elon-musks-ai-how-to-turn-it-off
+No second independent outlet enumerates the shipped positions of all three X-side toggles, so this does
+not reach `corroborated reported`.
+
+**Confidence: high (verified) on click path, field name, ship date and the official opt-out framing;
+the default is `reported` (one outlet) and therefore not firmed up to `verified`.**
+
+**What changes for a user:** this is the X→xAI personalization pipe, distinct from the training pipe in
+item 3, and it sits on the same screen — turning off training does not turn this off.
+
+---
+
+### 9. `Watermark Imagine generations` (grok.com)
+
+**Resolved — but the honest answer is not "default off", and reporting it that way would be wrong.**
+
+Three facts, each separately `verified`, which together mean the toggle does not do what its name
+suggests to a reader of the defaults table:
+
+1. **The stored preference defaults to `false`.** `26x_v88vhivnt.js`, preferences object `P`:
+   `watermarkImagineGenerations:!1`, with the Zod schema's `.catch(e.watermarkImagineGenerations)`
+   re-asserting it. `P` is embedded in both `B` and `M`, so this is region-independent.
+2. **The row is hidden unless a remote Imagine config turns it on, and that config's client fallback is
+   `false`.** `grokjs2/1-jsl8v3kdkhp.js`:
+   `!!s.IMAGINE_CONFIGS.get("enable_watermark_setting", !1) && c.user && !g && SettingsToggleRow({...})`
+   — the second argument is the fallback. Checked against production: `enable_watermark_setting` is
+   **absent** from the 727-key flag payload grok.com inlines for an unauthenticated request (searched
+   the unescaped payload for `watermark` — no key in any form), so `IMAGINE_CONFIGS.get(..., !1)`
+   returns `false` and the row does not render. It may be delivered only inside an authenticated
+   session or only to Imagine-eligible tiers.
+3. **xAI's own documentation says Imagine output is watermarked regardless, with no way to turn it
+   off.** `https://docs.x.ai/grok/faq`, section *"Why do my generated images/videos have a 'grok'
+   watermark? Can I remove it?"*, verbatim:
+
+   > "Generated images and videos include a Grok watermark to indicate that the content was created
+   > with AI. **There is no setting to remove the watermark.** In some jurisdictions, labeling
+   > AI-generated content is also legally required. Removing, altering, or obscuring the watermark or
+   > other provenance signals is prohibited under our Acceptable Use Policy."
+
+   Corroborated by a third party stating the same: metagrok.io — *"There is no setting to remove it."*
+   (https://metagrok.io/how-to/own-grok-outputs-and-commercial-use) — `reported`.
+
+**I cannot reconcile 1–2 with 3, and I am not going to paper over it.** The two readings that fit are
+(a) the toggle adds an *additional or more prominent* visible watermark on top of a baseline mark that
+is always applied, or (b) it is a gated experiment for a cohort where the baseline mark is absent.
+Which one is true is **`unresolved`** — no third-party source documents this toggle at all, and every
+"remove Grok watermark" article is about third-party scrubbing tools rather than this setting.
+
+**The defensible line for the audit file, and the one I recommend:** *a visible Grok watermark is
+applied to Imagine output by default and xAI's docs say there is no setting to remove it; separately, a
+"Watermark Imagine generations" preference exists in the client, defaults to `false`, and its row is
+hidden from accounts that do not receive the `enable_watermark_setting` config.* Do **not** write
+"watermarking is off by default."
+
+**Confidence: high (verified) on all three underlying facts; `unresolved` on what the toggle actually
+changes and on row visibility for authenticated Imagine users.**
+
+**What changes for a user:** nothing they can act on — the control is hidden from most accounts, and
+per xAI's docs the watermark is not removable anyway. The audit value here is the contradiction itself:
+a shipped preference whose name implies watermarking is opt-in, against documentation saying it is
+mandatory.
+
+---
+
+### 10. `Block modifications by Grok` (X, per-post) — click path and default
+
+**Click path resolved — `verified`.** It is **not** in the composer's main menu, not in the post "…"
+menu, and not an account-level setting. It lives in the **composer's per-attachment media settings
+dialog** — the same modal that holds alt text, crop, and the sensitive-media/content-warning controls.
+Analytics section is `sensitive_media`.
+
+Code, from `shared~bundle.ComposeMedia~bundle.TwitterArticles.76a18f777fc2197ca.js`:
+```js
+ec = m().b7e6d23a;   // "Block modifications by Grok"
+eh = m().e98a8136;   // "Prevent Grok from modifying this content"
+...
+A = ("boolean" == typeof n /*isGrokEditBlocked*/) && !!u /*toggleIsGrokEditBlocked*/;
+...
+A ? <View role="group">
+      <Checkbox checked={n} helpText={eh} label={ec} name="blockGrokEdit"
+                onChange={b} type="switch" />
+    </View> : null
+```
+Rendered in the same column as, and immediately after, the `aiGenerated` checkbox ("Generated with AI")
+and before the `download` switch ("Allow video to be downloaded"). It only renders when the host passes
+a boolean plus a handler, and the host gates that on a feature switch:
+```js
+let h = featureSwitches.isTrue("responsive_web_grok_media_block_edit_enabled");
+if (isVideo) return <VideoMediaEditor {...e} blockGrokEditEnabled={h} … />
+return <ImageMediaEditor {...e} blockGrokEditEnabled={h} … />
+```
+**That switch is `true` in production** (`"responsive_web_grok_media_block_edit_enabled":{"value":true}`
+in the inlined payload on `x.com/settings/grok_settings`), so the row is live. The exact tab is
+`MediaTab.SensitiveMedia`, rendered by `_renderSensitiveMediaTab()` — i.e. the dialog's
+**Sensitive media** tab, alongside Alt text, Crop, and (for video) Subtitles/Trimmer.
+
+**Resolved default: OFF — Grok modification is permitted unless the author opts in to blocking.
+Proven twice, once in each of the two editor classes.**
+
+Image path:
+```js
+_renderSensitiveMediaTab = () => { let {blockGrokEditEnabled:e} = this.props; …
+  let s = e ? { isGrokEditBlocked: i[t]?.grokActions?.blockGrokEdit ?? !1,
+                toggleIsGrokEditBlocked: this._handleToggleGrokEditBlocked } : null; … }
+_handleToggleGrokEditBlocked = () => {
+  let e = this.state.mediaMetadata[this.state.currentMediaId]?.grokActions?.blockGrokEdit ?? !1;
+  this._updateCurrentMediaMetadata({ grokActions: { blockGrokEdit: !e } }); }
+```
+Video path — the constructor hard-codes it, and note the contrast with the download switch right next
+to it, which *does* get a server-supplied default:
+```js
+this.state = { isAiGenerated: a?.selfReportedAiGenerated?.selfReportedAiGenerated ?? !1,
+               isGrokEditBlocked: !1,                              // hard-coded off
+               isAllowedDownloadVideo: e.allowDownloadVideoDefault, // server-supplied default
+               … }
+```
+On publish the value is serialised to the media-metadata API as
+`grok_actions: { block_grok_edit: "true" | "false" }`
+(`bundle.ComposeMedia.9391d55f0d8e994aa.js`), and is only sent at all if the author touched one of the
+media-metadata controls. The viewer-facing counterpart string exists too: *"Images from this post are
+not editable by Grok"* (id `f6385f9c`).
+
+**Mitigating context from the same production switch payload, worth recording so the audit does not
+overstate the exposure:** X's in-app "edit this image with Grok" entry points are currently *off* —
+`responsive_web_grok_tweet_actions_edit_image_enabled: false`,
+`responsive_web_grok_tweet_media_edit_image_button_enabled: false`,
+`responsive_web_grok_tweet_media_detail_edit_image_button_enabled: false` — while
+`responsive_web_grok_link_edit_image_to_grok_com_enabled: true` routes the flow out to grok.com
+instead, and `responsive_web_grok_edit_image_attribution_mode` is `"free"`. So the block-switch guards
+a capability whose on-X buttons are presently disabled; the grok.com route is where it matters.
+
+**Confidence: high (verified).**
+
+**What changes for a user:** every image and video a user posts is Grok-editable by default, and the
+only opt-out is a switch buried one level deep in the composer's media dialog, per attachment, before
+posting. There is no account-level "never" and no retroactive control in the shipped client.
+
+**Independent corroboration — `corroborated reported`, and it converges with the bundle exactly.**
+X never announced this feature and it is absent from help.x.com, but three outlets found it in the same
+place the code puts it, and all describe it as per-image and opt-in:
+- **Social Media Today**, Andrew Hutchinson, 8 Mar 2026 — first sighting: *"a simple toggle that enables
+  users to stop Grok from reimagining their material"*, located in *"the image/video upload flow in the
+  post composer"*, with X having *"not promoted the new option as yet."*
+  https://www.socialmediatoday.com/news/x-formerly-twitter-adds-option-to-restrict-grok-image-variations/814140/
+- **The Verge**, Jess Weatherbed, 9 Mar 2026 — verified independently, and gives the exact gesture
+  path: *"When you upload an image into the X post builder, you can locate it by tapping on the
+  **paintbrush symbol** that appears on the bottom right of the thumbnail, and then selecting the
+  **flag icon** at the bottom right of the editing taskbar."* Quotes the strings verbatim: *"block
+  modifications by Grok"* and *"prevent @Grok from modifying this content."* Also: *"The toggle also
+  doesn't appear on older content that's already been uploaded to X."*
+  https://www.theverge.com/tech/891352/x-grok-xai-edit-blocker-photo-toggle
+- **PCMag**, Jibin Joseph, 10 Mar 2026 — *"Tap the edit button, then select the **flag icon** to adjust
+  the image's **content settings**. On this page, you'll see a button to 'Block modifications by Grok.'"*
+  and *"X has not made an official announcement about its new button."*
+  https://www.pcmag.com/news/x-adds-button-to-block-grok-from-editing-images-but-its-hard-to-find
+- SquaredTech, 9 Mar 2026 — same flag-icon path, iOS-exclusive at the time.
+  https://www.squaredtech.co/x-grok-edit-blocker-fails
+
+That "flag icon → content settings" is precisely `MediaTab.SensitiveMedia` in the bundle, which is the
+independent confirmation of the click path. **Ship date: 8 March 2026** (first sighting), never
+officially announced.
+
+**Default OFF, corroborated:** PCMag's July 2026 explainer states it plainly — *"the option is fairly
+well hidden and **must be implemented on a case-by-case basis**. To block Grok from being able to edit
+your photos, you need to **customize permissions before you post the image to X. You can't do it after
+the fact.**"*
+https://www.pcmag.com/explainers/x-twitter-has-hidden-setting-training-elon-musks-ai-how-to-turn-it-off
+
+**Efficacy limits, from The Verge's hands-on — worth recording, because the toggle is weaker than its
+label:** it blocks only the reply-tag vector. Bypasses that still worked at the time: long-pressing a
+protected image on X iOS to open "Edit image with Grok" straight into the Grok app; saving the protected
+image, re-uploading it and then tagging Grok (which strips the protection); and pulling the image into
+the Grok app directly. Free accounts were already blocked from @Grok image edits after the January 2026
+backlash, so the toggle's marginal effect falls mainly on Premium subscribers.
+
+**Platform matrix — `unresolved`, and the sources contradict each other.** The Verge (Mar 2026): iOS
+only, *"The Grok blocker didn't appear at any point during the X image upload process on the web in our
+testing."* PCMag's July 2026 explainer: *"I was also only able to do this on the web; the option is
+available on iOS, but not Android yet."* The most consistent reading is that it expanded from iOS-only
+in March to iOS + web by July, with Android still missing — but I cannot verify the current matrix.
+(My own evidence is web-only: the component and the enabling switch are both in X's web bundle today.)
+
+**Regulatory backdrop, `verified`:** this shipped during the Grok sexualised-image crisis that produced
+the European Commission's DSA proceedings of 26 Jan 2026 and the Irish DPC's 17 Feb 2026 inquiry citing
+GDPR Arts. 5, 6, **25 (by design and by default)** and 35 — see item 3b for both citations. A
+per-image, opt-in, post-hoc-unavailable control is exactly the kind of design an Art. 25 analysis would
+scrutinise.
+
+**Flagged for the audit — a live inconsistency across X's two web stacks.** X is mid-migration to a new
+front end (`abs.twimg.com/x-web/x-web/`). Its English table contains the **inverted** label
+**"Allow modifications by Grok"**, with no consuming component yet in the shipped x-web chunks (grepped
+all 2,078 downloaded x-web assets — the literal appears only in `assets/en-DHR7HtaA.js`). If that
+polarity ships as written, the same underlying field will be presented as an allow-switch rather than a
+block-switch, and a default-off allow-switch means the opposite of a default-off block-switch. This is
+worth a watch-item rather than a finding.
+
+---
+
+### 11. Team / org plane defaults
+
+Panel: grok.com → Settings → (team context) **"Organization Sharing & Retention"**, rendered by
+`grokjs2/3gfgjmgykxhkq.js`, backed by `teamSettingsQueryOptions({teamId})` /
+`updateTeamSettingsMutationOptions`.
+
+#### 11a. `Product sharing` — "Set the widest audience members can share each resource with."
+
+**Resolved scope ceiling — `verified`:** the ceiling differs by resource type.
+```js
+eA = [SharingScope.ORGANIZATION, SharingScope.TEAM, SharingScope.NONE];       // projects, skills
+eI = [SharingScope.PUBLIC, ...eA];                                            // conversations only
+rows = [ {conversationsScope, options: eN(eI, org.conversations)},
+         {projectsScope,      options: eN(eA, org.projects)},
+         {skillsScope,        options: eN(eA, org.skills)} ]
+```
+So **Conversations** can be raised to `Public`; **Projects** and **Skills** top out at `Organization` —
+there is no public option for them at all. The enum is the protobuf `SharingScope`
+(`SHARING_SCOPE_UNSPECIFIED, _NONE, _TEAM, _ORGANIZATION, _PUBLIC` = 0..4, confirmed in
+`grokjs/0uf56-pwxogcp.js` and `grokjs/1tx97cquvu2z2.js`), and an org-level policy caps each team via
+`eN` (filter `<= ceiling`) and `eC` (`min`), surfaced in the UI as *"Limited by organization policy."*
+
+**Resolved default scope — `verified` from an official xAI source.** `https://docs.x.ai/grok/management`
+(reachable as markdown at `https://docs.x.ai/grok/management.md`; `docs.x.ai` is **not** Cloudflare-
+blocked, unlike `x.ai/*`) states verbatim:
+
+> "Public links apply to conversations only; projects and skills cap at Organization. **By default,
+> conversations and projects can be shared organization-wide, and skills start at Private.**"
+
+So the shipped ceilings are **Conversations = Organization, Projects = Organization, Skills = Private**.
+The same page gives the ladder and the semantics: *"A sharing policy sets the widest audience a member
+may pick for a given resource; members can always share more narrowly, never more broadly"*, and
+*"Tightening a policy applies right away. Members can no longer create shares wider than the new
+ceiling, and access to existing shares beyond it is restricted to match."*
+
+Note the divergence from the client's own fallback, which is worth recording because it shows the
+client cannot be used alone here:
+```js
+conversationsScope = (server.sharing?.conversations && != UNSPECIFIED) ? that
+                   : server.publicSettings?.allowPublicShare ? PUBLIC : NONE
+projectsScope = eM(server.sharing?.projects)   // UNSPECIFIED/absent -> NONE
+skillsScope   = eM(server.sharing?.skills)     // UNSPECIFIED/absent -> NONE
+```
+With nothing stored the client would draw all three as `None`; the server in fact supplies
+Organization/Organization/Private. Also flag the legacy bridge in that code: a team with the old
+`publicSettings.allowPublicShare` boolean set is promoted straight to ceiling-**`Public`** for
+conversations under the new scope model, without anyone re-consenting.
+
+**Confidence: high (verified — official xAI documentation for the defaults and the ceilings; shipped
+code for the enum, the per-resource option lists, the org-policy `min()` cap and the legacy bridge).**
+
+#### 11b. `Conversation retention` — "Set how long deleted or stale conversations are retained before being permanently removed."
+
+**Resolved default: `Retain indefinitely` is NOT the client's shipped state. The client's fallback is
+`Custom period` at 15 days.**
+```js
+// 00wwe6evlg5_z.js
+MIN_RETENTION_DAYS = 15
+clampRetentionDays = e => (!Number.isFinite(e) || e <= 0) ? 15 : Math.max(15, Math.min(1825, e))
+retentionModeFromSettings = e => e ? "indefinite" : "custom"     // e = conversationsRetentionPeriodDisabled
+
+// 3gfgjmgykxhkq.js
+retentionDays     = server.conversationsRetentionPeriodDays       ?? MIN_RETENTION_DAYS   // 15
+retentionDisabled = server.conversationsRetentionPeriodDisabled   ?? !1                  // false
+mode              = retentionModeFromSettings(retentionDisabled)                          // "custom"
+```
+Range is 15–1825 days (max 5 years). The dropdown offers exactly two options, `Retain indefinitely`
+and `Custom period`.
+
+**Confidence: high (verified) for the client fallback. The authoritative server-side default for a
+newly provisioned team is `unresolved`** — the `??` only fires when the API omits the field, and I
+cannot observe an unauthenticated team-settings response. I am deliberately not calling this
+"default = 15 days" for the product.
+
+Checked against the official docs and the retention default is **not** documented: the
+`https://docs.x.ai/grok/management` "Sharing policy" section documents Product Sharing in detail but
+says nothing about Conversation retention, and `docs.x.ai/grok/faq` only offers *"Deleted chats and
+files are removed from systems within standard retention windows unless we are required to retain them
+longer for legal, compliance, or safety purposes."* Greps over all of `docs.x.ai` (185 pages, full
+sitemap) for `conversation retention`, `retention period`, `indefinit`, `15 day`, `1825`, `5 year`
+returned nothing. The 30-day figures in the xAI docs are the **API** audit-retention window
+(`docs.x.ai/developers/faq/security`: *"all API requests and responses are stored on our servers
+(encrypted at rest) for 30 days for auditing purposes… automatically deleted after 30 days"*), which is
+a different control — do not conflate it with team conversation retention.
+
+**What changes for a user:** an org admin reading the panel sees "Custom period / 15 days" on a team
+that has never been configured, which reads as a retention *limit* rather than retain-forever — the
+opposite of the hypothesis in the brief. Treat the shipped server value as unknown until an
+authenticated team can be observed.
+
+---
+
+### 12. Connector OAuth scopes
+
+**Resolved: YES — the full scope inventory is now sourced, from xAI's own documentation.**
+
+**How established — `verified`, official xAI source.** `x.ai/*` and `help.x.com/*` 403, but
+**`docs.x.ai` does not** (it 308-redirects `/docs/*` to `/*` and serves 200). Every page is available
+as markdown by appending `.md`, and `docs.x.ai/sitemap.xml` lists all 185 pages. The connector docs
+publish per-connector OAuth scope tables. URLs: `https://docs.x.ai/grok/connectors`,
+`.../connectors/gmail-google-calendar`, `.../connectors/google-drive`, `.../connectors/onedrive`,
+`.../connectors/outlook`, `.../connectors/microsoft-teams`, `.../connectors/sharepoint`,
+`.../connectors/salesforce`, `https://docs.x.ai/grok/connector-management`.
+
+#### Google — Gmail (tiered; `docs.x.ai/grok/connectors/gmail-google-calendar`)
+| Scope | Purpose | When requested |
+|---|---|---|
+| `gmail.readonly` | Search and read emails | Always (base) |
+| `gmail.modify` | Drafts, trash, label changes | When write tools are enabled |
+| `gmail.send` | Send messages, reply, forward | When send tools are enabled |
+| `gmail.labels` | Create and delete labels | When label-management tools are enabled |
+| `userinfo.email` | Identify your Google account | Always |
+
+xAI's note: *"gmail.modify is a superset of gmail.readonly. When write tools are enabled, only the
+modify scope is requested to avoid duplicate permission prompts."* Read that carefully — once write is
+enabled the user sees **one** prompt, for the broader scope, not two.
+
+#### Google — Calendar (tiered; same page)
+| Scope | Purpose | When requested |
+|---|---|---|
+| `calendar.readonly` | Search and read calendar events | Always (base) |
+| `calendar.events` | Create, update, and delete events | When write tools are enabled |
+| `calendar.freebusy` | Check availability / free-busy | When availability tool is enabled |
+| `calendar.calendarlist.readonly` | List accessible calendars | When calendar-list tool is enabled |
+| `userinfo.email` | Identify your Google account | Always |
+
+#### Google Drive (`docs.x.ai/grok/connectors/google-drive`)
+| Scope | Purpose |
+|---|---|
+| `drive.metadata.readonly` | View metadata for files in your Drive (titles, dates, folder structure) |
+| `drive.readonly` | Read the content of files in your Drive |
+| `drive` | Create and modify files in your Drive (write operations, optional) |
+| `userinfo.email` | Identify your Google account |
+
+`drive` is the **full-Drive** Google scope, i.e. the broadest one Google offers for Drive. xAI labels it
+"(write operations, optional)", so the audit line should be: enabling Drive writes grants Grok
+unrestricted read/write over the whole Drive, not a per-file picker grant.
+
+#### Microsoft OneDrive (`docs.x.ai/grok/connectors/onedrive`) — Graph, delegated
+| Scope | Purpose |
+|---|---|
+| `Files.ReadWrite` | Read and write files in the user's OneDrive |
+| `User.Read` | Read the signed-in user's profile (used to identify the account) |
+| `offline_access` | Maintain access without repeated sign-in prompts |
+
+Note there is no read-only tier here: the base connection is already `Files.ReadWrite`.
+
+#### Microsoft Outlook Mail (`docs.x.ai/grok/connectors/outlook`) — Graph, delegated
+| Scope | Purpose |
+|---|---|
+| `Mail.ReadWrite` | Read, create, update, and delete mail and drafts |
+| `Mail.Send` | Send mail on behalf of the user |
+| `User.Read` | Read the signed-in user's profile |
+| `offline_access` | Maintain access without repeated sign-in prompts |
+
+Again no read-only tier — unlike Gmail, Outlook is connected with send-on-your-behalf from the start.
+
+#### Microsoft Outlook Calendar (same page) — Graph, delegated
+| Scope | Purpose |
+|---|---|
+| `Calendars.ReadWrite` | Read, create, update, and delete calendar events |
+| `User.Read` | Read the signed-in user's profile |
+| `offline_access` | Maintain access without repeated sign-in prompts |
+
+#### Microsoft Teams (`docs.x.ai/grok/connectors/microsoft-teams`) — Graph, delegated
+| Scope | Purpose |
+|---|---|
+| `Team.ReadBasic.All` | List the teams the user belongs to |
+| `Channel.ReadBasic.All` | List channels within those teams |
+| `ChannelMessage.Read.All` | Read messages in channels the user has access to |
+| `ChannelMessage.Send` | Send messages and replies in channels |
+| `ChannelMember.Read.All` | View channel membership |
+| `TeamMember.Read.All` | View team membership |
+| `Chat.Read` | Read one-on-one and group chat messages |
+| `Chat.Create` | Create new one-on-one and group chats |
+| `ChatMessage.Send` | Send messages in chats |
+| `User.Read` | Read the signed-in user's profile |
+| `offline_access` | Maintain access without repeated sign-in prompts |
+
+Eleven scopes including DM read (`Chat.Read`) and send-as-you in both channels and DMs, all granted in
+one step. This is the widest consumer-reachable grant in the set.
+
+#### Microsoft SharePoint (`docs.x.ai/grok/connectors/sharepoint`)
+Per-user sign-in scopes:
+| Scope | Purpose |
+|---|---|
+| `Sites.Read.All` | Read items in all SharePoint site collections the user can access |
+| `Files.Read.All` | Read all files the user can access (required for cross-site document search) |
+| `User.Read` | Read the signed-in user's profile |
+| `offline_access` | Maintain access without repeated sign-in prompts |
+
+xAI's caveat, verbatim: *"When write capabilities are enabled for your organization, the connector
+requests **Files.ReadWrite.All** instead of the read-only scopes above."* Separately, write access
+*"uses a separate Microsoft Entra application with its own permissions… This grants the
+`Files.ReadWrite.All` scope and is independent of the read-only consent from step 3."*
+
+Plus a **background indexing sync with its own, separate scope set** — this is the part most likely to
+be missed in an audit, because it is not the same grant the user approves at sign-in:
+- Delegated mode: `Sites.Read.All` (*"Enumerate and read items from every site the account can
+  access"*), `Files.Read.All` (*"Download file content for indexing across those sites"*),
+  `offline_access`.
+- Application mode: `Sites.Selected` (*"Read items only in the sites explicitly granted to the
+  application… The sync cannot discover or index any site that has not been selected."*)
+
+The two auth modes, with xAI's own framing:
+- **Delegated permissions** *(xAI marks this "recommended")* — `Sites.Read.All`. xAI's mitigation advice
+  is organisational, not technical: *"The recommended approach is to create a dedicated user account
+  with access limited to specific SharePoint sites, then connect using that account."* Client copy
+  (i18n `mcp-connectors.sharepoint.auth-mode.all-sites.*`): *"Grok reads all sites visible to the
+  connecting admin"*, *"Quick setup with no additional configuration needed."*
+- **Application-level permissions** — `Sites.Selected`. Client copy: *"Least-privilege access with no
+  broad permissions"*, *"Requires an admin to configure allowed sites in Azure."*
+
+Mitigation xAI states, and it should be quoted alongside the warning: *"Indexed content is
+access-checked against the querying user on every request, so regardless of which sync mode is in use,
+team members still only see results they are individually authorized to view in SharePoint."*
+
+Audit line: xAI marks the **tenant-wide read** option as Recommended and the least-privilege option as
+the one that "requires an admin to configure." SharePoint is also the one connector where the broad
+option is reachable by clicking Continue on the default-selected choice — and it is the only connector
+whose own documentation confirms xAI **stores** an index of the content, rather than reading in real
+time.
+
+#### Salesforce (`docs.x.ai/grok/connectors/salesforce`)
+| Scope | Purpose | When requested |
+|---|---|---|
+| `mcp_api` | Access the Salesforce REST and SOAP APIs to read and write data | Always |
+| `refresh_token` | Maintain access and refresh tokens between sessions | Always |
+
+xAI: *"All actions are further restricted by your Salesforce profile, role, sharing rules, and
+field-level security."* This connector is admin-provisioned (client ID/secret entered in the xAI
+console) and runs via the Salesforce DX MCP server.
+
+#### Mechanism and defaults, `verified` from shipped code
+`grokjs/0kcqgmleanlog.js` plus the dialog in `grokjs2/1bondwvl6xnnr.js`
+(`mcp-connectors.scope-consent.*`, *"Grant Permissions / Choose what Grok can do on your behalf"*):
+```js
+mayRequireScopeConsent = e => eM.has(e)
+eM = new Set([ConnectorType.SHAREPOINT, SHAREPOINT_RW, SHAREPOINT_ADMINLESS, ONE_DRIVE,
+              OUTLOOK, OUTLOOK_CALENDAR, MICROSOFT_TEAMS, POWER_BI])
+
+seedScopeGroupSelection = (groups, priorSelectedIds) =>
+   new Set([ ...groups.filter(g => g.required).map(g => g.id),
+             ...(priorSelectedIds ?? []).filter(id => known(id)) ])   // then prune unmet dependencies
+expandScopeGroupSelection = (groups, picked) => /* required + picked + transitive dependsOn */
+```
+The scope groups themselves come from `POST /api/connectors/list-connector-scope-groups`, and the
+client's Zod schema for the response names every field (`grokjs/2c4yk92w1hb5e.js`):
+```js
+{ groups: [{ id, label, description, scopes: string[], required: boolean, dependsOn: string[] }],
+  consentMessage, consentVersion, priorSelectedGroupIds }
+```
+— so the per-group scope strings are served to the client at runtime, just not baked into the bundle.
+Four verified consequences:
+1. The granular, user-visible scope-consent step exists **only for the Microsoft family** (plus Power
+   BI). Google, Slack, Notion and the catalog connectors go straight to the provider's own OAuth screen
+   with the server-chosen scope set.
+2. **It is switched off in production right now.** The whole feature is gated on
+   `grok_web_connector_scope_consent_enabled` (`function l(){ return !0 ===
+   useFeatureStore.getState().getFeature("grok_web_connector_scope_consent_enabled") }`), and grok.com's
+   inlined production payload carries `"grok_web_connector_scope_consent_enabled":false`. So today
+   **every** connector, Microsoft included, goes straight to the provider consent screen with the
+   server-chosen scope set — there is no xAI-side permission picker in front of it.
+3. When it is on, **optional scope groups default to unselected** — the seed is required-groups-only
+   plus anything the user previously picked. Non-required permissions are opt-in, not opt-out. Credit
+   where due, but note it is latent, not live.
+4. Groups carry `required` and `dependsOn`; picking a dependent group transitively pulls in its
+   prerequisites on confirm, so the confirmed grant can exceed what the user visibly ticked.
+
+The previous pass's grep conclusion is confirmed, with the greps named: across all **1,969** grok.com
+chunks (`grokjs/` 84 + `grokjs2/` 1,885) I searched for `googleapis.com/auth/`,
+`https://www.googleapis.com`, `drive.readonly`, `gmail.readonly`, `calendar.readonly`,
+`offline_access`, `channels:history`, `Files.Read`, `Mail.Read`, `Calendars.Read`, `User.Read`,
+`openid email profile` — **zero hits for all twelve**. The only literal provider scope strings in the
+client are `Sites.Read.All` and `Sites.Selected`, as UI copy in the en i18n table
+(`grokjs/376vlecp-jky0.js`). Scopes are minted server-side at `/rest/auth/create-oauth-connector` and
+`getAuthUrl`. So the docs, not the bundle, are the source of record — which is why this item needed the
+`docs.x.ai` route.
+
+#### Supporting consent / retention copy, `verified`
+From the official docs (per connector page, "Privacy and security"):
+- Gmail / Google Calendar / Google Drive: *"**We do not train on your data.** SpaceXAI does not use
+  your Gmail or Google Calendar data for model training."* and *"**Nothing is stored.** …Grok accesses
+  your data in real time when you ask a question, and does not retain it afterward."*
+- Outlook / OneDrive / Teams: *"These are delegated permissions. Grok can only access the mailbox of
+  the signed-in user"* (resp. own OneDrive; resp. teams/channels/chats already joined).
+From the shipped i18n table (`grokjs/376vlecp-jky0.js`):
+- `syncing-connector.consent.no-training-*`: *"We never train on your data"* / *"xAI does not train on
+  your {{name}} data."*
+- Real-time, non-ingesting claims exist for **Gmail, Google Calendar, Outlook, Outlook Calendar and
+  Power BI** only. **Google Drive, OneDrive, SharePoint, Slack and Notion carry no such claim**, and
+  Drive has a separate `google-drive-sync` connector described as *"track and sync your Google Drive
+  files"* — i.e. ingesting. SharePoint's doc confirms an indexing sync outright.
+- `mcp-connectors.third-party-warning`: *"Third-party connectors are not built or maintained by xAI.
+  Use caution when granting access to external services. Review the permissions before connecting."*
+
+#### Three structural corrections to the brief's framing of this item
+1. **The built-in set is seven connectors, and Slack is not one of them.** `docs.x.ai/grok/connectors`
+   lists exactly: Gmail & Google Calendar, Google Drive, OneDrive, Outlook Mail & Calendar, Microsoft
+   Teams, SharePoint, Salesforce. `verified`. Slack and Notion i18n strings *do* ship in the client
+   (`syncing-connector.slack.*`, `syncing-connector.notion.*` in `grokjs/376vlecp-jky0.js`) — I read
+   them there — but they are not in the official built-in table, which places them in the **connector
+   catalog** instead. One third-party catalog maintainer goes further and says Slack is not available
+   at all: *"Slack failed the two-surface test (absent from the picker and from the docs table) and is
+   removed"* (`reported`, https://github.com/rdmgator12/awesome-grok-connectors ). Net: treat Slack as
+   catalog-or-absent, not as a built-in with unresolved scopes.
+2. **Catalog connectors cannot have xAI-defined scopes, by construction.** xAI classifies GitHub,
+   Notion, Linear, Box, Canva, Vercel, Stripe, Figma and the rest as third-party-hosted MCP servers
+   that xAI surfaces but does not build or maintain (`docs.x.ai/grok/connectors`, plus the
+   `third-party-warning` string above). Their OAuth scopes are defined by each provider's own MCP
+   endpoint — e.g. GitHub via `api.githubcopilot.com/mcp/x/all`, Notion via `mcp.notion.com/mcp`
+   (`reported`, same catalog repo). So "the remaining scopes" is not one unresolved list but N
+   provider-side lists. Adjust the audit's framing accordingly.
+3. **There is a Google Workspace Marketplace listing, but it is a different product.** It is the
+   Docs/Sheets/Slides add-on, not the grok.com Drive/Gmail connector OAuth client. Its declared
+   permissions, verbatim from https://workspace.google.com/marketplace/app/grok/660927092109
+   (`verified`): *"See, edit, create, and delete all your Google Docs documents · See, edit, create,
+   and delete only the specific Google Drive files you use with this app · View and manage spreadsheets
+   that this application has been installed in · See, edit, create, and delete all your Google Slides
+   presentations · Display and run third-party web content in prompts and sidebars inside Google
+   applications · Connect to an external service · See your primary Google Account email address · See
+   your personal info, including any personal info you've made publicly available."* The raw
+   `googleapis.com/auth/...` URIs behind those phrases are **`unresolved`** — I will not guess the
+   mapping, and no Google admin-console app-access-control export for xAI's client was obtainable.
+   **Do not file these under the grok.com connector scopes**; they are a separate grant surface.
+
+#### Microsoft Entra enterprise app
+`verified` that one exists and may require tenant admin consent — xAI's docs instruct: *"contact your
+IT administrator and ask them to grant consent for the xAI Grok application in the Azure AD admin
+portal under Enterprise applications."* The app's **client ID / object ID is `unresolved`** — no public
+Entra gallery listing or admin-portal screenshot surfaced. SharePoint write access uses a **separate
+Entra app registration** with its own consent, per the SharePoint doc quoted above.
+
+**Confidence: high (verified) for every scope table above, for the Microsoft-only scope-consent gate,
+for the optional-groups-default-off behaviour in code, and for that dialog being flagged off in
+production.** Still `unresolved`: Slack, Notion, GitHub and the rest of the "connector catalog" have no
+per-connector doc page and therefore no published scope list — blocked by the catalog being enumerated
+only inside an authenticated `grok.com/connectors` session. A follow-up that would close it without
+credentials is unavailable to me here: the per-group `scopes[]` array is returned by
+`POST /api/connectors/list-connector-scope-groups`, which needs a session.
+
+**What changes for a user:** connecting Outlook, OneDrive or Teams hands Grok write/send authority in a
+single click with no read-only option; enabling Drive writes grants the full-Drive `drive` scope; and
+SharePoint's recommended mode is tenant-wide read plus a background index that keeps its own grant.
+The opt-in permission picker that would soften this exists in the code but is switched off, so right
+now the provider's own consent screen is the only place a user sees what they are granting.
+
+
+---
+
+### Appendix — official-source quotes on retention, sharing and opt-out posture
+
+Everything here is `verified` from an official xAI or X source. These are the quotes worth lifting into
+the audit's retention and lineage sections; they also date the controls.
+
+**30-day deletion, stated consistently since at least Nov 2024.**
+- `x.ai/legal/faq`, archived 5 Nov 2024 (https://web.archive.org/web/20241105123923/https://x.ai/legal/faq ):
+  *"If you delete conversations from your account, they will be removed from our systems **within 30
+  days**, unless they have been de-identified and disassociated from your account or we have to retain
+  them for safety, security or legal reasons."*
+- `x.ai/legal/faq`, archived 14 Jun 2025 (https://web.archive.org/web/20250614022714/https://x.ai/legal/faq ):
+  *"When using Private Chat, your conversation history will not be viewable to you and will be deleted
+  from xAI systems **within 30 days**."*
+- `x.ai/legal/faq`, archived 13 Sept 2026 (https://web.archive.org/web/20260913161312/https://x.ai/legal/faq ):
+  *"After you indicate that you want your data deleted, it will take **up to 30 days** to delete from
+  SpaceXAI systems."*
+- `x.ai/legal/privacy-policy`, effective 24 Aug 2026 (archived
+  https://web.archive.org/web/20261002172849/https://x.ai/legal/privacy-policy ): *"when Private Chat
+  is turned on, conversations will not appear in your conversation history and your conversations will
+  be deleted from SpaceXAI systems **within 30 days** unless it is necessary that they be kept longer
+  for legal, compliance, or safety purposes. Further, if you choose to delete any or all of your
+  conversations or if you choose to delete your account, we will delete the data **within 30 days**."*
+- The grok.com UI says the same thing in-product (i18n `settings-data.deleted-conversations.description`):
+  *"View and restore conversations that you have deleted. Deleted conversations are permanently removed
+  after 30 days."*
+- **Do not conflate with the API window.** `docs.x.ai/developers/faq/security`: *"By default, all API
+  requests and responses are stored on our servers (encrypted at rest) for **30 days** for auditing
+  purposes in the event of suspected abuse or misuse. SpaceXAI does not train on this data."* Same
+  number, different control, and it has a documented off-switch (Zero Data Retention, team-admin
+  self-serve, surfaced as an `x-zero-data-retention` response header).
+- X-side, same window: `help.x.com/en/using-x/about-grok` (archived
+  https://web.archive.org/web/20250509143914/https://help.x.com/en/using-x/about-grok ): *"Deleted
+  conversations are removed from our systems **within 30 days**, unless we have to keep them for
+  security or legal reasons."*
+
+**The unauthenticated carve-out — an opt-out that does not exist outside the EU/UK.**
+`x.ai/legal/faq`, archived 14 Jun 2025: *"If you do not log into your account to access Grok (i.e., you
+are unauthenticated), where permissible, we may collect and retain your content on an anonymous basis.
+As a result, **in some regions (excluding the EU/UK)**, when you use Grok without logging in, you won't
+have the option to opt out of model training."* The consumer terms put it even more bluntly
+(`x.ai/legal/terms-of-service`, last updated 11 Sept 2026): *"**Where available, you may access our
+Service without logging in; when doing so, where permitted, you grant us full rights to use any data
+you provide** to or obtain from our Service for product development and model training purposes."*
+Note the direction of the carve-out: EU/UK users get *more* control here, not less.
+
+**The toggle itself, per the consumer terms** (`x.ai/legal/terms-of-service`, 11 Sept 2026):
+*"Electing whether your User Content is used for product development or model training. When logged
+into our Service, **you can select** whether or not you want us to use your User Content to improve our
+products and services and train our models. Private Chat and User Content that you request to be
+deleted will be queued for deletion, which may take **up to 30 days**."*
+
+**X's opt-out does not unlearn.** `help.x.com/en/using-x/about-grok` (archived
+https://web.archive.org/web/20260507202711/https://help.x.com/en/using-x/about-grok ): *"when you use
+an X feature that is powered by Grok (e.g. X recommendations), Grok will learn from your interactions
+and **the opt-out does not prevent a deployed model from learning** as a result of its normal use."*
+That sentence deserves its own line in the audit — it materially narrows what the item-3 toggle buys.
+
+**Naming note for the audit's front matter:** xAI now brands itself **"SpaceXAI"** on x.ai and in
+`docs.x.ai` (same entity, same legal documents), and the X-side corporate entity was renamed from
+Twitter International Unlimited Company (TIUC) to **X Internet Unlimited Company (XIUC)** on
+1 April 2025. `x.ai/legal/consumer-terms-of-service` has never been archived and 404s today — the
+consumer terms live at `x.ai/legal/terms-of-service`.
+
+**Fetching note for anyone reproducing this:** `x.ai/*` and `help.x.com/*` 403 direct automated
+fetches, but both render through a text-extraction proxy (`r.jina.ai`), and `web.archive.org` responds
+to `curl` with the `id_` raw-content suffix even where the fetch tool is blocked. `docs.x.ai` needs no
+workaround at all. `forbes.com`, `pcmag.com`, `theverge.com` and `cnet.com` block the fetch tool but
+respond to `curl`.
+
+---
+
+### Status summary
+
+| # | Item | Resolved default | Label |
+|---|---|---|---|
+| 1 | Allow chat link sharing (grok.com) | **ON**, all regions incl. EEA/UK and enterprise | verified (code, two places) + reported screenshot |
+| 2 | Improve the Model (grok.com) | **ON** outside EEA/UK; **OFF** in EEA/UK and enterprise; row hidden for enterprise/gov | verified (code + xAI EU addendum) + corroborated reported |
+| 3a | X training toggle `allow_xai_data_sharing` | **ON** | **verified** (Swiss FDPIC regulator doc + X help-page opt-out framing) + corroborated reported |
+| 3b | …does it ship OFF for EU/EEA? | **NO** — same default-on toggle; the 2024 Irish remedy was a dataset-specific deletion, not a default change | verified (undertaking text, DPC releases, X privacy policy, xAI FAQ) + corroborated reported; first-hand EEA observation unresolved |
+| 4 | Personalize with conversation history (grok.com) | **ON** outside EEA/UK; **OFF** in EEA/UK and enterprise; row rendered | verified (code + prod flag) + corroborated reported (TechCrunch EU/UK exclusion, CNET default-on) |
+| 5 | Personalize using 𝕏 (grok.com) | **ON** outside EEA/UK; **OFF** in EEA/UK and enterprise | verified (code + xAI's own screenshot) |
+| 6 | Device location (grok.com) | **OFF**; row not rendered (prod flag `false`) | verified (code + prod flag); third-party corroboration unresolved (nobody covers it) |
+| 7 | Allow Grok to remember history (X) | **row hidden** in the observable bucket (`grok_settings_memory_visibility:"hide"`); where visible, reported ON | verified (prod flag) / reported (one outlet) — default **unresolved** |
+| 8 | Allow X to personalize with Grok (X) | documented only as an opt-out; reported ON | verified (official framing + ship date Jan 2025) / reported (one outlet) — default **unresolved** |
+| 9 | Watermark Imagine generations (grok.com) | preference **`false`**, row hidden — **but xAI docs say output is watermarked with no way to remove it**. Contradiction unresolved; do not publish "off by default" | verified (all three facts) / unresolved (what it changes) |
+| 10 | Block modifications by Grok (X) | **OFF**, per-image, no retroactive application. Path: composer → image thumbnail **paintbrush** → **flag** icon → **Sensitive media** / content settings. Row live (prod flag `true`). Shipped 8 Mar 2026, never announced | verified (code, both editor paths + prod flag) + corroborated reported (Social Media Today → The Verge → PCMag) |
+| 11a | Team Product sharing | **Conversations = Organization, Projects = Organization, Skills = Private**; Public available for conversations only | verified (official xAI docs + code) |
+| 11b | Team Conversation retention | `Retain indefinitely` is **not** the client's state; client fallback is Custom / 15 days (range 15–1825) | verified (client fallback); server default **unresolved** |
+| 12 | Connector OAuth scopes | **Full tables sourced** for all seven built-ins (Gmail, Google Calendar, Drive, OneDrive, Outlook Mail/Calendar, Teams, SharePoint incl. a second indexing-sync set, Salesforce). xAI's own scope-consent picker is flagged **off** in production | verified (official docs + code); catalog-connector scopes unresolved by construction |
+
+#### Still open, and what would close each
+- **Items 7 and 8** — the server-side stored default for `allow_grok_memory` and
+  `allow_xai_personalization`. Both rest on a single outlet's July 2026 hands-on. Closing them needs an
+  authenticated X session on a brand-new account (read `user_preferences` before touching anything), a
+  second independent hands-on walkthrough, or an official X statement. Item 7 additionally needs an
+  account in a cohort where `grok_settings_memory_visibility` is not `"hide"`.
+- **Item 3b** — a first-hand observation of the checkbox on a newly created EEA/EU account. Proven
+  absent from both clients, so it is purely a server-side question. No regulator document states it;
+  the DPC's April 2025 inquiry into *ongoing* EU/EEA training is still open with no decision, and the
+  EU AI Act record is empty on this point.
+- **Item 9** — what the `watermarkImagineGenerations` preference actually changes given that
+  `docs.x.ai/grok/faq` says the watermark cannot be removed; and whether
+  `enable_watermark_setting` is delivered to authenticated Imagine users.
+- **Item 11b** — the shipped server value for `conversationsRetentionPeriodDisabled` /
+  `conversationsRetentionPeriodDays` on a newly provisioned team. Not documented anywhere on
+  `docs.x.ai` (all 185 pages searched); needs an authenticated team-settings response.
+- **Item 12** — per-provider scopes for catalog connectors (GitHub, Notion, Linear, Box, Canva, …),
+  which are defined by each third party's own MCP endpoint rather than by xAI; the raw
+  `googleapis.com/auth/...` URIs behind the Google Workspace Marketplace add-on's permission phrases;
+  and the Microsoft Entra app's client/object ID. The grok.com-side list is served at runtime by
+  `POST /api/connectors/list-connector-scope-groups` (`scopes[]` per group), which requires a session.
+- **Item 10** — the current platform matrix (The Verge said iOS-only in March 2026, PCMag said web +
+  iOS and no Android in July 2026). My own evidence is web-only.
+- **Unattributed but suggestive**, flagged rather than used: the DPC AI Insights Report (Sept 2026,
+  p. 36) describes an unnamed controller whose *"opt out for processing personal data for AI training
+  for a particular chatbot was not available to non-subscribers using mobile devices"*, affecting
+  ~7.7 million EEA mobile users, identified Jan 2025 and fixed by Feb 2025, with the controller
+  committing not to train on data collected during the gap. It fits X/Grok — Grok was open to all users
+  and the opt-out was long web-only — but the report does not name it, so it must stay unattributed.

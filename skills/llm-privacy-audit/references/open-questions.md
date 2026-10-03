@@ -1,6 +1,6 @@
 # Open questions — what this audit does not know
 
-> **Generated:** 2026-10-02 · **203 of 566 documented settings** carry a `reported` or `unresolved` component.
+> **Generated:** 2026-10-02 · **201 of 566 documented settings** carry a `reported` or `unresolved` component.
 
 
 This file exists because an audit that only lists what it found is an audit you cannot calibrate.
@@ -15,26 +15,30 @@ file — what is missing is the confidence to state a default as fact.
 - **As a maintainer:** this is the work queue. Anything resolved here moves a finding from "check it
   yourself" to "we know."
 - **As a reader deciding whether to trust the rest:** a vendor with a high open ratio is not a worse
-  vendor, it is a worse-*documented* one. Meta AI and Grok sit high here because Meta's Privacy Center
-  is login-gated and `x.ai` blocks automated fetching — not because their settings are more dangerous.
+  vendor, it is a worse-*documented* one. Meta AI sits high here because Meta's Privacy Center is
+  login-gated — not because its settings are more dangerous.
 
 **Why the ratio is this high, honestly.** Most vendors do not publish default states. They document
 that a setting exists and how to change it, and leave the shipped value to be discovered. That is
 itself a finding — see dark pattern 1 in [methodology.md](methodology.md), where the detection
-heuristic is to create a clean account and record every toggle before touching anything. Short of
-that, a default read out of shipped client code or stated in a primary doc is the only thing that
-earns `verified`.
+heuristic is to create a clean account and record every toggle before touching anything.
 
-**What an item on this list does and does not mean.** It means the answer is absent from the sources
-that were reachable. It does **not** mean the answer is unknowable. The Copilot second pass ran with
-no search budget at all, so its `unresolved` labels mean *"absent from Microsoft's own documentation"* —
-a narrower claim than "nobody knows." Each vendor file's method note says which constraint applied.
+**What an item here does and does not mean.** It means the answer was absent from the sources that were
+reachable. It does **not** mean the answer is unknowable. The Copilot second pass ran with no search
+budget at all, so its `unresolved` labels mean *"absent from Microsoft's own documentation"* — narrower
+than "nobody knows." Each vendor file's method note says which constraint applied.
 
-**Two things close an item fast.** A **live read** settles labels, paths and current state — the
-2026-10-02 run against one Claude and one ChatGPT account resolved four items outright, including an
-exact UI label a third-party guide had reported wrong. And a **verified negative** — proving a setting
-is absent from a vendor's own canonical documentation — is worth as much as a positive, because it
-tells a client-facing writer not to cite something that does not exist.
+**Three things close an item, and research is the slowest of them.**
+
+- A **live read** settles labels, paths and current state. The 2026-10-02 run against one Claude and one
+  ChatGPT account resolved four items outright, including an exact UI label a third-party guide had
+  reported wrong.
+- **Shipped client code** settles defaults when the docs won't. Grok's second pass resolved ten of
+  twelve open defaults that way, after the help pages returned 403 to every fetch — including the
+  discovery that its consumer defaults are **regional**, not global, which the first pass had wrong.
+- A **verified negative** — proving a setting is absent from a vendor's own canonical documentation —
+  is worth as much as a positive, because it tells a client-facing writer not to cite something that
+  does not exist.
 
 
 ## Open items by vendor
@@ -45,9 +49,9 @@ tells a client-facing writer not to cite something that does not exist.
 | Google Gemini | 101 | 35 |
 | Meta AI (and Muse) | 61 | 35 |
 | ChatGPT (OpenAI) | 120 | 31 |
-| Grok (xAI) | 63 | 25 |
 | Claude (Anthropic) | 73 | 24 |
-| **Total** | **566** | **203** |
+| Grok (xAI) | 63 | 23 |
+| **Total** | **566** | **201** |
 
 ## Microsoft Copilot
 
@@ -243,41 +247,6 @@ tells a client-facing writer not to cite something that does not exist.
 - Include your audio recordings / Include your video recordings
 - Audit logging (API Platform)
 
-## Grok (xAI)
-
-`vendors/grok.md` — 25 open of 63 documented.
-
-**Unresolved — no sourced default, path, or effect:**
-
-- Personalize Grok with your conversation history ("Allow Grok to remember details from…
-- Personalize Grok using 𝕏 ("Allow your 𝕏 data to be used for personalizing and enhanci…
-- Personalize Grok with your device location ("Allow Grok to include your browser locat…
-- Allow Grok to remember your conversation history (X side)
-- Allow X to personalize your experience with Grok (X side)
-- Granular OAuth scope strings
-- Allow chat link sharing ("Allow sharing chats using only your chat link.")
-- Watermark Imagine generations / Share to X
-- Block modifications by Grok ("Prevent Grok from modifying this content"; related: "Im…
-- Cookie Settings → Manage
-- Call transcript / Voice Chat history
-- Custom Voice / voice cloning ("Voice cloning is available on the Grok mobile app")
-- Camera / live vision in voice mode
-- Grok Bot account/data plane
-- Product sharing — scopes Private / Team / Organization / Public, per resource (Conver…
-- Conversation retention → Custom period / Retain indefinitely
-- Team settings surface — Overview, Usage, Analytics, Connectors, Marketplaces, Advanced
-- Grok Bot org controls
-- Grok Build CLI — /privacy, /settings
-- OS runtime permission grants — Microphone, Camera, Photos, Location, Notifications, C…
-- Allow NSFW Content (I'm 18+)
-
-**Reported only — a third party claims it, no primary source:**
-
-- Improve the Model (helper text, verbatim: "By allowing your data to be used for train…
-- Allow your public data as well as your interactions, inputs, and results with Grok an…
-- Protect your posts
-- Connected apps (X side, reverse direction)
-
 ## Claude (Anthropic)
 
 `vendors/claude.md` — 24 open of 73 documented.
@@ -312,14 +281,47 @@ tells a client-facing writer not to cite something that does not exist.
 - Role-based permissions — Privacy: Can manage
 - (App Store privacy label) Data linked to you
 
+## Grok (xAI)
+
+`vendors/grok.md` — 23 open of 63 documented.
+
+**Unresolved — no sourced default, path, or effect:**
+
+- Personalize Grok with your conversation history ("Allow Grok to remember details from…
+- Personalize Grok using 𝕏 ("Allow your 𝕏 data to be used for personalizing and enhanci…
+- Personalize Grok with your device location ("Allow Grok to include your browser locat…
+- Allow Grok to remember your conversation history (X side)
+- Allow X to personalize your experience with Grok (X side)
+- Granular OAuth scope strings
+- Watermark Imagine generations / Share to X
+- Block modifications by Grok ("Prevent Grok from modifying this content"; related: "Im…
+- Cookie Settings → Manage
+- Call transcript / Voice Chat history
+- Custom Voice / voice cloning ("Voice cloning is available on the Grok mobile app")
+- Camera / live vision in voice mode
+- Grok Bot account/data plane
+- Product sharing — scopes Private / Team / Organization / Public, per resource (Conver…
+- Conversation retention → Custom period / Retain indefinitely
+- Team settings surface — Overview, Usage, Analytics, Connectors, Marketplaces, Advanced
+- Grok Bot org controls
+- Grok Build CLI — /privacy, /settings
+- OS runtime permission grants — Microphone, Camera, Photos, Location, Notifications, C…
+- Allow NSFW Content (I'm 18+)
+
+**Reported only — a third party claims it, no primary source:**
+
+- Allow your public data as well as your interactions, inputs, and results with Grok an…
+- Protect your posts
+- Connected apps (X side, reverse direction)
+
 ## How to close one
 
 1. Open the setting's entry in its vendor file and read what was already tried — the `Evidence` line
    names the pages that were fetched and the `Confidence` line says what blocked it.
-2. Prefer, in order: **a live read of the setting itself** · the vendor's own documentation · a
-   default read out of shipped client code (name the file and key) · an archived snapshot of a
-   primary page · two or more independent third parties agreeing, which is *corroborated reported*,
-   never `verified`.
+2. Prefer, in order: **a live read of the setting itself** · **a default read out of shipped client
+   code** (name the file and key) · the vendor's own documentation · an archived snapshot of a primary
+   page · two or more independent third parties agreeing, which is *corroborated reported*, never
+   `verified`.
 3. Update the entry's `Default`, `Evidence` and `Confidence` lines, and bump the file's
    `Last verified` date.
 4. Regenerate this file so the counts stay true.
@@ -327,6 +329,10 @@ tells a client-facing writer not to cite something that does not exist.
 **A live read settles a label or a path. It does not settle a default** — an observed account's state
 is one data point shaped by whatever its owner has clicked over the years. Record it as "observed on
 <date>", and leave the default `unresolved` unless a primary source or shipped code states it.
+
+**Check whether the default is regional before writing it down as one value.** Grok's consumer toggles
+are ON outside the EEA/UK and OFF inside it. A single global answer would have been wrong for half the
+world.
 
 **Do not close an item by inference.** If the only available answer is "it would be odd if this were
 on by default," the item stays open. The value of this list is that everything on it is genuinely

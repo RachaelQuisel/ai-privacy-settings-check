@@ -132,7 +132,7 @@ someone made up.
 
 All of it is consolidated in
 [open-questions.md](skills/llm-privacy-audit/references/open-questions.md) — at the last check,
-**203 of 564 documented settings** had a default, path, or effect that could not be sourced.
+**201 of 566 documented settings** had a default, path, or effect that could not be sourced.
 That ratio is high because most vendors document that a setting exists without ever saying what
 it ships as. A vendor near the top of that list isn't more dangerous, it's worse documented.
 
