@@ -12,50 +12,43 @@ file — what is missing is the confidence to state a default as fact.
 
 - **As an auditor:** these are the items where you must look at the live account rather than cite the
   baseline. A `reported` default is a hypothesis; an `unresolved` one is not even that.
-- **As a maintainer:** this is the work queue. Anything resolved here moves a finding from "check it
-  yourself" to "we know."
+- **As a maintainer:** this is the work queue.
 - **As a reader deciding whether to trust the rest:** a vendor with a high open ratio is not a worse
-  vendor, it is a worse-*documented* one. Meta AI sits high here because Meta's Privacy Center is
-  login-gated — not because its settings are more dangerous.
+  vendor, it is a worse-*documented* one. Meta AI sits high because Meta's Privacy Center is
+  login-gated, not because its settings are more dangerous.
 
-**Why the ratio is this high, honestly.** Most vendors do not publish default states. They document
-that a setting exists and how to change it, and leave the shipped value to be discovered. That is
-itself a finding — see dark pattern 1 in [methodology.md](methodology.md), where the detection
-heuristic is to create a clean account and record every toggle before touching anything.
+**Why the ratio is this high.** Most vendors do not publish default states. They document that a
+setting exists and how to change it, and leave the shipped value to be discovered. That is itself a
+finding — see dark pattern 1 in [methodology.md](methodology.md).
 
-**What an item here does and does not mean.** It means the answer was absent from the sources that were
-reachable. It does **not** mean the answer is unknowable. The Copilot second pass ran with no search
-budget at all, so its `unresolved` labels mean *"absent from Microsoft's own documentation"* — narrower
-than "nobody knows." Each vendor file's method note says which constraint applied.
+**What an item here does and does not mean.** It means the answer was absent from the sources that
+were reachable. It does **not** mean the answer is unknowable. The Copilot second pass ran with no
+search budget, so its `unresolved` labels mean *"absent from Microsoft's own documentation"* — narrower
+than "nobody knows."
 
-**Three things close an item, and research is the slowest of them.**
-
-- A **live read** settles labels, paths and current state. The 2026-10-02 run against one Claude and one
-  ChatGPT account resolved four items outright, including an exact UI label a third-party guide had
-  reported wrong.
-- **Shipped client code** settles defaults when the docs won't. Grok's second pass resolved ten of
-  twelve open defaults that way, after the help pages returned 403 to every fetch — including the
-  discovery that its consumer defaults are **regional**, not global, which the first pass had wrong.
-- A **verified negative** — proving a setting is absent from a vendor's own canonical documentation —
-  is worth as much as a positive, because it tells a client-facing writer not to cite something that
-  does not exist.
+**Three things close an item, and research is the slowest.** A **live read** settles labels, paths and
+current state. **Shipped client code** settles defaults when the docs won't — Grok's second pass
+resolved ten of twelve that way, including the discovery that its consumer defaults are **regional**,
+not global. And a **verified negative** — proving a setting is absent from a vendor's own canonical
+documentation — is worth as much as a positive.
 
 
 ## Open items by vendor
 
-| Vendor | Settings documented | Open (`reported` or `unresolved`) |
+| Vendor file | Settings documented | Open (`reported` or `unresolved`) |
 |---|---:|---:|
-| Microsoft Copilot | 148 | 53 |
+| Microsoft Copilot | 118 | 40 |
 | Google Gemini | 101 | 35 |
 | Meta AI (and Muse) | 61 | 35 |
 | ChatGPT (OpenAI) | 120 | 31 |
 | Claude (Anthropic) | 73 | 24 |
 | Grok (xAI) | 63 | 23 |
+| Microsoft Copilot (admin, API, mobile) | 30 | 13 |
 | **Total** | **566** | **201** |
 
 ## Microsoft Copilot
 
-`vendors/copilot.md` — 53 open of 148 documented.
+`vendors/copilot.md` — 40 open of 118 documented.
 
 **Unresolved — no sourced default, path, or effect:**
 
@@ -99,22 +92,7 @@ than "nobody knows." Each vendor file's method note says which constraint applie
 - Stored credentials (computer use) and Enforce HTTPS
 - Human supervision (computer use)
 - Repository access (Copilot cloud agent)
-- EdgeEntraCopilotPageContext, CopilotPageContext, CopilotCoworkToolActionsEnabled, All…
-- Suggestions matching public code (enterprise/org enforcement)
-- (organization and enterprise policy pages generally)
-- (Copilot audit log and metrics)
-- Semantic Search (Windows AI Foundry)
-- (what context is sent for completions, and its retention)
-- Copilot mobile privacy settings
-- (full OS permission list for the Copilot mobile app)
-- Microsoft Family Safety controls over Copilot (under-18 accounts)
-- Ask Copilot (taskbar item)
-- Windows app permission pages underlying every AI feature
-- (GitHub Mobile Copilot permissions)
 
-**Reported only — a third party claims it, no primary source:**
-
-- Text and image generation (app permission)
 
 ## Google Gemini
 
@@ -314,27 +292,44 @@ than "nobody knows." Each vendor file's method note says which constraint applie
 - Protect your posts
 - Connected apps (X side, reverse direction)
 
+## Microsoft Copilot (admin, API, mobile)
+
+`vendors/copilot-admin-api-mobile.md` — 13 open of 30 documented.
+
+**Unresolved — no sourced default, path, or effect:**
+
+- EdgeEntraCopilotPageContext, CopilotPageContext, CopilotCoworkToolActionsEnabled, All…
+- Suggestions matching public code (enterprise/org enforcement)
+- (organization and enterprise policy pages generally)
+- (Copilot audit log and metrics)
+- Semantic Search (Windows AI Foundry)
+- (what context is sent for completions, and its retention)
+- Copilot mobile privacy settings
+- (full OS permission list for the Copilot mobile app)
+- Microsoft Family Safety controls over Copilot (under-18 accounts)
+- Ask Copilot (taskbar item)
+- Windows app permission pages underlying every AI feature
+- (GitHub Mobile Copilot permissions)
+
+**Reported only — a third party claims it, no primary source:**
+
+- Text and image generation (app permission)
+
 ## How to close one
 
-1. Open the setting's entry in its vendor file and read what was already tried — the `Evidence` line
-   names the pages that were fetched and the `Confidence` line says what blocked it.
-2. Prefer, in order: **a live read of the setting itself** · **a default read out of shipped client
-   code** (name the file and key) · the vendor's own documentation · an archived snapshot of a primary
-   page · two or more independent third parties agreeing, which is *corroborated reported*, never
-   `verified`.
-3. Update the entry's `Default`, `Evidence` and `Confidence` lines, and bump the file's
-   `Last verified` date.
+1. Read the entry's `Evidence` and `Confidence` lines — they name what was already tried.
+2. Prefer, in order: **a live read** · **shipped client code** (name the file and key) · vendor
+   documentation · an archived snapshot · two or more independent third parties agreeing, which is
+   *corroborated reported*, never `verified`.
+3. Update `Default`, `Evidence` and `Confidence`, and bump the file's `Last verified` date.
 4. Regenerate this file so the counts stay true.
 
-**A live read settles a label or a path. It does not settle a default** — an observed account's state
-is one data point shaped by whatever its owner has clicked over the years. Record it as "observed on
-<date>", and leave the default `unresolved` unless a primary source or shipped code states it.
+**A live read settles a label or a path. It does not settle a default** — an observed account is one
+data point shaped by its owner's history.
 
-**Check whether the default is regional before writing it down as one value.** Grok's consumer toggles
-are ON outside the EEA/UK and OFF inside it. A single global answer would have been wrong for half the
-world.
+**Check whether the default is regional before writing it as one value.** Grok's consumer toggles are
+ON outside the EEA/UK and OFF inside it.
 
-**Do not close an item by inference.** If the only available answer is "it would be odd if this were
-on by default," the item stays open. The value of this list is that everything on it is genuinely
+**Do not close an item by inference.** The value of this list is that everything on it is genuinely
 unknown, and everything off it is genuinely sourced.
 
