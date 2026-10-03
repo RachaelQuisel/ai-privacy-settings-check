@@ -555,7 +555,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Setting:** Codex network secrets vs environment variables
 - **Default:** None configured. In Codex Cloud (Legacy), secrets *"are available only during setup and are removed before the agent phase starts."*
 - **Exposes:** A network secret is never handed to the program — *"Programs receive a placeholder; the proxy substitutes the real value for allowed destinations."* **But** saving an environment-owned network secret **adds its destinations to restricted internet access**, silently widening the network policy.
-- **Recommend:** Prefer network secrets over plain env vars, then **re-read the saved network policy after adding one.** Use **Personal vault** so your credential is not shared with everyone using the environment.
+- **Recommend:** Prefer network secrets over plain environment variables, then **re-read the saved network policy after adding one.** Use **Personal vault** so your credential is not shared with everyone using the environment.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
@@ -897,7 +897,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Where:** macOS app → Settings → Work with Apps. Requires System Settings → Privacy & Security → **Accessibility** → ChatGPT for most apps.
 - **Default:** `unresolved` for the switch. **Gating is verified:** it cannot read anything until you add an app *and* grant Accessibility. **Admin-lockable.**
 - **Exposes:** ChatGPT reads **the last 200 lines of open panes** in Apple Notes, Notion, TextEdit, Quip, Xcode, Script Editor, VS Code/Cursor/Windsurf/VSCodium, the JetBrains family, **and Terminal, iTerm, Warp, Prompt.** That content *"becomes part of your chat history and is saved in your account,"* and *"We may use the content included to improve our model performance."* With IDEs it can also **write edits** to open files.
-- **Recommend:** Off, or at minimum revoke Accessibility. ⚠️ **Terminal scrollback is the sharp edge** — 200 lines of a terminal routinely contains tokens, connection strings and `.env` contents, **and it lands in trainable chat history.**
+- **Recommend:** Off, or at minimum revoke Accessibility. ⚠️ **Terminal scrollback is the sharp edge** — 200 lines of a terminal routinely contains tokens, connection strings and dotenv-file contents, **and it lands in trainable chat history.**
 - **Risk:** High
 - **Confidence:** `verified` (behavior, paths, admin locks); `unresolved` (switch default)
 

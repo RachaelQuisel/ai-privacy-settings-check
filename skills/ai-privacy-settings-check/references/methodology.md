@@ -148,7 +148,7 @@ A control named for visibility is read by users as a control over storage.
 
 The fact that employees or contractors read conversations lives in a help-center sub-page, not in the chat UI or the main policy.
 
-**Example.** Google, in the Gemini Apps Privacy Hub rather than in the product: *"A subset of chats are reviewed by human reviewers (including Google's trained service providers)… Please don't enter confidential information that you wouldn't want a reviewer to see"* — [Google](https://support.google.com/gemini/answer/13594961), `verified`. Why it matters: Apple's $95M Siri settlement concerned recordings shared with human reviewers.
+**Example.** Google, in the Gemini Apps Privacy Hub rather than in the product: *"A subset of chats are reviewed by human reviewers (including Google's trained service providers)… Please don't enter confidential information that you wouldn't want a reviewer to see"* — [Google](https://support.google.com/gemini/answer/13594961), `verified`. Why it matters: Apple's USD 95 million Siri settlement concerned recordings shared with human reviewers.
 
 **Heuristic.** Search the vendor's full documentation for `human review`, `reviewer`, `annotator`, `trained service providers`, `rater`. Then ask whether it is disclosed anywhere in the surface where a user actually types. **The distance in clicks between the input box and the disclosure is the measurable finding.**
 

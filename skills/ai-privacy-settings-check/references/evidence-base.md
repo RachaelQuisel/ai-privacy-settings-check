@@ -51,7 +51,7 @@ One admin decision binds every employee, and the opt-out is often not self-servi
 
 ### 6. Voice / audio / camera — low frequency, but the only category with a large settled payout
 
-- Apple agreed to **$95M** to settle claims that unintended Siri activations were recorded and extracts shared with human reviewers; class period 2014-09-17 to 2024-12-31. `reported` — [Courthouse News](https://www.courthousenews.com/judge-approves-95-million-apple-settlement-over-siri-privacy-case/)
+- Apple agreed to **USD 95 million** to settle claims that unintended Siri activations were recorded and extracts shared with human reviewers; class period 2014-09-17 to 2024-12-31. `reported` — [Courthouse News](https://www.courthousenews.com/judge-approves-95-million-apple-settlement-over-siri-privacy-case/)
 - **Otter.ai** faces consolidated class actions (N.D. Cal., Aug–Sep 2025) alleging its notetaker recorded Zoom/Meet/Teams participants **who were not Otter accountholders** and used those recordings to train speech models, under ECPA and California law. `reported` — [NPR](https://www.npr.org/2025/08/15/g-s1-83087/otter-ai-transcription-class-action-lawsuit), [National Law Review](https://natlawreview.com/article/ai-notetaking-tools-under-fire-lessons-otterai-class-action-complaint)
 
 This is the category that most reliably harms **non-users** — which is why it scores high on the rubric's P dimension even with few incidents.
@@ -90,7 +90,7 @@ Each row: what happened, label, and **the specific control that would have preve
 
 | Date | Incident | Label | Preventing / limiting control |
 |---|---|---|---|
-| 2019→2025-01 | Apple Siri unintended activations recorded, extracts shared with human reviewers; **$95M settlement** | `reported` | "Improve Siri & Dictation" off; wake-word disabled; on-device-only processing |
+| 2019→2025-01 | Apple Siri unintended activations recorded, extracts shared with human reviewers; **USD 95 million settlement** | `reported` | "Improve Siri & Dictation" off; wake-word disabled; on-device-only processing |
 | 2023-09→2024-05 | Slack analyzed messages/content/files for ML by default; opt-out required an org-owner email | `reported` | Workspace-level global model opt-out submitted, **with receipt retained as evidence** |
 | 2024-06 | Microsoft Recall shipped intended-on with unencrypted screenshot DB; reversed to opt-in | `reported` | Recall off at OS level; group-policy disable in managed estates |
 | 2024-09-18→20 | LinkedIn began training gen-AI on member data and enabled the setting globally **before** updating its terms; paused for UK/EEA/CH after ICO engagement | `reported` | "Data for Generative AI Improvement" off — note the window where no control existed in-region |

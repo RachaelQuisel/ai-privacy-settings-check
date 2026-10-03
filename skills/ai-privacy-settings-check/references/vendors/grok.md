@@ -465,7 +465,7 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 - **Setting:** API key hygiene
 - **Where:** xAI Console → API Keys → ⋮ → Disable key / Delete key
 - **Default:** Keys are team-scoped and live until revoked.
-- **Recommend:** Env vars or a secret manager, never shared between teammates, rotate regularly.
+- **Recommend:** Hold keys in a secret manager rather than in shell configuration, never share them between teammates, and rotate them regularly.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
