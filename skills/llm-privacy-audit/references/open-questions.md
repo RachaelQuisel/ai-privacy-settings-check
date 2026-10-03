@@ -1,6 +1,6 @@
 # Open questions — what this audit does not know
 
-> **Generated:** 2026-10-02 · **203 of 564 documented settings** carry a `reported` or `unresolved` component.
+> **Generated:** 2026-10-02 · **204 of 566 documented settings** carry a `reported` or `unresolved` component.
 
 
 This file exists because an audit that only lists what it found is an audit you cannot calibrate.
@@ -25,6 +25,11 @@ heuristic is to create a clean account and record every toggle before touching a
 that, a default read out of shipped client code or stated in a primary doc is the only thing that
 earns `verified`.
 
+**A live read closes these faster than research does.** The 2026-10-02 run against one Claude and one
+ChatGPT account resolved four of them outright — an exact UI label that a third-party guide had
+reported wrong, two management panels no vendor article names, and the live state of an undocumented
+network permission. When an item here is blocking a real decision, looking is cheaper than searching.
+
 
 ## Open items by vendor
 
@@ -35,8 +40,8 @@ earns `verified`.
 | Meta AI (and Muse) | 61 | 35 |
 | ChatGPT (OpenAI) | 120 | 31 |
 | Grok (xAI) | 63 | 25 |
-| Claude (Anthropic) | 71 | 23 |
-| **Total** | **564** | **203** |
+| Claude (Anthropic) | 73 | 24 |
+| **Total** | **566** | **204** |
 
 ## Microsoft Copilot
 
@@ -270,15 +275,17 @@ earns `verified`.
 
 ## Claude (Anthropic)
 
-`vendors/claude.md` — 23 open of 71 documented.
+`vendors/claude.md` — 24 open of 73 documented.
 
 **Unresolved — no sourced default, path, or effect:**
 
-- Help Improve our AI models (help-center label; live toggle widely reported as "Help i…
+- Help improve our AI models
 - Rate chats (admin)
 - Trusted Tester Program
 - Tool permissions — Always allow / Needs approval / Blocked
 - Artifact visibility — Only you (Pro/Max) / Only people invited (Team/Enterprise) / An…
+- Shared artifacts → Manage · Uploaded files → Manage · Your feedback → Manage · Memory…
+- (settings sections absent from this file) Design systems · Reflect · Time and focus
 - (derived) Consumer retention window
 - Delete Account
 - Dictation (mobile microphone)
@@ -294,7 +301,6 @@ earns `verified`.
 - OAuth scope review at connect time
 - Restrict verified domain connectors (admin)
 - Share chats using connectors (admin)
-- Shared chats → Manage
 - Camera / Photos access (mobile)
 - Bypass permissions mode / Auto permissions mode (Claude Code, admin)
 - Organization settings → Capabilities (Memory, Web search, Ask Org, Interactive conten…
@@ -305,12 +311,17 @@ earns `verified`.
 
 1. Open the setting's entry in its vendor file and read what was already tried — the `Evidence` line
    names the pages that were fetched and the `Confidence` line says what blocked it.
-2. Prefer, in order: the vendor's own documentation · a default read out of shipped client code
-   (name the file and key) · an archived snapshot of a primary page · two or more independent
-   third parties agreeing, which is *corroborated reported*, never `verified`.
+2. Prefer, in order: **a live read of the setting itself** · the vendor's own documentation · a
+   default read out of shipped client code (name the file and key) · an archived snapshot of a
+   primary page · two or more independent third parties agreeing, which is *corroborated reported*,
+   never `verified`.
 3. Update the entry's `Default`, `Evidence` and `Confidence` lines, and bump the file's
    `Last verified` date.
 4. Regenerate this file so the counts stay true.
+
+**A live read settles a label or a path. It does not settle a default** — an observed account's state
+is one data point shaped by whatever its owner has clicked over the years. Record it as "observed on
+<date>", and leave the default `unresolved` unless a primary source or shipped code states it.
 
 **Do not close an item by inference.** If the only available answer is "it would be odd if this were
 on by default," the item stays open. The value of this list is that everything on it is genuinely

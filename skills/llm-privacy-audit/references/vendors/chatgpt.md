@@ -246,7 +246,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Exposes:** A personal link is a public snapshot including supported images and uploaded files, forwardable by anyone. **The workspace variant is worse in one way:** *"a workspace conversation link can include messages added after sharing"* — it keeps leaking as you keep typing.
 - **Recommend:** Audit Shared links periodically and delete what you no longer need. **There are no recipient-level controls and no expiration dates.** *"Shared link pages are not intended for search-engine indexing, but this does not make a link private."*
 - **Risk:** High
-- **Confidence:** `verified`
+- **Confidence:** `verified`. The live Shared links panel states: *"Anyone with a shared link can view the shared image, message, chat, or scheduled task. Deleting a shared link stops others from viewing that shared content. It does not delete your original content."* — confirming both that the link is the unit of exposure and that **deleting the chat does not revoke the link** (live read of a consumer ChatGPT account, 2026-10-02).
 
 - **Setting:** `Share chats and scheduled tasks` *(workspace permission)*
 - **Default:** `unresolved`. **Availability is tier-split and verified: Enterprise/Edu only.** The Business FAQ: *"**Can I disable shared links entirely?** No. This feature is available in ChatGPT Enterprise."*
@@ -942,8 +942,9 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 
 - **Setting:** `Work network access` / `Reset ChatGPT Work`
 - **Where:** Settings → Data controls. Verified live; appears only on accounts with ChatGPT Work.
-- **Default:** `unresolved`
-- **Exposes:** **`unresolved`** — the controls and their exact labels are verified live, but **no help-center article defines what network access they grant.** Do not characterize it without further checking.
+- **Default:** **`Work network access` was observed ON** on a consumer account (live read of a consumer ChatGPT account, 2026-10-02). Whether that is the shipped default or a prior choice is `unresolved`.
+- **Exposes:** **`unresolved`** — the controls, their exact labels and their live state are confirmed, but **no help-center article defines what network access this grants.** Do not characterize it without further checking.
+- **Do not flip it blind:** turning off an undocumented network permission may break ChatGPT Work with no stated way to tell what was lost.
 - **Recommend:** **Worth a dedicated follow-up** — an undocumented network-scoped permission sitting in Data controls is exactly the kind of thing to resolve before advising a client.
 - **Risk:** `unresolved`
 - **Confidence:** `verified` (exists, label); `unresolved` (effect)

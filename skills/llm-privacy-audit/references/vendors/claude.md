@@ -20,14 +20,15 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 
 ---
 
-- **Setting:** Help Improve our AI models *(help-center label; live toggle widely reported as "Help improve Claude")*
+- **Setting:** `Help improve our AI models`
+  *(Live UI label, confirmed by direct observation. Earlier third-party walkthroughs rendered it "Help improve Claude" — that is wrong. The in-product description reads: "Allow the use of your chats and coding sessions to train and improve Anthropic AI models.")*
 - **Where:** Settings → Privacy → toggle. https://claude.ai/settings/data-privacy-controls
 - **Default:** **`unresolved` for the out-of-box state.** Anthropic's help article does not state a default. Three pieces of evidence point to effectively-on: (a) the Privacy Policy reads *"We may use your Inputs and Outputs to train and improve Anthropic AI models, **unless you opt out** through your account settings"* — opt-out framing, `verified`; (b) the Aug-2025 news post says new users *"select their preference during signup"* without naming a default, `verified`; (c) third-party reporting states the toggle arrives **pre-set to On** inside the "Updates to Consumer Terms and Policies" modal, beside a prominent "Accept" button — `reported`. Team, Enterprise, API, Gov, Education: off / not applicable (`verified`).
 - **Exposes:** Left on, every new or resumed chat and Claude Code session from a Free/Pro/Max account becomes eligible training data, held de-identified in training pipelines up to five years.
 - **Recommend:** **Off.** Highest-leverage toggle on claude.ai — drops retention from 5 years to 30 days and removes your work from training corpora.
 - **Risk:** High
 - **Evidence:** https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings ; https://www.anthropic.com/legal/privacy ; https://www.anthropic.com/news/updates-to-our-consumer-terms — checked 2026-10-02
-- **Confidence:** `verified` that the setting, path and effect exist; `unresolved` on new-account default; `reported` on the pre-checked modal. Label string is unsettled between Anthropic's article and third-party walkthroughs — treat as approximate.
+- **Confidence:** `verified` — setting, path, exact label and description string all confirmed by direct observation (live read of a consumer Max account, 2026-10-02), matching the help-center label. `unresolved` remains on the **new-account default**; `reported` remains on the pre-checked modal. Note the observed account had it **on**, which is consistent with but does not prove the default.
 
 - **Setting:** Thumbs up / thumbs down on a Claude response
 - **Where:** Hover a Claude message → thumbs icons (all surfaces)
@@ -284,8 +285,26 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Exposes:** Nothing new; it is the audit surface for links already created.
 - **Recommend:** Review quarterly. Old share links are the most commonly forgotten exposure on claude.ai.
 - **Risk:** Medium
-- **Evidence:** https://joindeleteme.com/ai-privacy-settings/claude-privacy-settings-guide/ — checked 2026-10-02
-- **Confidence:** `reported` — third-party walkthrough dated 2026-09-14; no Anthropic article found naming this panel.
+- **Evidence:** panel confirmed by direct observation (live read of a consumer Max account, 2026-10-02) at Settings → Privacy → Your data → **Shared chats → Manage**; columns are Name, Date shared, Location, Unshare, and each row carries the sharing scope beneath its title. — checked 2026-10-02
+- **Confidence:** `verified` for the panel, its path and its columns. Still **no Anthropic help article names it** — the documentation gap is real even though the feature is not.
+
+- **Setting:** `Shared artifacts` → **Manage** · `Uploaded files` → **Manage** · `Your feedback` → **Manage** · `Memory preferences` → **Manage**
+- **Where:** Settings → Privacy → **Your data**, alongside Export data and Shared chats
+- **Default:** Each lists whatever exists; these are management surfaces, not toggles.
+- **Exposes:** Nothing new — but they matter because **each is a separate store with its own lifecycle.** Deleting a conversation does not clear an uploaded file, revoke a shared artifact, or withdraw submitted feedback (feedback is training-eligible and 5-year-retained per §1).
+- **Recommend:** Audit all four alongside Shared chats. Most people have never opened three of them.
+- **Risk:** Medium
+- **Evidence:** confirmed by direct observation (live read of a consumer Max account, 2026-10-02) — checked 2026-10-02
+- **Confidence:** `verified` for existence, labels and path; `unresolved` for what each panel's contents look like when populated, which was not inspected.
+
+- **Setting:** *(settings sections absent from this file)* `Design systems` · `Reflect` · `Time and focus`
+- **Where:** Settings navigation, between Memory and Claude Code
+- **Default:** **`unresolved` — these three sections exist in the live settings navigation and are not documented anywhere in this file.** They were observed but not opened.
+- **Exposes:** Unknown. `Reflect` and `Time and focus` in particular sound like they could carry activity-derived data.
+- **Recommend:** **Open them before relying on this file as a complete inventory of Claude's settings surface.** Their absence here is a known gap, not an assertion that they are empty.
+- **Risk:** Cannot rate
+- **Evidence:** observed in the settings navigation (live read of a consumer Max account, 2026-10-02) — checked 2026-10-02
+- **Confidence:** `unresolved`
 
 ## 5. Retention & deletion
 
@@ -643,7 +662,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 
 - **Setting:** Location metadata
 - **Where:** Settings → Privacy (consumer); Organization settings → Data and privacy (admin). https://claude.ai/settings/data-privacy-controls
-- **Default:** `unresolved` for consumers — Anthropic's article points at the dashboard without naming the toggle or its default. A September 2026 third-party walkthrough lists the label as **"Location metadata"**, toggled **on**.
+- **Default:** `unresolved` for consumers — Anthropic's article points at the dashboard without naming the toggle or its default. **The label is confirmed as "Location metadata" by direct observation (live read of a consumer Max account, 2026-10-02), under Settings → Privacy → Preferences**, with the description "Allow Claude to use coarse location metadata (city/region) to improve product experiences." The observed account had it **on**; whether that is the shipped default is still unconfirmed.
 - **Exposes:** Anthropic uses *"IP address to determine coarse-grained location (city/region level)"* for optional features like web search, and separately *"IP address and other signals to infer coarse-grained location (country/region level)"* for security and anti-abuse — the second is **mandatory and "cannot be toggled off."** Mobile and extension location access is managed at the device level.
 - **Recommend:** Turn the optional product-enhancement use off; accept that the security-purpose inference remains.
 - **Risk:** Low
@@ -678,7 +697,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 
 Re-check these first.
 
-1. **"Help Improve our AI models" default and label.** The Aug-2025 change is under 14 months old, the Privacy Policy was last updated **2026-09-10**, and the help article still declines to state a default. The label differs between Anthropic's article and third-party walkthroughs. Expect wording and consent flow to keep shifting under GDPR pressure — EU legal analysis has called the pre-selected toggle potentially unlawful.
+1. **"Help improve our AI models" default.** The label is now settled by direct observation and matches the help-center string. What remains open is the **new-account default** — the Aug-2025 change is under 14 months old, the Privacy Policy was last updated **2026-09-10**, and the help article still declines to state one. Expect wording and consent flow to keep shifting under GDPR pressure — EU legal analysis has called the pre-selected toggle potentially unlawful.
 2. **Consumer retention documentation.** The retention article (updated **2026-07-01**) has an empty "Standard Retention Timeframe" section and no longer restates the 30-day opt-out window the Aug-2025 post promised. Either the policy changed or the doc regressed. Re-verify before relying on "30 days".
 3. **Claude in Chrome on Enterprise.** Documented to flip from disabled to **enabled on September 10, 2026 unless already disabled** — that date has passed, so Enterprise admins who never touched it are now enabled. Highest-urgency admin item here.
 4. **Cowork.** Recent, already **on by default for Team and Enterprise**, with local transcripts outside admin control and a 6-year Compliance API default for local sessions. Admin surface is new and expanding.
@@ -692,4 +711,4 @@ Re-check these first.
 
 ### Unresolved, collected
 
-New-account default for the training toggle · default for **Rate chats** · default and exact consumer label for **Location metadata** · per-tool connector permission defaults · cookie defaults by region · whether published artifacts are search-indexed · post-account-deletion backend retention · Android permission set · defaults for Claude Code **Bypass/Auto permissions mode** and **Restrict verified domain connectors** · which Organization → Capabilities toggles beyond Memory are on out of the box · the dictation speech-to-text subprocessor · exact wording of Cowork's per-app permission prompt.
+New-account default for the training toggle · default for **Rate chats** · default for **Location metadata** (label now verified) · the contents and purpose of the **Design systems**, **Reflect** and **Time and focus** settings sections · per-tool connector permission defaults · cookie defaults by region · whether published artifacts are search-indexed · post-account-deletion backend retention · Android permission set · defaults for Claude Code **Bypass/Auto permissions mode** and **Restrict verified domain connectors** · which Organization → Capabilities toggles beyond Memory are on out of the box · the dictation speech-to-text subprocessor · exact wording of Cowork's per-app permission prompt.
