@@ -1,6 +1,6 @@
 # Open questions — what this audit does not know
 
-> **Generated:** 2026-10-02 · **204 of 566 documented settings** carry a `reported` or `unresolved` component.
+> **Generated:** 2026-10-02 · **203 of 566 documented settings** carry a `reported` or `unresolved` component.
 
 
 This file exists because an audit that only lists what it found is an audit you cannot calibrate.
@@ -25,27 +25,33 @@ heuristic is to create a clean account and record every toggle before touching a
 that, a default read out of shipped client code or stated in a primary doc is the only thing that
 earns `verified`.
 
-**A live read closes these faster than research does.** The 2026-10-02 run against one Claude and one
-ChatGPT account resolved four of them outright — an exact UI label that a third-party guide had
-reported wrong, two management panels no vendor article names, and the live state of an undocumented
-network permission. When an item here is blocking a real decision, looking is cheaper than searching.
+**What an item on this list does and does not mean.** It means the answer is absent from the sources
+that were reachable. It does **not** mean the answer is unknowable. The Copilot second pass ran with
+no search budget at all, so its `unresolved` labels mean *"absent from Microsoft's own documentation"* —
+a narrower claim than "nobody knows." Each vendor file's method note says which constraint applied.
+
+**Two things close an item fast.** A **live read** settles labels, paths and current state — the
+2026-10-02 run against one Claude and one ChatGPT account resolved four items outright, including an
+exact UI label a third-party guide had reported wrong. And a **verified negative** — proving a setting
+is absent from a vendor's own canonical documentation — is worth as much as a positive, because it
+tells a client-facing writer not to cite something that does not exist.
 
 
 ## Open items by vendor
 
 | Vendor | Settings documented | Open (`reported` or `unresolved`) |
 |---|---:|---:|
-| Microsoft Copilot | 148 | 54 |
+| Microsoft Copilot | 148 | 53 |
 | Google Gemini | 101 | 35 |
 | Meta AI (and Muse) | 61 | 35 |
 | ChatGPT (OpenAI) | 120 | 31 |
 | Grok (xAI) | 63 | 25 |
 | Claude (Anthropic) | 73 | 24 |
-| **Total** | **566** | **204** |
+| **Total** | **566** | **203** |
 
 ## Microsoft Copilot
 
-`vendors/copilot.md` — 54 open of 148 documented.
+`vendors/copilot.md` — 53 open of 148 documented.
 
 **Unresolved — no sourced default, path, or effect:**
 
@@ -55,7 +61,6 @@ network permission. When an item here is blocking a real decision, looking is ch
 - Suggestions matching public code
 - (retention periods for prompts and suggestions)
 - Microsoft usage data (older app — the predecessor of "One shared experience")
-- Import browser data (Bring over your browsing data from Microsoft Edge)
 - Browsing data sync / autofill in Copilot for Windows
 - Visibility of Microsoft 365 Copilot conversations within Copilot
 - Recall additional activity details from App Actions providers (policy: DisableRecallD…
@@ -99,13 +104,13 @@ network permission. When an item here is blocking a real decision, looking is ch
 - Copilot mobile privacy settings
 - (full OS permission list for the Copilot mobile app)
 - Microsoft Family Safety controls over Copilot (under-18 accounts)
-- Text and image generation (app permission)
+- Ask Copilot (taskbar item)
 - Windows app permission pages underlying every AI feature
 - (GitHub Mobile Copilot permissions)
 
 **Reported only — a third party claims it, no primary source:**
 
-- Ask Copilot (taskbar item)
+- Text and image generation (app permission)
 
 ## Google Gemini
 

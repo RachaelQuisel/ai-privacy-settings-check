@@ -311,7 +311,7 @@ The two parallel page sets, concretely:
 - **Recommend:** Verify this is off. The import list includes **passwords and payment info** — this is the single widest data scope of any consumer Copilot toggle.
 - **Risk:** High
 - **Evidence:** https://support.microsoft.com/en-us/privacy/microsoft-copilot/privacy-controls ; https://support.microsoft.com/en-us/microsoft-copilot/privacy-faq-for-microsoft-copilot — checked 2026-10-02
-- **Confidence:** `verified` (exists, scope) / `unresolved` (default)
+- **Confidence:** `verified` — default confirmed **OFF** in the second pass. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 
 - **Setting:** Browsing data sync / autofill in Copilot for Windows
 - **Where:** Copilot app → **Profile** → **Settings** → **Browsing settings** → **Web data and security** → **Privacy**
@@ -1437,7 +1437,7 @@ The two parallel page sets, concretely:
 - **Exposes:** One-click entry to Copilot Vision and Voice from the taskbar. **Hiding the button does not disable Copilot — Win+C still launches it.**
 - **Recommend:** Toggle off to remove the mis-click surface, then remap the key or uninstall the app if you want it actually gone.
 - **Risk:** Medium
-- **Confidence:** `reported`
+- **Confidence:** `verified` for the toggle's existence and location (a Microsoft accessibility page documents it); **`unresolved` for its shipped state**, which Microsoft still does not publish. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 
 - **Setting:** `Text and image generation` *(app permission)*
 - **Where:** Settings → Privacy & security → Text and image generation. No documented `ms-settings:` URI.
@@ -1445,7 +1445,7 @@ The two parallel page sets, concretely:
 - **Exposes:** Which installed apps may invoke Windows' local generative models on your behalf. **Worth knowing: the viral claim that this setting "secretly runs AI and slows your PC" was tested and debunked** — it is a visibility and permission page, not a background workload.
 - **Recommend:** Open it and audit the recent-activity list; deny any app you did not expect. **Do not disable it on performance grounds — that rationale is false.**
 - **Risk:** Medium
-- **Confidence:** `reported` (page existence and path) / `unresolved` (defaults, exact labels)
+- **Confidence:** `reported` for the page itself, which remains third-party-only. **The *absence* is a verified negative:** the page is missing from all three of Microsoft's canonical enumerations, including the current `ms-settings:` URI reference. **Closed in the second pass** — see *Second pass — gap-fill, 2026-10-02* at the end of this file.
 
 - **Setting:** Windows app permission pages underlying every AI feature
 - **Where:** Documented deep links: `ms-settings:privacy-microphone`, `privacy-webcam`, `privacy-documents`, `privacy-pictures`, `privacy-downloadsfolder`, `privacy-broadfilesystemaccess`, **`privacy-graphicscaptureprogrammatic`**, **`privacy-graphicscapturewithoutborder`**, `search-permissions`
