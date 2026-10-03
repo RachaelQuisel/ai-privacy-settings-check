@@ -1,17 +1,17 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "llm-privacy-audit",
-  "description": "LLM Privacy Audit: which of your AI settings are set the way the vendor wanted, not the way you would have chosen.",
+  "name": "ai-privacy-settings-check",
+  "description": "AI Privacy Settings Check: which of your AI settings are set the way the vendor wanted, not the way you would have chosen.",
   "owner": {
     "name": "Rachael Quisel"
   },
   "plugins": [
     {
-      "name": "llm-privacy-audit",
+      "name": "ai-privacy-settings-check",
       "description": "Reviews the privacy settings on your AI accounts and tells you which defaults are costing you something. Every finding carries the date it was checked and whether your account was actually read.",
       "source": "./",
       "category": "security",
-      "homepage": "https://github.com/RachaelQuisel/llm-privacy-audit"
+      "homepage": "https://github.com/RachaelQuisel/ai-privacy-settings-check"
     }
   ]
 }

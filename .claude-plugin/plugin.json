@@ -1,13 +1,13 @@
 {
-  "name": "llm-privacy-audit",
-  "displayName": "LLM Privacy Audit",
+  "name": "ai-privacy-settings-check",
+  "displayName": "AI Privacy Settings Check",
   "description": "Reviews the privacy settings on your AI accounts and tells you which defaults are costing you something. Every finding carries the date it was checked and whether your account was actually read.",
   "version": "1.0.0",
   "author": {
     "name": "Rachael Quisel"
   },
-  "homepage": "https://github.com/RachaelQuisel/llm-privacy-audit",
-  "repository": "https://github.com/RachaelQuisel/llm-privacy-audit",
+  "homepage": "https://github.com/RachaelQuisel/ai-privacy-settings-check",
+  "repository": "https://github.com/RachaelQuisel/ai-privacy-settings-check",
   "license": "MIT",
   "keywords": [
     "privacy",
@@ -18,6 +18,6 @@
     "settings-review"
   ],
   "icon": "./icon.png",
-  "documentationUrl": "https://github.com/RachaelQuisel/llm-privacy-audit#readme",
-  "supportUrl": "https://github.com/RachaelQuisel/llm-privacy-audit/issues"
+  "documentationUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check#readme",
+  "supportUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/issues"
 }

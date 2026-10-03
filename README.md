@@ -1,6 +1,6 @@
-# LLM Privacy Audit
+# AI Privacy Settings Check
 
-LLM Privacy Audit reviews the privacy settings on your AI accounts and tells you which
+AI Privacy Settings Check reviews the privacy settings on your AI accounts and tells you which
 defaults are costing you something.
 
 I built it because the honest answer to "is my ChatGPT training on my client work?" turned
@@ -16,8 +16,8 @@ fine.
 ## Install
 
 ```
-/plugin marketplace add RachaelQuisel/llm-privacy-audit
-/plugin install llm-privacy-audit
+/plugin marketplace add RachaelQuisel/ai-privacy-settings-check
+/plugin install ai-privacy-settings-check
 ```
 
 ## Use
@@ -44,7 +44,7 @@ Each finding carries five things:
 - A citation with the date it was checked.
 - A severity score you can audit, not a vibe.
 
-Here is [a full fictional example](skills/llm-privacy-audit/examples/sample-audit.md).
+Here is [a full fictional example](skills/ai-privacy-settings-check/examples/sample-audit.md).
 
 ## The ten categories
 
@@ -131,7 +131,7 @@ defaults the vendors don't publish, so you check them yourself instead of trusti
 someone made up.
 
 All of it is consolidated in
-[open-questions.md](skills/llm-privacy-audit/references/open-questions.md) — at the last check,
+[open-questions.md](skills/ai-privacy-settings-check/references/open-questions.md) — at the last check,
 **201 of 566 documented settings** had a default, path, or effect that could not be sourced.
 That ratio is high because most vendors document that a setting exists without ever saying what
 it ships as. A vendor near the top of that list isn't more dangerous, it's worse documented.

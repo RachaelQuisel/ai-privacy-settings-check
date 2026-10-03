@@ -1,9 +1,9 @@
 ---
-name: llm-privacy-audit
+name: ai-privacy-settings-check
 description: Audit the privacy and permission settings on AI assistant accounts (ChatGPT, Claude, Gemini, Grok, Copilot, Meta AI) and flag defaults that expose more than the owner intends. Use when someone asks to review, audit, or lock down their AI privacy settings, asks what they should turn off in ChatGPT/Claude/Gemini/Grok/Copilot/Meta AI, asks whether their chats are used for training, or wants an AI data-exposure review for themselves or a client. Read-only — it reports and recommends, never changes a setting.
 ---
 
-# LLM Privacy Audit
+# AI Privacy Settings Check
 
 Review the AI assistant accounts the user names, determine how each one is currently configured, and report which settings expose more than the owner intends — ranked by severity, with the exact path to fix each one.
 
