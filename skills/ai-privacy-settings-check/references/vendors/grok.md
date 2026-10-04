@@ -366,7 +366,7 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 
 - **Setting:** Sharing a Bot
 - **Default:** Not shared. xAI: *"A public share link lets others copy the Bot's configuration. It does not share your computer or logins. Still, do not put secrets, customer data, or internal URLs in a Bot you share."*
-- **Recommend:** Keep credentials, client names and internal hostnames out of Bot instructions entirely.
+- **Recommend:** Keep sign-in details, client names and internal addresses out of Bot instructions entirely.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
@@ -1867,7 +1867,7 @@ for the optional-groups-default-off behaviour in code, and for that dialog being
 production.** Still `unresolved`: Slack, Notion, GitHub and the rest of the "connector catalog" have no
 per-connector doc page and therefore no published scope list — blocked by the catalog being enumerated
 only inside an authenticated `grok.com/connectors` session. A follow-up that would close it without
-credentials is unavailable to me here: the per-group `scopes[]` array is returned by
+a signed-in session is unavailable to me here: the per-group `scopes[]` array is returned by
 `POST /api/connectors/list-connector-scope-groups`, which needs a session.
 
 **What changes for a user:** connecting Outlook, OneDrive or Teams hands Grok write/send authority in a

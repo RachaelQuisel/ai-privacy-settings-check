@@ -10,6 +10,14 @@ The package contains markdown and two JSON manifests. It bundles no MCP servers,
 
 The reference files quote other vendors' settings, command names, and environment-variable names as documentation of those products. Those are descriptions of third-party software for the reader, not instructions the package executes.
 
+### Why an automated scan may flag the vendor files
+
+The subject of this package is credential and permission exposure in other companies' products, so its reference text necessarily contains words like "credentials," "token," and "API key" near those vendors' hostnames. An automated scan reading prose as if it were shell can take that as evidence that the package reads a secret and sends it somewhere.
+
+`references/vendors/grok.md` is the densest example. It quotes xAI's own published warnings verbatim — including the line that files, browser sessions, and command line credentials on a shared Bot computer are available across a user's Bot roster — and it documents xAI's OAuth scope tables, which list scope names such as `refresh_token`. Those quotations are the evidence the audit rests on. Paraphrasing them would make the documentation inaccurate, so they are deliberately left as published.
+
+Nothing in this package reads a secret. There is no code to read one with: the plugin is markdown files, two JSON manifests, an icon, and a license, with no scripts, hooks, MCP servers, or network calls of its own. The https URLs in `plugin.json` are the listing's homepage, repository, documentation, support, and privacy-policy links.
+
 ## Data used in an audit
 
 The skill asks Claude to read the vendor reference files bundled in this repository. When the user asks for a live read, it additionally asks Claude to open that user's own AI account settings pages in a browser the user is already signed into, using browser tooling the user has already installed and permitted, and to record the state of named settings.
