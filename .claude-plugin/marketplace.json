@@ -1,17 +1,17 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "ai-privacy-audit",
-  "description": "AI Privacy Audit: your AI accounts are set the way the vendor wanted, not the way you would have chosen.",
+  "name": "turn-off-ai-data-sharing",
+  "description": "Turn Off AI Data Sharing: your AI tools are sharing more than you think.",
   "owner": {
     "name": "Rachael Quisel"
   },
   "plugins": [
     {
-      "name": "ai-privacy-audit",
-      "description": "Find out which of your AI privacy settings are quietly costing you something. Reads the settings pages in your own browser, rates what it finds, and hands you the exact click path to fix each one. Never changes a setting.",
+      "name": "turn-off-ai-data-sharing",
+      "description": "Find out what your AI accounts are actually sharing, then shut off the parts you never agreed to. Reads the settings pages in your own browser, checks each one against what the vendor documents, and hands you the exact click path to fix it.",
       "source": "./",
       "category": "security",
-      "homepage": "https://github.com/RachaelQuisel/ai-privacy-audit"
+      "homepage": "https://github.com/RachaelQuisel/turn-off-ai-data-sharing"
     }
   ]
 }

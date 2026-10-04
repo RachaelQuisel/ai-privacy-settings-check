@@ -1,4 +1,4 @@
-# AI Privacy Audit
+# Turn Off AI Data Sharing
 
 Your AI tools are sharing more than you think.
 
@@ -31,8 +31,8 @@ fine.
 ## Install
 
 ```
-/plugin marketplace add RachaelQuisel/ai-privacy-audit
-/plugin install ai-privacy-audit
+/plugin marketplace add RachaelQuisel/turn-off-ai-data-sharing
+/plugin install turn-off-ai-data-sharing
 ```
 
 ## Use
@@ -59,7 +59,7 @@ Each finding carries five things:
 - A citation with the date it was checked.
 - A severity score you can audit, not a vibe.
 
-Here is [a full fictional example](skills/ai-privacy-audit/examples/sample-audit.md).
+Here is [a full fictional example](skills/turn-off-ai-data-sharing/examples/sample-audit.md).
 
 ## The ten categories
 
@@ -146,7 +146,7 @@ defaults the vendors don't publish, so you check them yourself instead of trusti
 someone made up.
 
 All of it is consolidated in
-[open-questions.md](skills/ai-privacy-audit/references/open-questions.md). At the last check,
+[open-questions.md](skills/turn-off-ai-data-sharing/references/open-questions.md). At the last check,
 **201 of 566 documented settings** had a default, path, or effect that could not be sourced.
 That ratio is high because most vendors document that a setting exists without ever saying what
 it ships as. A vendor near the top of that list isn't more dangerous, it's worse documented.
