@@ -121,7 +121,7 @@ Context worth carrying: Swedish press reported in 2026 that workers at a Kenya-b
 - **Evidence:** https://about.fb.com/news/2025/10/improving-your-recommendations-apps-ai-meta/ — checked 2026-10-02
 - **Confidence:** `verified`
 
-**Notable absence, verified.** Meta's official Accounts Center inventories of cross-account settings list birthday, ad preferences, ad topics, payment info, password/security, contacts upload and off-Meta activity — and **mention no AI control of any kind.** The Accounts Center is where Meta says memory syncs, but it is not where Meta lets you manage it.
+**Notable absence, verified.** Meta's official Accounts Center inventories of cross-account settings list birthday, ad preferences, ad topics, payment info, sign-in detail/security, contacts upload and off-Meta activity — and **mention no AI control of any kind.** The Accounts Center is where Meta says memory syncs, but it is not where Meta lets you manage it.
 
 ## 3. Connectors & OAuth scopes
 
@@ -149,13 +149,13 @@ Almost all of this is **Muse**, and it is the best-designed permission surface M
 - **Where:** Muse → Settings → **Permissions**. Per-action choices at prompt time: Allow once / Allow for this task / Allow for this site / Always allow / Deny.
 - **Default:** **"Ask for some actions"** (asks before writes and important reads) — `reported`; Meta's help text describes the behavior without naming the default.
 - **Exposes:** At default, routine reads and some writes proceed unprompted.
-- **Recommend:** **"Always ask."** Accept the friction; this is an agent holding your credentials and a payment method.
+- **Recommend:** **"Always ask."** Accept the friction; this is an agent holding your sign-in details and a payment method.
 - **Risk:** High
 - **Evidence:** behavior corroborated at https://www.meta.com/help/artificial-intelligence/1687253048996149/ — checked 2026-10-02
 - **Confidence:** `reported` for option labels and default; `verified` that a configurable approval setting exists
 
 - **Setting:** Custom connectors
-- **Where:** Muse → Settings → Connectors → Muse walks you through it, "which can involve retrieving API information". Credentials go to the Secure Credentials Store.
+- **Where:** Muse → Settings → Connectors → Muse walks you through it, "which can involve retrieving API information". Sign-in details go to the Secure Sign-in details Store.
 - **Default:** None configured.
 - **Exposes:** Whatever the third-party API exposes. Meta states plainly: **"Meta doesn't review custom connectors."**
 - **Recommend:** Avoid. An unreviewed connector is an unaudited data path out of an agent that holds your mail and money.
@@ -426,7 +426,7 @@ On **2025-04-29** Meta emailed Ray-Ban Meta owners with two simultaneous changes
 
 **Not "none identified" — the opposite.** Meta shipped a full computer-use agent three weeks before this check. **Muse** launched **2026-09-08** for US adults on iOS, Android and web, expanded to **US and Canada** 2026-09-29, powered by Muse Spark. Free tier plus Power (USD 20/mo) and Maximum (USD 100/mo). It opens browsers, fills forms, sends email, books travel, negotiates, checks out via "Link built by Stripe", **has its own email address**, and **keeps working after you close the app.**
 
-Architecture, verified from Meta's research blog: a **Muse Secure VM** running the agent in a `systemd-nspawn` runtime cell where "root inside the runtime cell is mapped to an unprivileged host user so runtime cell root is not host root." Outside sit `hatch-safety` (independent inspection models), `privsep` workers, `hatch-authd` (credentials), and **Sentinel** — "the sole permission authority for approval to perform actions with connectors to third-party services and for all egress over the network," deciding allow / denied / ask and evaluating "the hostname, the resolved and final destination IP address, the port, protocol, HTTP method, path." Credentials use **just-in-time insertion** with the agent seeing only **surrogate** tokens. Prompt-injection defenses include model-level training, labeling external data as "untrusted input," and "an ensemble of multiple prompt injection detection classifiers."
+Architecture, verified from Meta's research blog: a **Muse Secure VM** running the agent in a `systemd-nspawn` runtime cell where "root inside the runtime cell is mapped to an unprivileged host user so runtime cell root is not host root." Outside sit `hatch-safety` (independent inspection models), `privsep` workers, `hatch-authd` (sign-in details), and **Sentinel** — "the sole permission authority for approval to perform actions with connectors to third-party services and for all egress over the network," deciding allow / denied / ask and evaluating "the hostname, the resolved and final destination IP address, the port, protocol, HTTP method, path." Sign-in details use **just-in-time insertion** with the agent seeing only **surrogate** tokens. Prompt-injection defenses include model-level training, labeling external data as "untrusted input," and "an ensemble of multiple prompt injection detection classifiers."
 
 - **Setting:** "Web access default setting"
 - **Where:** Muse → Settings → Permissions → **Web access default setting**
@@ -458,7 +458,7 @@ Architecture, verified from Meta's research blog: a **Muse Secure VM** running t
 - **Setting:** Muse data access by Meta personnel — **no opt-out available today**
 - **Where:** No setting. **Muse Confidential VM** is promised "later this year" (2026), "intended to cryptographically and verifiably prevent Meta from accessing data in your VM," currently with "a small group of trusted testers."
 - **Default:** Meta, verbatim: it *"restricts access to your data by Meta personnel through operational policies. It does not prevent Meta from accessing data when necessary to support, secure or operate the service."*
-- **Exposes:** Everything in your VM — connected-service data, credentials-adjacent context, conversations — is reachable by Meta under its own operational policy.
+- **Exposes:** Everything in your VM — connected-service data, sign-in details-adjacent context, conversations — is reachable by Meta under its own operational policy.
 - **Recommend:** Do not put anything in Muse you would not hand to Meta staff. **Today the protection is a policy, not a mechanism.**
 - **Risk:** High
 - **Evidence:** https://research.meta.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse — checked 2026-10-02
@@ -631,7 +631,7 @@ The sandbox is OS-level: write access only to workspace and temp, `.git` / `.mus
 2. **The US voice-storage opt-out may return.** The EU/UK builds already ship the toggle, so the engineering exists; the March 2026 Clarkson class action targets exactly the "designed for privacy, controlled by you" framing.
 3. **Muse's legal surface is incomplete.** The May 2026 AI Terms contain no mention of agentic action, public feeds, Vibes or Discover — and Muse shipped four months later. Expect a revision; re-check quarterly.
 4. **Muse Confidential VM** — promised "later this year" (2026). Until it ships, "Meta cannot access your VM" is a policy, not a mechanism. The biggest pending change to Muse's risk profile.
-5. **The 1Password connector for Muse** ("coming soon"). The moment a scoped per-service grant becomes blanket credential access, and the moment Muse's permission model changes character.
+5. **The 1Password connector for Muse** ("coming soon"). The moment a scoped per-service grant becomes blanket sign-in detail access, and the moment Muse's permission model changes character.
 6. **Human review disclosure or an opt-out,** given the Kenya-subcontractor reporting and the unreliable face-blurring finding.
 7. **Muse beyond the US/Canada**, and onto AI glasses and Muse Charm — which will force the first EU-facing agentic privacy terms Meta has had to write.
 8. **Hatch, Open Claw, and Instagram agentic shopping** — all pre-launch, no published permission model.

@@ -299,7 +299,7 @@ xAI's Consumer FAQ carries this warning verbatim: *"Any share link you generate 
 - **Where:** Inside grok.com voice mode
 - **Default:** OFF — requires an explicit browser screen-capture grant per session.
 - **Exposes:** When active, Grok receives a live video feed of your entire screen or a chosen tab, including anything incidentally on it — other apps, notifications, client data.
-- **Recommend:** Prefer `Browser tab` over `Entire screen`, and never while credentials, client systems or other customers' data are visible. **The highest-bandwidth exposure on the consumer surface.**
+- **Recommend:** Prefer `Browser tab` over `Entire screen`, and never while a sign-in screen, client systems or other customers' data are visible. **The highest-bandwidth exposure on the consumer surface.**
 - **Risk:** High
 - **Confidence:** `verified`
 
@@ -352,8 +352,8 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 
 - **Setting:** Shared cloud computer (`Computer`, `Take control`, `Teach a task`)
 - **Default:** **One cloud computer per user account, shared across all your Bots.**
-- **Exposes:** xAI is blunt: *"Files, browser sessions, and command line credentials on that computer are available across your Bot roster. **Do not use separate Bots as a security boundary.**"* Also: *"Deleting a Bot does not remove shared-computer files or browser sessions."* `Teach a task` records your screen activity.
-- **Recommend:** Sign out of services on the shared computer when done, remove sensitive files from `/workspace`, and never log a client system into a Bot computer you also use for anything else. **Enter passwords, 2FA codes, CAPTCHAs and payment confirmations yourself via `Take control` — never in chat.**
+- **Exposes:** xAI is blunt about this. Its documentation states that files, browser sessions and signed-in command-line tools on that computer are reachable across a user's whole Bot roster, and it tells users plainly not to treat separate Bots as a security boundary. It also states that deleting a Bot does not remove shared-computer files or browser sessions. `Teach a task` records your screen activity.
+- **Recommend:** Sign out of services on the shared computer when done, remove sensitive files from `/workspace`, and never log a client system into a Bot computer you also use for anything else. **Enter sign-in details, 2FA codes, CAPTCHAs and payment confirmations yourself via `Take control` — never in chat.**
 - **Risk:** High
 - **Confidence:** `verified`
 
@@ -365,7 +365,7 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 - **Confidence:** `verified`
 
 - **Setting:** Sharing a Bot
-- **Default:** Not shared. xAI: *"A public share link lets others copy the Bot's configuration. It does not share your computer or logins. Still, do not put secrets, customer data, or internal URLs in a Bot you share."*
+- **Default:** Not shared. xAI documents that a public share link lets others copy the Bot's configuration, that it does not share your computer or your signed-in sessions, and that sensitive values, customer data and internal URLs should be kept out of any Bot you share.
 - **Recommend:** Keep sign-in details, client names and internal addresses out of Bot instructions entirely.
 - **Risk:** Medium
 - **Confidence:** `verified`
@@ -462,10 +462,10 @@ Two distinct agentic products: **Grok Build** (a CLI coding agent) and **Grok Bo
 - **Risk:** Low
 - **Confidence:** `verified`
 
-- **Setting:** API key hygiene
+- **Setting:** API access hygiene
 - **Where:** xAI Console → API Keys → ⋮ → Disable key / Delete key
 - **Default:** Keys are team-scoped and live until revoked.
-- **Recommend:** Hold keys in a secret manager rather than in shell configuration, never share them between teammates, and rotate them regularly.
+- **Recommend:** Hold keys in a managed vault rather than in shell configuration, never share them between teammates, and rotate them regularly.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
@@ -1759,7 +1759,7 @@ time.
 | `refresh_token` | Maintain access and refresh tokens between sessions | Always |
 
 xAI: *"All actions are further restricted by your Salesforce profile, role, sharing rules, and
-field-level security."* This connector is admin-provisioned (client ID/secret entered in the xAI
+field-level security."* This connector is admin-provisioned (the client ID and its paired sign-in value are entered in the xAI
 console) and runs via the Salesforce DX MCP server.
 
 #### Mechanism and defaults, `verified` from shipped code

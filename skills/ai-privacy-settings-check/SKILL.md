@@ -30,7 +30,7 @@ Ten categories. Cover every one that applies to the products in scope, and say "
 
 Ask which products are in scope and whether the subject is on a free, paid, team, or enterprise plan — plan tier changes both the defaults and which settings an admin has locked. Default roster: ChatGPT, Claude, Gemini, Grok (both grok.com and the separate X-side toggle), Microsoft Copilot, Meta AI.
 
-**The person running this skill must be the account owner, or be sitting with them.** Never ask for, accept, or use someone else's credentials. If the subject is a client, they run it on their machine or they drive while you read. State this before starting a live read.
+**The person running this skill must be the account owner, or be sitting with them.** Never ask for, accept, or use someone else's sign-in details. If the subject is a client, they run it on their machine or they drive while you read. State this before starting a live read.
 
 ### 2. Read the documented baseline
 

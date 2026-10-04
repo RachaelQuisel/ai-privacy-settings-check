@@ -114,7 +114,7 @@ choose to allow it**."
 
 **Confidence:** `verified`
 
-**What changes for a user:** Copilot does not pull Edge history/passwords/form data until the user
+**What changes for a user:** Copilot does not pull Edge history/sign-in details/form data until the user
 opts in — this is one of the few consumer Copilot switches that ships closed.
 
 ---
@@ -159,10 +159,10 @@ Two separable things, and Microsoft is only explicit about the first two:
 1. **Edge browser-data import toggle** — off by default (see item 2). `verified`
 2. **Edge cookie import at launch** — "works only when you choose to allow it". `verified`
 3. **Full browser-data sync** — "When you are signed in, Copilot provides an option to sync all
-   your history, favorites, passwords and other browser data…" Described as an *option*; **no
+   your history, favorites, [sign-in details] and other browser data…" Described as an *option*; **no
    default state given.** `unresolved`
 
-Getting started with Copilot on Windows mentions "you can sync passwords and form data so it's
+Getting started with Copilot on Windows mentions "you can sync [sign-in details] and form data so it's
 easier to work within Copilot" and qualifies it "if you choose to enable it" — opt-in phrasing,
 but still not an explicit default. "Browse with Copilot" documents what Copilot accesses
 (screenshots, cookies, open tabs, site permissions) and states **no** defaults at all.
@@ -765,23 +765,23 @@ inferred from primary wording without an explicit statement.
   180-day window — it will never answer "what did someone paste into Copilot", so prompt-level forensics
   needs a different control.
 
-##### 14. Cloud-agent secrets access
-- **Resolved default:** **Deny by construction.** Only the **Agents**-type secrets and variables are
+##### 14. Cloud-agent sensitive values access
+- **Resolved default:** **Deny by construction.** Only the **Agents**-type sensitive values and variables are
   visible to the Copilot cloud agent; verbatim: "Copilot cloud agent does not have access to GitHub
-  Actions, Codespaces, or Dependabot secrets and variables." Agents-type values are "exposed to the agent
+  Actions, Codespaces, or Dependabot [sensitive values] and variables." Agents-type values are "exposed to the agent
   as environment variables in its development environment." MCP servers read only values "prefixed with
   `COPILOT_MCP_`, which are only available to MCP servers." Migration note (the one way an org can have
-  inherited exposure it did not re-consent to): "If you previously configured secrets or variables in the
-  `copilot` environment in a repository's GitHub Actions settings, those secrets and variables have been
+  inherited exposure it did not re-consent to): "If you previously configured [sensitive values] or variables in the
+  `copilot` environment in a repository's GitHub Actions settings, those [sensitive values] and variables have been
   automatically migrated to the new repository-level **Agents** type."
 - **Lockable?** Effectively yes — nothing is readable unless someone explicitly creates it as an Agents
-  secret/variable; there is no blanket allow to turn off.
+  sensitive value/variable; there is no blanket allow to turn off.
 - **Evidence:** https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/configure-secrets-and-variables
   · checked 2026-10-02.
 - **Confidence:** High (verified).
-- **For an admin:** Audit the **Agents** secret scope per repo (and anything auto-migrated out of the old
-  `copilot` Actions environment) — that list *is* the agent's credential surface; your Actions and
-  Dependabot secrets are out of reach.
+- **For an admin:** Audit the **Agents** sensitive value scope per repo (and anything auto-migrated out of the old
+  `copilot` Actions environment) — that list *is* the agent's sign-in detail surface; your Actions and
+  Dependabot sensitive values are out of reach.
 
 ##### 15. Enterprise-policy lock semantics — **RESOLVED**
 - **Resolved default:** An organization **cannot** override a policy the enterprise has set. Verbatim from

@@ -174,7 +174,7 @@ Group labels, verbatim: `Google Workspace` (Gmail, Calendar, Drive, Docs, Sheets
 - **Setting:** Third-party Connected Apps, including custom **MCP servers**
 - **Where:** https://gemini.google.com/apps ; roster at https://support.google.com/gemini/table/17434654
 - **Default:** Not connected until you authorize.
-- **Exposes:** Google explicitly disclaims responsibility: *"Before connecting a custom third-party Model Context Protocol (MCP) server… make sure you trust that third-party and understand the supported actions. **Google does not control, monitor, or secure these servers.**"* And: *"Choosing to connect them may expose your data, passwords, devices, and accounts to unauthorized access."* Third parties *"process your data according to their own privacy policies"* — **Google's no-ads and review commitments do not travel with it.**
+- **Exposes:** Google explicitly disclaims responsibility: *"Before connecting a custom third-party Model Context Protocol (MCP) server… make sure you trust that third-party and understand the supported actions. **Google does not control, monitor, or secure these servers.**"* And: *"Choosing to connect them may expose your data, [sign-in details], devices, and accounts to unauthorized access."* Third parties *"process your data according to their own privacy policies"* — **Google's no-ads and review commitments do not travel with it.**
 - **Recommend:** Treat every third-party connector and MCP server as a full data egress outside all of Google's commitments. Connect none you would not sign a DPA with.
 - **Risk:** High
 - **Evidence:** https://support.google.com/gemini/answer/13594961#connected_apps — checked 2026-10-02
@@ -351,7 +351,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Setting:** Agentic Calling (`Call for me`)
 - **Where:** Gemini mobile app → ask Gemini to call a business → tap `Call for me`. Records land in Phone by Google history.
 - **Default:** Requires an explicit tap plus acceptance of three agreements. **Your microphone is muted by default** during the call. US numbers only; eligible Pixel devices.
-- **Exposes:** **Calls are recorded.** Verbatim: *"Gemini starts every call by disclosing that it's an AI assistant from Google calling on a recorded line on your behalf, stating your name."* Before dialing it shows what it plans to share — *"name, email, phone number, or other relevant details"* — and requires approval; it will not disclose card numbers or passwords. **Transcripts are stored on Google servers; audio recordings are not retained server-side.** Local copies of both remain on-device in Phone by Google. *"Google does not use these recordings or transcripts to train AI models."*
+- **Exposes:** **Calls are recorded.** Verbatim: *"Gemini starts every call by disclosing that it's an AI assistant from Google calling on a recorded line on your behalf, stating your name."* Before dialing it shows what it plans to share — *"name, email, phone number, or other relevant details"* — and requires approval; it will not disclose card numbers or sign-in details. **Transcripts are stored on Google servers; audio recordings are not retained server-side.** Local copies of both remain on-device in Phone by Google. *"Google does not use these recordings or transcripts to train AI models."*
 - **Recommend:** Treat as a recorded call: two-party-consent jurisdictions, client confidentiality, and the fact that **a recording of a third party who never consented now exists on your device.** Purge from Phone history after use.
 - **Risk:** High
 - **Evidence:** https://support.google.com/gemini/answer/18336420 — checked 2026-10-02
@@ -386,7 +386,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Confidence:** `verified` (gating, permissions, logged-in-session access, kill switch) / `unresolved` (per-user default once subscribed)
 
 - **Setting:** Spark confirmation gates
-- **Default:** Confirmation required before *"Sending communications, modifying your data, making purchases, and submitting web forms"* and before *"Signing in to websites using Sign in with Google."* `Take control` mode requires you to personally enter passwords or payment details. Per-task Stop; 15 concurrent task cap.
+- **Default:** Confirmation required before *"Sending communications, modifying your data, making purchases, and submitting web forms"* and before *"Signing in to websites using Sign in with Google."* `Take control` mode requires you to personally enter sign-in details or payment details. Per-task Stop; 15 concurrent task cap.
 - **Exposes:** **One documented gap:** *"Gemini can perform bulk actions on private tasks in Google Tasks without your confirmation."* Screenshots taken during automation *"are reviewed by trained reviewers and used to improve Google services if Keep Activity is on."*
 - **Recommend:** The gates are reasonable, but note the Tasks carve-out and that Spark's screenshots enter human review. **Since Spark requires `Keep Activity` ON, you cannot run the agent and opt out of training/review — that coupling is the structural problem.**
 - **Risk:** High
@@ -402,8 +402,8 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Setting:** `Let Gemini browse for you` *(Chrome auto browse)*
 - **Where:** Chrome → Settings → AI innovations → Gemini in Chrome → Permissions. `chrome://settings/ai/gemini`
 - **Default:** Gated — US only, 18+, AI Pro or Ultra, personal account, Safe Browsing on, latest Chrome, English. Per-user default once eligible: **`unresolved`**.
-- **Exposes:** Multi-step tasks across arbitrary sites; with permission it uses Google Password Manager to sign in (Google states it does not share your passwords with Gemini or with sites). Presents a plan for review, then requests confirmation for sending communications, modifying data, submitting forms, scheduling events, and finalizing financial transactions. Visited sites appear in Chrome history with a distinguishing icon.
-- **Recommend:** Keep off; separately revoke the Password Manager auto-sign-in permission.
+- **Exposes:** Multi-step tasks across arbitrary sites; with permission it uses Google Sign-in detail Manager to sign in (Google states it does not share your sign-in details with Gemini or with sites). Presents a plan for review, then requests confirmation for sending communications, modifying data, submitting forms, scheduling events, and finalizing financial transactions. Visited sites appear in Chrome history with a distinguishing icon.
+- **Recommend:** Keep off; separately revoke the Sign-in detail Manager auto-sign-in permission.
 - **Risk:** High
 - **Evidence:** https://support.google.com/chrome/answer/16821166 — checked 2026-10-02
 - **Confidence:** `verified` (controls, gates) / `unresolved` (default once eligible)
@@ -411,7 +411,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Setting:** `Screen automation` in Android apps — **no dedicated toggle found**
 - **Default:** **`unresolved`** — no on/off control documented.
 - **Exposes:** Verbatim: *"Gemini can help with tasks, like placing orders or booking rides, using screen automation on certain apps on your device."* It captures **screenshots that may contain visible information**, which *"are reviewed by trained reviewers and used to improve Google services if Keep Activity is on."* Google cautions against entering login or payment details and against using it for emergencies.
-- **Recommend:** Do not use for anything involving credentials or payment. Turn `Keep Activity` off to keep the screenshots out of human review.
+- **Recommend:** Do not use for anything involving sign-in details or payment. Turn `Keep Activity` off to keep the screenshots out of human review.
 - **Risk:** High
 - **Confidence:** `verified` (behavior, human review) / `unresolved` (whether a toggle exists)
 
@@ -593,7 +593,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 ### 9a. Google AI Studio / Gemini Developer API — the tier IS the privacy setting
 
 - **Setting:** Billing Tier (Free → Paid)
-- **Where:** Google AI Studio → API keys → *Billing Tier* column → Set up billing. https://aistudio.google.com/apikey
+- **Where:** Google AI Studio → API access values → *Billing Tier* column → Set up billing. https://aistudio.google.com/apikey
 - **Default:** **Free Tier.** Verbatim: *"New accounts begin on the Free Tier."*
 - **Exposes:** On Free Tier, verbatim: *"When you use Unpaid Services, including, for example, Google AI Studio and the unpaid quota on Gemini API, Google uses the content you submit to the Services and any generated responses to provide, improve, and develop Google products and services and machine learning technologies."* Every prompt, system instruction, cached content, uploaded file and response flows into product and model development.
 - **Recommend:** Link a billing account to the specific project before putting anything real through it. **Paid tier is the only documented way to stop product-improvement use. There is no opt-out toggle on the free tier.**
@@ -602,7 +602,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Confidence:** `verified`
 
 - **Setting:** Human review on the free tier — **no opt-out**
-- **Default:** Active on Free Tier. Verbatim: *"To help with quality and improve our products, human reviewers may read, annotate, and process your API input and output… This includes disconnecting this data from your Google Account, API key, and Cloud project before reviewers see or annotate it. Do not submit sensitive, confidential, or personal information to the Unpaid Services."*
+- **Default:** Active on Free Tier. Verbatim: *"To help with quality and improve our products, human reviewers may read, annotate, and process your API input and output… This includes disconnecting this data from your Google Account, [API access value], and Cloud project before reviewers see or annotate it. Do not submit sensitive, confidential, or personal information to the Unpaid Services."*
 - **Exposes:** De-identification is **account-level only** — it does not redact content.
 - **Recommend:** Never send client data, source code or PII through a free-tier key.
 - **Risk:** High
@@ -623,8 +623,8 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 
 - **Setting:** What makes AI Studio "Paid" — **project-scoped, and this changed**
 - **Default:** Current verbatim: *"Your access to Google AI Studio is a 'Paid Service' even when it is offered free of charge, as long as the account you are using to access Google AI Studio has access to a Cloud Project with an associated and active Cloud Billing account or is a Workspace enterprise account. Your access to Gemini API is a 'Paid Service' only when accessing the API through a Cloud Project associated with an active billing account."* The Sept 2025 version read *"When you activate a Cloud Billing account, all use of Gemini API and Google AI Studio is a 'Paid Service.'"*
-- **Exposes:** **A trap.** A developer with billing on one project gets Paid protection in the AI Studio **UI**, but an API key minted in a **different, non-billed project is still Unpaid** and gets trained on.
-- **Recommend:** **Audit each API key's project individually, not the account.**
+- **Exposes:** **A trap.** A developer with billing on one project gets Paid protection in the AI Studio **UI**, but an API access value minted in a **different, non-billed project is still Unpaid** and gets trained on.
+- **Recommend:** **Audit each API access value's project individually, not the account.**
 - **Risk:** High
 - **Evidence:** https://ai.google.dev/gemini-api/terms ; https://web.archive.org/web/20251005134032/https://ai.google.dev/gemini-api/terms — checked 2026-10-02
 - **Confidence:** `verified`
@@ -709,7 +709,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 
 - **Setting:** VPC Service Controls perimeter
 - **Default:** **No perimeter.** Verbatim: *"By default, these public APIs are reachable from the internet; however, IAM permissions are required for use."* And: *"Private Service Connect… and Private Google Access… don't eliminate public internet accessibility for Agent Platform APIs."*
-- **Exposes:** Without a perimeter, a leaked credential is usable from anywhere on the internet; training data, models, inference requests and batch results can egress.
+- **Exposes:** Without a perimeter, a leaked sign-in detail is usable from anywhere on the internet; training data, models, inference requests and batch results can egress.
 - **Recommend:** Put Agent Platform inside a VPC-SC perimeter. Abuse-monitoring logs are stated to adhere to VPC-SC.
 - **Risk:** High without it
 - **Confidence:** `verified`
@@ -763,8 +763,8 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 - **Confidence:** `verified`
 
 - **Setting:** Which terms govern Gemini CLI now
-- **Default:** With Google-account login removed, the live paths are a **Gemini Developer API key** (→ Gemini API ToS, Unpaid or Paid per the key's project billing) or a **Vertex AI key** (→ GCP Platform ToS).
-- **Exposes:** **A Gemini CLI user on a free Developer API key is squarely under Unpaid Services** — prompts and responses used for product improvement and subject to human review. **The highest-value fix for anyone pointing Gemini CLI at client code.**
+- **Default:** With Google-account login removed, the live paths are a **Gemini Developer API access value** (→ Gemini API ToS, Unpaid or Paid per the key's project billing) or a **Vertex AI key** (→ GCP Platform ToS).
+- **Exposes:** **A Gemini CLI user on a free Developer API access value is squarely under Unpaid Services** — prompts and responses used for product improvement and subject to human review. **The highest-value fix for anyone pointing Gemini CLI at client code.**
 - **Recommend:** Link billing to the specific key's project, or use a Vertex key.
 - **Risk:** High
 - **Confidence:** `verified`. Note `docs/resources/tos-privacy.md` on the CLI's `main` branch is **stale** — it still documents the retired Google-account login path, contradicting the deprecation page.
@@ -845,7 +845,7 @@ Current third-party roster (abridged): Adobe, Canva, Picsart, Squarespace, Webfl
 | **Entire Workspace admin help corpus moved**: `support.google.com/a/*` → `knowledge.workspace.google.com` | ~2026-10-01 | Any tooling pinned to `support.google.com/a/` will break |
 | **Vertex abuse-logging 30 → 90 days**; self-serve opt-out removed; form now `/closedform`; invoiced-billing exemption removed | since May 2025 | A 3× retention increase plus loss of the documented opt-out |
 | **Vertex AI generative AI → "Gemini Enterprise Agent Platform"**; Cloud docs → `docs.cloud.google.com` | 2026 | The old data-governance page no longer exists |
-| **Gemini API ToS rewritten**; Paid status became **project-scoped for API keys** while AI Studio follows the account | effective 2026-03-23 | Creates the key-in-unbilled-project trap |
+| **Gemini API ToS rewritten**; Paid status became **project-scoped for API access values** while AI Studio follows the account | effective 2026-03-23 | Creates the key-in-unbilled-project trap |
 | **Code Assist individuals / AI Pro / AI Ultra tiers retired**, incl. that login path for Gemini CLI | 2026-06-18 | The old free-tier opt-out toggle no longer exists |
 | **Vault retention rules + litigation holds for the Gemini app** GA | June 2026 | Previously search/export only |
 | **Data regions support for the Gemini app** GA | 2026-06-29 | Enterprise Plus, Education Plus/Standard, Frontline Plus only |

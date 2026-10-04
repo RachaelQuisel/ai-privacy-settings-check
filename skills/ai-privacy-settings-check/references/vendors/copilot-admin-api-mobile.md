@@ -39,7 +39,7 @@
 - **Where:** Repository Settings → Copilot → Content exclusion · Organization Settings → Copilot → Content exclusion · Enterprise → AI controls → Copilot → Content exclusion. YAML forms: `- "/PATH"`, or `"*": ["/PATH"]` / `REPOSITORY-REFERENCE:`.
 - **Default:** **No exclusions configured** at any level.
 - **Exposes:** When set, *"Inline suggestions will not be available in the affected files."* **Three documented leaks:** *"It's possible that Copilot may use semantic information from an excluded file if the information is provided by the IDE indirectly. Examples of such content include type information and hover-over definitions for symbols."* Exclusions *"currently do not apply to symbolic links or remote filesystem repositories."* And chat/agent coverage is partial — supported in Visual Studio, **VS Code Chat (not Edit or Agent modes)**, JetBrains, github.com, GitHub Mobile, the Copilot app and the CLI; **not supported** for chat/agent in Xcode or Eclipse. Propagation takes *"up to 30 minutes."*
-- **Recommend:** Exclude secrets directories, customer-data fixtures and vendored third-party code — **but do not treat it as a boundary: type information still leaks, and VS Code Agent mode ignores it entirely, which is exactly where an agent has the most reach.**
+- **Recommend:** Exclude sensitive values directories, customer-data fixtures and vendored third-party code — **but do not treat it as a boundary: type information still leaks, and VS Code Agent mode ignores it entirely, which is exactly where an agent has the most reach.**
 - **Risk:** High *(because the gaps are in the highest-capability modes)*
 - **Evidence:** https://docs.github.com/en/copilot/concepts/security-governance-and-network-settings/content-exclusion — checked 2026-10-02
 - **Confidence:** `verified`
@@ -112,7 +112,7 @@
 - **Where:** Win32 API (`winuser.h`)
 - **Default:** Not set — windows are capturable by default.
 - **Exposes:** The developer-side opt-out: *"By setting the flag `WDA_EXCLUDEFROMCAPTURE`, the window content won't show up in Recall or any other screenshot application."*
-- **Recommend:** **If you ship a Windows app handling secrets or client data, set this.** It is the only mechanism that protects your users regardless of **their** Recall settings — and the one thing a consultant building client tooling can actually control.
+- **Recommend:** **If you ship a Windows app handling sensitive values or client data, set this.** It is the only mechanism that protects your users regardless of **their** Recall settings — and the one thing a consultant building client tooling can actually control.
 - **Risk:** Low as a control; High if omitted from a sensitive app
 - **Confidence:** `verified`
 
@@ -276,7 +276,7 @@
 5. **Vision — screen and mobile camera sharing — is on by default in the tenant**, bypassing every file-level permission you configured, because it captures rendered pixels.
 6. **`User access` defaults to All users** — verbatim: *"**All users** - This option is the default."* Out of the box every licensed user can reach agents and plugins, including external-publisher agents and MCP servers. ⚠️ **Correction to an earlier reading of this file:** "All users" is the default of **`User access`**, *not* of the adjacent **`Agent and plugin access`** setting — they are two different controls on the same Agents → Settings page, and the latter (three per-publisher allow switches) has **no documented default at all**. Do not cite one as the other.
 7. **Web search is on by default and it leaves the DPA, HIPAA and the EU Data Boundary.** The green shield in the UI does not communicate this.
-8. **Copilot Studio computer use defaults to maker credentials and an unrestricted allow-list** — *"anyone using it can act with the original author's access"* on *"any website or application."*
+8. **Copilot Studio computer use defaults to maker sign-in details and an unrestricted allow-list** — *"anyone using it can act with the original author's access"* on *"any website or application."*
 9. **GitHub Copilot cloud agent is enabled in all repositories by default**, and its sessions are **shared by default** to anyone with repo access.
 10. **The Azure OpenAI abuse-monitoring opt-out is not available to self-serve customers** — only *"customers and partners managed by a Microsoft account team or under an eligible program."*
 

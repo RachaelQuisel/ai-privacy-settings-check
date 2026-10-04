@@ -89,7 +89,7 @@ documentation — is worth as much as a positive.
 - Files — Allow Always / Ask every time / Never allow (per agent)
 - Settings agentic search experience — DisableSettingsAgent
 - Allow Recall to be enabled — AllowRecallEnablement (cross-referenced here; full admin…
-- Stored credentials (computer use) and Enforce HTTPS
+- Stored sign-in details (computer use) and Enforce HTTPS
 - Human supervision (computer use)
 - Repository access (Copilot cloud agent)
 

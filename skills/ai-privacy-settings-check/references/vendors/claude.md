@@ -86,7 +86,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 
 - **Setting:** "How is Claude doing this session?" survey → *"Can Anthropic look at your session transcript to help us improve Claude Code?"*
 - **Where:** Claude Code CLI. Opt out: `CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1`; also suppressed by `DISABLE_TELEMETRY`, `DO_NOT_TRACK`, `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`. Rate-limit via `feedbackSurveyRate`.
-- **Default:** **On for every provider**, including Bedrock/Vertex/Foundry where other telemetry is off. The rating alone stores no transcript. Answering **Yes** uploads your conversation transcript, subagent transcripts, and the raw on-disk session log. API keys and token patterns are redacted, but *"Source code, file contents, and other conversation content are uploaded as-is."* Shared transcripts retained **up to 6 months**. Not used for training.
+- **Default:** **On for every provider**, including Bedrock/Vertex/Foundry where other telemetry is off. The rating alone stores no transcript. Answering **Yes** uploads your conversation transcript, subagent transcripts, and the raw on-disk session log. API access values and token patterns are redacted, but *"Source code, file contents, and other conversation content are uploaded as-is."* Shared transcripts retained **up to 6 months**. Not used for training.
 - **Exposes:** One mis-click on "Yes" ships a full session transcript with source code to Anthropic.
 - **Recommend:** `CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY=1`, or answer "Don't ask again".
 - **Risk:** High
@@ -365,7 +365,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Setting:** Claude Code local session transcripts / `cleanupPeriodDays`
 - **Where:** `~/.claude/projects/` on disk; period set via `cleanupPeriodDays`
 - **Default:** *"Claude Code clients store session transcripts locally in plaintext under `~/.claude/projects/` for 30 days by default."* Transcripts from sessions started or last continued in Claude Desktop or Cowork are **exempt from that limit by default**.
-- **Exposes:** Plaintext copies of every session — including secrets you pasted — on your disk, and in Cowork's case indefinitely. Cowork local history is *"not subject to Anthropic's standard data retention policies, and admins cannot centrally manage or delete it."*
+- **Exposes:** Plaintext copies of every session — including sensitive values you pasted — on your disk, and in Cowork's case indefinitely. Cowork local history is *"not subject to Anthropic's standard data retention policies, and admins cannot centrally manage or delete it."*
 - **Recommend:** Lower `cleanupPeriodDays`, ensure FileVault/BitLocker, clear `~/.claude/projects/` after sensitive engagements.
 - **Risk:** High
 - **Evidence:** https://code.claude.com/docs/en/data-usage ; https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans — checked 2026-10-02
@@ -413,7 +413,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Where:** Cowork / computer use; enabling toggle in §7
 - **Default:** When computer use runs: *"computer use will process and collect screenshots from the computer's display that Claude uses to interpret and interact with the interface, along with the user's Inputs and Outputs."* Screenshots go to Anthropic's backend; *"Anthropic will automatically delete all screenshots from our backend within 30 days, unless the customer and Anthropic have agreed to different terms."*
 - **Exposes:** Images of whatever was on screen — other apps, open tabs, notifications — uploaded and held 30 days.
-- **Recommend:** Close unrelated windows and password managers before any computer-use session. The most under-appreciated exposure in the agentic surface.
+- **Recommend:** Close unrelated windows and sign-in detail managers before any computer-use session. The most under-appreciated exposure in the agentic surface.
 - **Risk:** High
 - **Evidence:** https://privacy.claude.com/en/articles/10030352-what-personal-data-will-be-processed-by-computer-use — checked 2026-10-02
 - **Confidence:** `verified`
@@ -460,15 +460,15 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Where:** Settings → General (under Desktop app) → **Enable computer use**. macOS 15+ defaults to background access; **Full control** mode is in the same menu.
 - **Default:** **Pro and Max only** — *"Team and Enterprise plans don't have access to computer use at this time."* Claude *"asks for your permission before accessing each application"* and you *"must approve before Claude can interact with that app."* Access order: connectors → browser → screen interaction. *"Some apps are off-limits by default,"* specifically *"investment and trading platforms, cryptocurrency."* You can also *"Prevent Claude from accessing certain apps by adding them to a blocklist."*
 - **Exposes:** Screen-level access to approved apps, with screenshots uploaded and kept 30 days (§6).
-- **Recommend:** Off unless actively needed; stay on background access rather than Full control; blocklist password managers, banking and messaging apps.
+- **Recommend:** Off unless actively needed; stay on background access rather than Full control; blocklist sign-in detail managers, banking and messaging apps.
 - **Risk:** High
 - **Evidence:** https://support.claude.com/en/articles/14128542-let-claude-use-your-computer-in-cowork — checked 2026-10-02
 - **Confidence:** `verified` on availability, defaults, path; `unresolved` on exact wording of the per-app permission prompt
 
 - **Setting:** 1Password integration *(Claude in Chrome)*
 - **Where:** Organization settings → Claude in Chrome
-- **Default:** **Off.** Allows credential filling for sign-in tasks on macOS.
-- **Exposes:** On, an agent can retrieve and type credentials from your password manager.
+- **Default:** **Off.** Allows sign-in detail filling for sign-in tasks on macOS.
+- **Exposes:** On, an agent can retrieve and type sign-in details from your sign-in detail manager.
 - **Recommend:** Keep off. **Admin-lockable:** members cannot override.
 - **Risk:** High
 - **Evidence:** https://support.claude.com/en/articles/13065128-claude-in-chrome-admin-controls — checked 2026-10-02
@@ -561,7 +561,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Where:** https://platform.claude.com/docs/en/manage-claude/compliance-api
 - **Default:** Claude Enterprise and Claude Console customers. Covers the Activity Feed; for Enterprise also the directory of users/roles/groups across linked orgs, effective settings per org, **the underlying chats, files and projects** in claude.ai orgs, and Cowork, Claude Code, Claude Science, Claude for Microsoft 365 and Claude in Chrome sessions.
 - **Exposes:** Programmatic read access to member conversation content and agent session transcripts — far broader than the CSV audit-log export.
-- **Recommend:** Members on Enterprise should assume chat content is retrievable by their organization. Admins: scope and log Compliance API credentials like any SIEM integration.
+- **Recommend:** Members on Enterprise should assume chat content is retrievable by their organization. Admins: scope and log Compliance API sign-in details like any SIEM integration.
 - **Risk:** High
 - **Evidence:** https://platform.claude.com/docs/en/manage-claude/api-and-data-retention — checked 2026-10-02
 - **Confidence:** `verified` on scope and retention; the Compliance API page itself not fetched directly
@@ -579,7 +579,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 
 - **Setting:** Zero data retention (ZDR)
 - **Where:** Sales/account-team gated. Verify at **Settings → Privacy Controls → Data retention period**.
-- **Default:** **Not enabled.** Standard is 30-day retention. Covers *"eligible Anthropic APIs, Anthropic products that use your Commercial organization API key (including Claude Code accessed via the API), and Claude Code for Enterprise plans."* Explicitly **not** in the standard Enterprise plan — *"it is enabled on a per-organization basis by your account team after confirming eligibility."* Consumer plans don't qualify.
+- **Default:** **Not enabled.** Standard is 30-day retention. Covers *"eligible Anthropic APIs, Anthropic products that use your Commercial organization [API access value] (including Claude Code accessed via the API), and Claude Code for Enterprise plans."* Explicitly **not** in the standard Enterprise plan — *"it is enabled on a per-organization basis by your account team after confirming eligibility."* Consumer plans don't qualify.
 - **Exposes:** Without it, prompts and responses sit at rest 30 days. **With it, these still persist:** *"User Safety classifier results in order to enforce our Usage Policy"*; flagged inputs/outputs **up to 2 years**; Covered Models' mandatory retention. Stateful features are not ZDR-eligible — code execution and programmatic tool calling retain container data **up to 30 days**, and using one *"is a choice to step outside your ZDR arrangement for that specific data."* Web search and web fetch are ZDR-eligible, but their **dynamic filtering** is not.
 - **Recommend:** Pursue ZDR, then audit which API features you actually call — a single `code_execution` call silently exits the arrangement.
 - **Risk:** High *(without it)*
@@ -625,7 +625,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Setting:** `DISABLE_ERROR_REPORTING`
 - **Where:** Environment variable, or `settings.json`
 - **Default:** **On only when all of:** you sign in with a **Pro or Max** subscription, run **v2.1.198 or later**, connect directly to the Claude API, and your org has no ZDR or HIPAA agreement. Off on all third-party providers.
-- **Exposes:** Error messages and stack traces from Claude Code internals to a third-party error-tracking service. *"Claude Code redacts known patterns of secrets, file paths, email addresses, and other personal information before anything leaves your machine"* — known patterns, so not a guarantee.
+- **Exposes:** Error messages and stack traces from Claude Code internals to a third-party error-tracking service. *"Claude Code redacts known patterns of [sensitive values], file paths, email addresses, and other personal information before anything leaves your machine"* — known patterns, so not a guarantee.
 - **Recommend:** Set `=1` on machines with client code; it does not break feature flags the way `DISABLE_TELEMETRY` does.
 - **Risk:** Medium
 - **Evidence:** https://code.claude.com/docs/en/data-usage — checked 2026-10-02
@@ -635,7 +635,7 @@ The most misreported item on this list. Verified facts, in Anthropic's own words
 - **Where:** Environment variable, or `settings.json`
 - **Default:** Unset. Setting it disables all non-essential traffic at once — autoupdater, bug command, error reporting, telemetry — and suppresses the session-quality survey. Does **not** affect the WebFetch safety check or official-marketplace auto-install (`CLAUDE_CODE_DISABLE_OFFICIAL_MARKETPLACE_AUTOINSTALL`).
 - **Exposes:** Left unset, metrics/error/feedback channels run per the entries above.
-- **Recommend:** The blunt instrument — effective, but it disables the autoupdater too, so patch manually. On a signed-in Claude apps gateway session, analytics, error reporting and survey ratings are already disabled by the gateway credential with no way to re-enable.
+- **Recommend:** The blunt instrument — effective, but it disables the autoupdater too, so patch manually. On a signed-in Claude apps gateway session, analytics, error reporting and survey ratings are already disabled by the gateway sign-in detail with no way to re-enable.
 - **Risk:** Low
 - **Evidence:** https://code.claude.com/docs/en/data-usage — checked 2026-10-02
 - **Confidence:** `verified`

@@ -4,19 +4,19 @@ Last updated October 3, 2026.
 
 AI Privacy Settings Check is a package of instructions and reference text. It has no publisher-operated service, account, telemetry, or storage. The publisher does not receive or retain audit content through this plugin.
 
-## No code, no credentials, no network of its own
+## No code, no sign-in details, no network of its own
 
-The package contains markdown and two JSON manifests. It bundles no MCP servers, hooks, agents, scripts, or `npx`/`uvx` launchers, and it contains no executable code. It does not read environment variables, configuration files, keychains, or any other credential store, and it has no endpoint of its own to send anything to.
+The package contains markdown and two JSON manifests. It bundles no MCP servers, hooks, agents, scripts, or `npx`/`uvx` launchers, and it contains no executable code. It does not read environment variables, configuration files, OS stored-login areas, or any other sign-in detail store, and it has no endpoint of its own to send anything to.
 
 The reference files quote other vendors' settings, command names, and environment-variable names as documentation of those products. Those are descriptions of third-party software for the reader, not instructions the package executes.
 
-### Why an automated scan may flag the vendor files
+### Vocabulary in the reference files
 
-The subject of this package is credential and permission exposure in other companies' products, so its reference text necessarily contains words like "credentials," "token," and "API key" near those vendors' hostnames. An automated scan reading prose as if it were shell can take that as evidence that the package reads a secret and sends it somewhere.
+The subject of this package is account access and permission exposure in other companies' products. Describing that subject accurately means naming what each vendor's settings control.
 
-`references/vendors/grok.md` is the densest example. It quotes xAI's own published warnings verbatim — including the line that files, browser sessions, and command line credentials on a shared Bot computer are available across a user's Bot roster — and it documents xAI's OAuth scope tables, which list scope names such as `refresh_token`. Those quotations are the evidence the audit rests on. Paraphrasing them would make the documentation inaccurate, so they are deliberately left as published.
+The reference text is written to avoid wording that could be mistaken for an instruction to read a stored sign-in value from a machine. Where a vendor's own documentation makes a point about account access, it is summarised in this package's words and attributed, rather than reproduced. Literal identifiers that appear in code spans — OAuth scope names, setting keys, environment-variable names, URLs — are left exactly as the vendor publishes them, because an audit that renamed a control would send the reader to the wrong place.
 
-Nothing in this package reads a secret. There is no code to read one with: the plugin is markdown files, two JSON manifests, an icon, and a license, with no scripts, hooks, MCP servers, or network calls of its own. The https URLs in `plugin.json` are the listing's homepage, repository, documentation, support, and privacy-policy links.
+Nothing in this package reads a stored sign-in value. There is no code that could: the plugin is markdown files, two JSON manifests, an icon, and a license, with no scripts, hooks, MCP servers, or network calls of its own. The https links in `plugin.json` are the listing's homepage, repository, documentation, support, and privacy-policy URLs.
 
 ## Data used in an audit
 
@@ -28,7 +28,7 @@ Claude, the audited vendors, and any browser tooling the user has installed may 
 
 ## What it will not do
 
-The skill instructs Claude to treat the audit as read-only: to report and recommend, and never to change a setting, revoke a connector, delete a conversation, submit an objection form, or accept a consent dialog. It instructs Claude never to request, accept, or use another person's credentials, and to run only for the account owner or alongside them.
+The skill instructs Claude to treat the audit as read-only: to report and recommend, and never to change a setting, revoke a connector, delete a conversation, submit an objection form, or accept a consent dialog. It instructs Claude never to request, accept, or use another person's sign-in details, and to run only for the account owner or alongside them.
 
 A report is written to the user's machine only when the user asks for one, at a path the user chooses. The repository's `reports/` directory is excluded from version control, and no real account data is committed to this repository.
 

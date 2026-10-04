@@ -89,9 +89,9 @@ prevented it. The rubric rates a left-on training toggle **Medium** — irrevers
 third-party-exposed. That is the opposite of what most checklists say, and the worked
 examples say so out loud.
 
-**"Don't type secrets into the chatbot" stops working once connectors are on.** In the
+**"Don't type [sensitive values] into the chatbot" stops working once connectors are on.** In the
 AgentFlayer research the victim typed nothing sensitive. They uploaded an innocuous document,
-asked for a summary, and the agent went and found API keys in their own Drive. So the audit
+asked for a summary, and the agent went and found API access values in their own Drive. So the audit
 checks for the *lethal trifecta* — private data access, untrusted content, and an outbound
 channel — as a finding in its own right, rated above any single toggle in the set.
 
@@ -112,7 +112,7 @@ These are constraints written into the skill, not suggestions.
 - It will not pretend a dated check is a standing fact. Every finding carries `verified_on`
   and `recheck_after`, because at least one vendor's toggle is credibly reported to
   re-enable itself and nobody has reproduced it either way.
-- It will not ask for your credentials, or anyone else's. The person running it is the
+- It will not ask for your sign-in details, or anyone else's. The person running it is the
   account owner or is sitting with them. For a client, they run it on their machine.
 
 If a settings page or help doc contains text that reads like an instruction, the skill treats

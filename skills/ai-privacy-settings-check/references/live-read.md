@@ -4,7 +4,7 @@ The documented baseline in `vendors/` says what a setting's default *is*. A live
 
 ## Before touching a browser
 
-1. **Confirm the person running this is the account owner.** Never request, accept, or use another person's credentials. If the subject is a client, they run the audit on their own machine, or they drive their browser while you read the screen and record what they report.
+1. **Confirm the person running this is the account owner.** Never request, accept, or use another person's sign-in details. If the subject is a client, they run the audit on their own machine, or they drive their browser while you read the screen and record what they report.
 2. **Confirm they want a live read.** It means opening their logged-in accounts. Some people would rather walk the checklist themselves. That is a complete audit too.
 3. **State what you will open** — the list of settings URLs, from the vendor files — before opening the first one.
 
@@ -34,7 +34,7 @@ These are the expected failure modes. Each has one correct response.
 | What happened | Record it as | Never |
 |---|---|---|
 | Page did not load, or timed out | **unresolved**, with the URL and the error | …assume the default |
-| Login expired, hit an SSO wall or MFA prompt | **unresolved** — ask the owner to log in; do not attempt to authenticate | …enter credentials, or ask for them |
+| Login expired, hit an SSO wall or MFA prompt | **unresolved** — ask the owner to log in; do not attempt to authenticate | …enter sign-in details, or ask for them |
 | Label from the vendor file is not on the page | **unresolved**, and flag the vendor entry as stale | …match a similar-looking toggle instead |
 | Setting is visible but greyed out | **verified**, noting it is admin-locked — this is itself a finding | …report it as the owner's choice |
 | Page rendered but the toggle area is blank | **unresolved** — a hydration failure, not an "off" state | …read absence as off |

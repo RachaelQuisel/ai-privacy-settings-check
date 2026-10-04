@@ -227,7 +227,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 
 - **Setting:** `Allow use in Sites` *(per plugin)*
 - **Default:** **"This setting is off by default."** Verified for Enterprise and Business.
-- **Exposes:** Lets a workspace-built Site call a plugin using **each visitor's own** connected account — a path from one member's credentials into another member's page.
+- **Exposes:** Lets a workspace-built Site call a plugin using **each visitor's own** connected account — a path from one member's sign-in details into another member's page.
 - **Recommend:** Keep off; enable only for a reviewed Site with a named owner.
 - **Risk:** High
 - **Confidence:** `verified`
@@ -306,7 +306,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 
 - **Setting:** Codex workspace share links
 - **Default:** `unresolved`. *"Workspace share links are limited to authenticated members of the originating workspace, and admins can turn off workspace share links."*
-- **Exposes:** A read-only snapshot of a Codex thread. *"Codex redacts known secret patterns, but users should review the snapshot because sensitive paths, diffs, images, or other content may remain."*
+- **Exposes:** A read-only snapshot of a Codex thread. *"Codex redacts known [sensitive value] patterns, but users should review the snapshot because sensitive paths, diffs, images, or other content may remain."*
 - **Recommend:** Off. **Redaction is best-effort and diffs leak file paths and structure.**
 - **Risk:** High
 - **Confidence:** `verified` (control exists); `unresolved` (label, path, default)
@@ -462,13 +462,13 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Where:** Settings → Cloud computer → Manage cookies used by ChatGPT Work
 - **Default:** **Sessions persist.** Verbatim: *"The authentication will persist for future tasks until it expires, so you do not need to sign in each time."*
 - **Exposes:** A signed-in session inside OpenAI's remote browser stays live across tasks — **so a later task, or a later prompt injection, can act as you on that site without re-authenticating.**
-- **Recommend:** Clear per-site data after any sensitive session. **The sharpest edge in the cloud-browser design: the credential handling is good, the session persistence is the exposure.**
+- **Recommend:** Clear per-site data after any sensitive session. **The sharpest edge in the cloud-browser design: the sign-in detail handling is good, the session persistence is the exposure.**
 - **Risk:** High
 - **Confidence:** `verified`
 
 - **Setting:** Secure sign-in form + confirmation before consequential actions *(cloud browser)*
-- **Default:** Always on, **not configurable.** *"Credentials entered through the secure form go directly to the remote browser. The username and password entered there are not visible to the model, and ChatGPT does not store those sign-in credentials."* Separately: *"Website access permission is separate from approval for consequential actions."*
-- **Recommend:** Use only the secure form — never paste credentials, 2FA codes or card numbers into chat. The cloud browser is isolated from your device: *"It does not use your personal browser's open tabs, browsing history, saved passwords, cookies, extensions, or existing sign-ins."* Prefer **takeover** for anything sensitive.
+- **Default:** Always on, **not configurable.** *"[Sign-in details] entered through the secure form go directly to the remote browser. The username and [sign-in detail] entered there are not visible to the model, and ChatGPT does not store those sign-in [sign-in details]."* Separately: *"Website access permission is separate from approval for consequential actions."*
+- **Recommend:** Use only the secure form — never paste sign-in details, 2FA codes or card numbers into chat. The cloud browser is isolated from your device: *"It does not use your personal browser's open tabs, browsing history, saved [sign-in details], cookies, extensions, or existing sign-ins."* Prefer **takeover** for anything sensitive.
 - **Risk:** Low
 - **Confidence:** `verified`
 
@@ -506,7 +506,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Where:** Desktop app → Plugins → Computer Use. App access at Settings → Computer Use. OS grants: System Settings → Privacy & Security → Screen Recording / Accessibility → Codex Computer Use.
 - **Default:** Not installed. Always-allowed list **empty** — ChatGPT asks before using each app. Admin lock: `computer_use = false`.
 - **Exposes:** ChatGPT sees your screen and clicks/types in approved apps, **including clipboard state**; on Windows it takes over the foreground pointer and keyboard. Hard limits: it *"can't automate terminal apps or ChatGPT itself"* and *"can't authenticate as an administrator or approve security and privacy permission prompts."*
-- **Recommend:** **Keep the always-allowed list empty, or trivial only** — OpenAI's own screenshot shows Calculator as the sole entry. Never add a mail client, password manager, bank app, or browser. **Revoke the OS grants in System Settings when done; ChatGPT's in-app settings cannot revoke an OS grant.**
+- **Recommend:** **Keep the always-allowed list empty, or trivial only** — OpenAI's own screenshot shows Calculator as the sole entry. Never add a mail client, sign-in detail manager, bank app, or browser. **Revoke the OS grants in System Settings when done; ChatGPT's in-app settings cannot revoke an OS grant.**
 - **Risk:** High
 - **Confidence:** `verified`
 
@@ -527,7 +527,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Setting:** Codex permission modes — Ask for approval / Approve for me / Full access
 - **Where:** Permissions control below the composer, or `/permissions` in the CLI. To expose the other two: Settings → General → Permissions.
 - **Default:** **Ask for approval** — the other two are **not in the menu until you enable them.**
-- **Recommend:** Stay on **Ask for approval**. `approval_policy = "untrusted"` was **retired** and can now prevent Codex/ChatGPT Work from starting — remove it from configs. Keep `approvals_reviewer = "user"` for anything touching credentials or production.
+- **Recommend:** Stay on **Ask for approval**. `approval_policy = "untrusted"` was **retired** and can now prevent Codex/ChatGPT Work from starting — remove it from configs. Keep `approvals_reviewer = "user"` for anything touching sign-in details or production.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
@@ -553,9 +553,9 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Confidence:** `verified` (controls); `unresolved` (scopes)
 
 - **Setting:** Codex network secrets vs environment variables
-- **Default:** None configured. In Codex Cloud (Legacy), secrets *"are available only during setup and are removed before the agent phase starts."*
-- **Exposes:** A network secret is never handed to the program — *"Programs receive a placeholder; the proxy substitutes the real value for allowed destinations."* **But** saving an environment-owned network secret **adds its destinations to restricted internet access**, silently widening the network policy.
-- **Recommend:** Prefer network secrets over plain environment variables, then **re-read the saved network policy after adding one.** Use **Personal vault** so your credential is not shared with everyone using the environment.
+- **Default:** None configured. In Codex Cloud (Legacy), sensitive values *"are available only during setup and are removed before the agent phase starts."*
+- **Exposes:** A network sensitive value is never handed to the program — *"Programs receive a placeholder; the proxy substitutes the real value for allowed destinations."* **But** saving an environment-owned network sensitive value **adds its destinations to restricted internet access**, silently widening the network policy.
+- **Recommend:** Prefer network sensitive values over plain environment variables, then **re-read the saved network policy after adding one.** Use **Personal vault** so your sign-in detail is not shared with everyone using the environment.
 - **Risk:** Medium
 - **Confidence:** `verified`
 
@@ -629,7 +629,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 
 - **Setting:** `Allow event-triggered scheduled tasks`
 - **Default:** **"This setting is turned off by default in Enterprise, Edu, and ChatGPT for Healthcare workspaces."**
-- **Exposes:** Lets webhooks — new Gmail messages, Slack channel messages, GitHub PR activity — **autonomously trigger ChatGPT work with the member's connected-app credentials, unattended.** Not BAA-covered in Healthcare.
+- **Exposes:** Lets webhooks — new Gmail messages, Slack channel messages, GitHub PR activity — **autonomously trigger ChatGPT work with the member's connected-app sign-in details, unattended.** Not BAA-covered in Healthcare.
 - **Recommend:** **Leave off. This is autonomous processing of inbound attacker-controllable content — the prime prompt-injection vector.**
 - **Risk:** High
 - **Confidence:** `verified`
@@ -656,7 +656,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 
 - **Setting:** IP allowlist
 - **Default:** Off (opt-in). **Enterprise and Edu only.**
-- **Exposes:** When on, *"only users from the IPs you specify will be allowed access... even if the user has valid credentials."* **"For Compliance API traffic, IP Allowlisting is always enforced and cannot be turned off."** Does **not** cover platform.openai.com.
+- **Exposes:** When on, *"only users from the IPs you specify will be allowed access... even if the user has valid [sign-in details]."* **"For Compliance API traffic, IP Allowlisting is always enforced and cannot be turned off."** Does **not** cover platform.openai.com.
 - **Recommend:** Enable, scoped to corporate egress or VPN.
 - **Risk:** High
 - **Confidence:** `verified`
@@ -897,7 +897,7 @@ Also sunsetting: **custom GPTs** (Enterprise retirement 2026-12-11; personal acc
 - **Where:** macOS app → Settings → Work with Apps. Requires System Settings → Privacy & Security → **Accessibility** → ChatGPT for most apps.
 - **Default:** `unresolved` for the switch. **Gating is verified:** it cannot read anything until you add an app *and* grant Accessibility. **Admin-lockable.**
 - **Exposes:** ChatGPT reads **the last 200 lines of open panes** in Apple Notes, Notion, TextEdit, Quip, Xcode, Script Editor, VS Code/Cursor/Windsurf/VSCodium, the JetBrains family, **and Terminal, iTerm, Warp, Prompt.** That content *"becomes part of your chat history and is saved in your account,"* and *"We may use the content included to improve our model performance."* With IDEs it can also **write edits** to open files.
-- **Recommend:** Off, or at minimum revoke Accessibility. ⚠️ **Terminal scrollback is the sharp edge** — 200 lines of a terminal routinely contains tokens, connection strings and dotenv-file contents, **and it lands in trainable chat history.**
+- **Recommend:** Off, or at minimum revoke Accessibility. ⚠️ **Terminal scrollback is the sharp edge** — 200 lines of a terminal routinely contains tokens, connection strings and environment-file-file contents, **and it lands in trainable chat history.**
 - **Risk:** High
 - **Confidence:** `verified` (behavior, paths, admin locks); `unresolved` (switch default)
 

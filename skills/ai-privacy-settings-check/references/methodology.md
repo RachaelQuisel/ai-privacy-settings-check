@@ -34,7 +34,7 @@ Designed to be computed, not argued. Five dimensions, each scored 0–3 from an 
 | 0 | Telemetry, crash logs, feature-usage counters only |
 | 1 | Behavioral/metadata: timestamps, prompt counts, device/locale, derived interests |
 | 2 | Conversation content, uploaded files, or connected-document content |
-| 3 | Special-category or regulated content: health, sexual, biometric, political/religious, children's data, credentials/secrets, or client-confidential material under a professional duty |
+| 3 | Special-category or regulated content: health, sexual, biometric, political/religious, children's data, sign-in details/sensitive values, or client-confidential material under a professional duty |
 
 ### X — Third-party exposure the setting permits
 
@@ -88,7 +88,7 @@ Designed to be computed, not argued. Five dimensions, each scored 0–3 from an 
 2. **A = 3 and S ≥ 2** — trifecta complete over real content. *EchoLeak, AgentFlayer, Claudy Day.*
 3. **R = 3 and S = 3** — special-category data in an irreversible sink.
 4. **P = 3 and S ≥ 2** — content captured about people who never consented. *Otter.ai, Siri. Carries statutory wiretap / all-party-consent exposure, not only privacy exposure.*
-5. **S = 3 and X ≥ 2** — regulated or credential data reaching third parties or ad systems.
+5. **S = 3 and X ≥ 2** — regulated or sign-in detail data reaching third parties or ad systems.
 
 ### Caps — never rate above Medium
 

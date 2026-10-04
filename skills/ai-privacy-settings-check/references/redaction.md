@@ -15,7 +15,7 @@ Replace these with a stable placeholder, keeping enough shape that the owner can
 | Connected third-party account identifiers | the service name only: "Google Drive connector", not the account it points at |
 | Document, file, repo, and channel names seen while reading a settings page | omit entirely; they are not findings |
 | Device names | `[laptop]`, `[phone]` |
-| API keys, tokens, session cookies, or any credential | never record one, in any form, masked or not |
+| API access values, tokens, session cookies, or any sign-in detail | never record one, in any form, masked or not |
 
 Keep unmasked: product names, plan tiers, setting labels, toggle states, regions, and dates. Those are the findings. Masking them would make the report useless.
 
