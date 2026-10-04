@@ -1,7 +1,7 @@
 {
   "name": "ai-privacy-settings-check",
   "displayName": "AI Privacy Settings Check",
-  "description": "Reviews the privacy settings on your AI accounts and tells you which defaults are costing you something. Every finding carries the date it was checked and whether your account was actually read.",
+  "description": "Your AI tools are sharing more than you think. One scan of your default settings across ChatGPT, Claude, Gemini, Grok, Copilot, and Meta AI, in plain English, with a fix-it checklist and the date every finding was checked.",
   "version": "1.0.0",
   "author": {
     "name": "Rachael Quisel"
@@ -19,5 +19,6 @@
   ],
   "icon": "./icon.png",
   "documentationUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check#readme",
-  "supportUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/issues"
+  "supportUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/issues",
+  "privacyPolicyUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/blob/main/PRIVACY.md"
 }

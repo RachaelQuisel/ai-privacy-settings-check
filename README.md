@@ -1,7 +1,22 @@
 # AI Privacy Settings Check
 
-AI Privacy Settings Check reviews the privacy settings on your AI accounts and tells you which
-defaults are costing you something.
+Your AI tools are sharing more than you think.
+
+One scan of your default settings across ChatGPT, Claude, Gemini, Grok, Copilot, and Meta AI.
+It flags every privacy concern, explains what each toggle actually does in plain English, and
+tells you exactly what to switch off.
+
+- Audits default settings across six major AI assistants in one pass
+- Flags training-data opt-ins, data retention, and third-party sharing you probably did not
+  agree to on purpose
+- Plain-English explanations, no legalese, no 40-page privacy policy homework
+- Gives you a fix-it checklist: toggle this, turn off that, done
+- Never blurs what a setting defaults to with what your account is actually set to, and dates
+  every finding
+
+How it works: answer a few quick questions about which tools you use, or let it read your
+logged-in accounts if you'd rather. Either way you get a privacy report card and lock it down
+in ten minutes.
 
 I built it because the honest answer to "is my ChatGPT training on my client work?" turned
 out to be six answers, four of which had changed in the last year. ChatGPT's consumer
