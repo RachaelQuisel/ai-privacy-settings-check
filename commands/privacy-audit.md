@@ -3,7 +3,7 @@ description: Audit privacy and permission settings across AI assistant accounts 
 argument-hint: "[products, or 'all'] [--baseline-only]"
 ---
 
-Run the `ai-privacy-settings-check` skill.
+Run the `ai-privacy-audit` skill.
 
 Products in scope: $ARGUMENTS
 

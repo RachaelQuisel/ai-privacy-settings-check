@@ -1,13 +1,13 @@
 {
-  "name": "ai-privacy-settings-check",
-  "displayName": "AI Privacy Settings Check",
-  "description": "Your AI tools are sharing more than you think. One scan of your default settings across ChatGPT, Claude, Gemini, Grok, Copilot, and Meta AI, in plain English, with a fix-it checklist and the date every finding was checked.",
+  "name": "ai-privacy-audit",
+  "displayName": "AI Privacy Audit",
+  "description": "Find out which of your AI privacy settings are quietly costing you something. Reads the settings pages in your own browser, rates what it finds, and hands you the exact click path to fix each one. Never changes a setting.",
   "version": "1.0.0",
   "author": {
     "name": "Rachael Quisel"
   },
-  "homepage": "https://github.com/RachaelQuisel/ai-privacy-settings-check",
-  "repository": "https://github.com/RachaelQuisel/ai-privacy-settings-check",
+  "homepage": "https://github.com/RachaelQuisel/ai-privacy-audit",
+  "repository": "https://github.com/RachaelQuisel/ai-privacy-audit",
   "license": "MIT",
   "keywords": [
     "privacy",
@@ -18,7 +18,7 @@
     "settings-review"
   ],
   "icon": "./icon.png",
-  "documentationUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check#readme",
-  "supportUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/issues",
-  "privacyPolicyUrl": "https://github.com/RachaelQuisel/ai-privacy-settings-check/blob/main/PRIVACY.md"
+  "documentationUrl": "https://github.com/RachaelQuisel/ai-privacy-audit#readme",
+  "supportUrl": "https://github.com/RachaelQuisel/ai-privacy-audit/issues",
+  "privacyPolicyUrl": "https://github.com/RachaelQuisel/ai-privacy-audit/blob/main/PRIVACY.md"
 }

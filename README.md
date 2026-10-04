@@ -1,4 +1,4 @@
-# AI Privacy Settings Check
+# AI Privacy Audit
 
 Your AI tools are sharing more than you think.
 
@@ -31,8 +31,8 @@ fine.
 ## Install
 
 ```
-/plugin marketplace add RachaelQuisel/ai-privacy-settings-check
-/plugin install ai-privacy-settings-check
+/plugin marketplace add RachaelQuisel/ai-privacy-audit
+/plugin install ai-privacy-audit
 ```
 
 ## Use
@@ -48,7 +48,7 @@ Or just ask: "audit my AI privacy settings," "what should I turn off in ChatGPT,
 
 ## What you get back
 
-Findings, ranked by severity across all products at once — not grouped by vendor, because
+Findings, ranked by severity across all products at once. They are not grouped by vendor, because
 you want to know what to fix first, not read six vendor sections.
 
 Each finding carries five things:
@@ -59,7 +59,7 @@ Each finding carries five things:
 - A citation with the date it was checked.
 - A severity score you can audit, not a vibe.
 
-Here is [a full fictional example](skills/ai-privacy-settings-check/examples/sample-audit.md).
+Here is [a full fictional example](skills/ai-privacy-audit/examples/sample-audit.md).
 
 ## The ten categories
 
@@ -85,22 +85,22 @@ adding one.
 **Training toggles are over-rated.** There is no documented case of an individual suffering
 an attributable harm from a frontier vendor training on their chat. Meanwhile Grok published
 hundreds of thousands of conversations to search engines with no setting that would have
-prevented it. The rubric rates a left-on training toggle **Medium** — irreversible, but not
+prevented it. The rubric rates a left-on training toggle **Medium**. It is irreversible, but not
 third-party-exposed. That is the opposite of what most checklists say, and the worked
 examples say so out loud.
 
 **"Don't type [sensitive values] into the chatbot" stops working once connectors are on.** In the
 AgentFlayer research the victim typed nothing sensitive. They uploaded an innocuous document,
 asked for a summary, and the agent went and found API access values in their own Drive. So the audit
-checks for the *lethal trifecta* — private data access, untrusted content, and an outbound
-channel — as a finding in its own right, rated above any single toggle in the set.
+checks for the *lethal trifecta*, meaning private data access plus untrusted content plus an
+outbound channel, as a finding in its own right, rated above any single toggle in the set.
 
 ## What it will not do
 
 These are constraints written into the skill, not suggestions.
 
 - It will not change a setting. Not a toggle, not a connector, not a deletion, not an
-  objection form — even when the fix is obvious and you're watching. It hands you the path.
+  objection form, even when the fix is obvious and you're watching. It hands you the path.
 - It will not read a failed page as "off." A page that times out, hits an SSO wall, or
   renders blank is recorded as **unresolved**, with what blocked it. Absence is never
   evidence of a safe default.
@@ -134,19 +134,19 @@ A completed audit lists which AI products you use, which third-party accounts th
 and where your configuration is weakest. That is a useful document for you and a useful
 document for an attacker. Reports mask account emails, workspace names and connected-account
 identifiers by default, and carry a confidentiality header. Don't paste one into a group chat
-— and specifically don't paste one into a chatbot whose retention settings it just criticised.
+Specifically, don't paste one into a chatbot whose retention settings it just criticised.
 
 ## Everything moves
 
 These settings change constantly. Every vendor file carries a `last verified` date, and the
 audit flags any baseline older than 90 days in its **Limits** section. Each file also ends
-with a `Volatile` list — what changed in the last twelve months, what is most likely to move
+with a `Volatile` list: what changed in the last twelve months, what is most likely to move
 next, and what could not be verified at all. That last list is the honest part: it names the
 defaults the vendors don't publish, so you check them yourself instead of trusting a number
 someone made up.
 
 All of it is consolidated in
-[open-questions.md](skills/ai-privacy-settings-check/references/open-questions.md) — at the last check,
+[open-questions.md](skills/ai-privacy-audit/references/open-questions.md). At the last check,
 **201 of 566 documented settings** had a default, path, or effect that could not be sourced.
 That ratio is high because most vendors document that a setting exists without ever saying what
 it ships as. A vendor near the top of that list isn't more dangerous, it's worse documented.

@@ -1,17 +1,17 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "ai-privacy-settings-check",
-  "description": "AI Privacy Settings Check: which of your AI settings are set the way the vendor wanted, not the way you would have chosen.",
+  "name": "ai-privacy-audit",
+  "description": "AI Privacy Audit: your AI accounts are set the way the vendor wanted, not the way you would have chosen.",
   "owner": {
     "name": "Rachael Quisel"
   },
   "plugins": [
     {
-      "name": "ai-privacy-settings-check",
-      "description": "Your AI tools are sharing more than you think. One scan of your default settings across ChatGPT, Claude, Gemini, Grok, Copilot, and Meta AI, in plain English, with a fix-it checklist and the date every finding was checked.",
+      "name": "ai-privacy-audit",
+      "description": "Find out which of your AI privacy settings are quietly costing you something. Reads the settings pages in your own browser, rates what it finds, and hands you the exact click path to fix each one. Never changes a setting.",
       "source": "./",
       "category": "security",
-      "homepage": "https://github.com/RachaelQuisel/ai-privacy-settings-check"
+      "homepage": "https://github.com/RachaelQuisel/ai-privacy-audit"
     }
   ]
 }

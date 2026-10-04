@@ -1,8 +1,8 @@
-# Privacy notice — AI Privacy Settings Check
+# Privacy notice — AI Privacy Audit
 
 Last updated October 3, 2026.
 
-AI Privacy Settings Check is a package of instructions and reference text. It has no publisher-operated service, account, telemetry, or storage. The publisher does not receive or retain audit content through this plugin.
+AI Privacy Audit is a package of instructions and reference text. It has no publisher-operated service, account, telemetry, or storage. The publisher does not receive or retain audit content through this plugin.
 
 ## No code, no sign-in details, no network of its own
 
@@ -34,4 +34,4 @@ A report is written to the user's machine only when the user asks for one, at a 
 
 These are instructions; the host's enabled tools and permissions determine what actions are technically possible. Users who need strict read-only access should configure it in their Claude environment and in any browser tooling they have installed.
 
-For questions about this package, use the [repository issue tracker](https://github.com/RachaelQuisel/ai-privacy-settings-check/issues). For Claude or vendor data controls, use those providers' privacy settings and policies.
+For questions about this package, use the [repository issue tracker](https://github.com/RachaelQuisel/ai-privacy-audit/issues). For Claude or vendor data controls, use those providers' privacy settings and policies.
