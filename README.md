@@ -28,6 +28,10 @@ of that is in a settings page you'd think to open.
 The plugin returns findings. It doesn't change a setting, and it doesn't tell you that you're
 fine.
 
+## Claude Marketplace submission
+
+Submitted to the [Claude Marketplace partner waitlist](https://claude.com/marketplace-partners) on **October 5, 2026**, through XRAY Automation. Submission confirmation was received; Marketplace eligibility and listing have not yet been confirmed.
+
 ## Install
 
 ```
